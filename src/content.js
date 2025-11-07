@@ -116,28 +116,29 @@ class BackgroundCacheManagerProxy {
  * @param {number} scrollPosition - The saved scroll position to restore
  */
 function restoreScrollPosition(scrollPosition) {
-  if (scrollPosition > 0) {
-    // Function to perform the scroll restoration
-    const performScroll = () => {
-      window.scrollTo(0, scrollPosition);
-      const currentPosition = window.scrollY || window.pageYOffset;
+  // Function to perform the scroll restoration
+  const performScroll = () => {
+    window.scrollTo(0, scrollPosition);
+    const currentPosition = window.scrollY || window.pageYOffset;
 
-      // Clear saved scroll position from background script after successful restoration
-      chrome.runtime.sendMessage({
-        type: 'clearScrollPosition',
-        url: document.location.href
-      });
+    // Clear saved scroll position from background script after restoration
+    chrome.runtime.sendMessage({
+      type: 'clearScrollPosition',
+      url: document.location.href
+    });
 
-      // If the position wasn't set correctly, try again after a short delay
-      if (Math.abs(currentPosition - scrollPosition) > 10) {
-        setTimeout(() => {
-          window.scrollTo(0, scrollPosition);
-        }, 100);
-      }
-    };
+    // If the position wasn't set correctly (and it's not supposed to be at top), try again after a short delay
+    if (scrollPosition > 0 && Math.abs(currentPosition - scrollPosition) > 10) {
+      setTimeout(() => {
+        window.scrollTo(0, scrollPosition);
+      }, 100);
+    }
+  };
 
-    // Use requestAnimationFrame to ensure DOM is fully rendered
-    requestAnimationFrame(() => {
+  // Use requestAnimationFrame to ensure DOM is fully rendered
+  requestAnimationFrame(() => {
+    // For non-zero positions, wait for images to load to ensure accurate positioning
+    if (scrollPosition > 0) {
       // Check if there are images that might still be loading
       const images = document.querySelectorAll('#markdown-content img');
       const imagePromises = Array.from(images).map(img => {
@@ -159,14 +160,11 @@ function restoreScrollPosition(scrollPosition) {
       } else {
         performScroll();
       }
-    });
-  } else {
-    // Still clear any stored position from background script
-    chrome.runtime.sendMessage({
-      type: 'clearScrollPosition',
-      url: document.location.href
-    });
-  }
+    } else {
+      // For position 0 (page top), scroll immediately without waiting for images
+      performScroll();
+    }
+  });
 }
 
 /**
@@ -624,7 +622,8 @@ async function getSavedScrollPosition() {
       url: document.location.href
     });
 
-    if (response && response.position > 0 && currentScrollPosition === 0) {
+    // Return saved position if available and current position is at top (page just loaded)
+    if (response && typeof response.position === 'number' && currentScrollPosition === 0) {
       return response.position;
     }
   } catch (e) {
@@ -688,13 +687,12 @@ try {
     scrollTimeout = setTimeout(() => {
       try {
         const currentPosition = window.scrollY || window.pageYOffset;
-        if (currentPosition > 0) {
-          chrome.runtime.sendMessage({
-            type: 'saveScrollPosition',
-            url: document.location.href,
-            position: currentPosition
-          });
-        }
+        // Save position even when it's 0 (page top) to ensure correct restoration
+        chrome.runtime.sendMessage({
+          type: 'saveScrollPosition',
+          url: document.location.href,
+          position: currentPosition
+        });
       } catch (e) {
         // Ignore errors
       }
