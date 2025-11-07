@@ -324,6 +324,7 @@ body.toc-hidden #markdown-content {
   line-height: 1.2 !important;
   /* Reset any box-sizing that might affect positioning */
   box-sizing: content-box !important;
+  font-size: 14px;
 }
 
 .katex * {
