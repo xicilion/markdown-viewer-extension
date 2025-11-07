@@ -810,9 +810,9 @@ function setupTocToggle() {
     overlayDiv.classList.toggle('hidden');
   };
 
-  // Use keyboard shortcut (Ctrl+T or Cmd+T) to toggle TOC
+  // Use keyboard shortcut (Ctrl+B or Cmd+B) to toggle TOC
   document.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 't') {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
       e.preventDefault();
       toggleToc();
     }

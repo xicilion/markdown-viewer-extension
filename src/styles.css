@@ -21,10 +21,8 @@ body {
 }
 
 /* When TOC is hidden, adjust the content margin */
-body.toc-hidden #markdown-content {
+body.toc-hidden #markdown-wrapper {
   margin-left: 0;
-  width: 100%;
-  max-width: 1200px;
 }
 
 #table-of-contents {
