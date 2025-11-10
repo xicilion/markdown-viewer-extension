@@ -45,7 +45,6 @@ async function initializeMermaid() {
       securityLevel: 'loose',
       lineHeight: 1.6,
       themeVariables: {
-        fontSize: '12px',
         fontFamily: "'SimSun', 'Times New Roman', Times, serif",
         background: 'transparent'
       },
@@ -133,7 +132,8 @@ async function renderMermaidToPng(code) {
       throw new Error('Generated content is not valid SVG');
     }
 
-    const result = await renderSvgToPng(processedSvg);
+    // Apply 10/16 scaling to achieve 10px font-size effect
+    const result = await renderSvgToPng(processedSvg, 10 / 16);
     return result;
   } catch (error) {
     return { error: error.message };
@@ -210,7 +210,7 @@ async function renderHtmlToPng(htmlContent, targetWidth = 1200) {
 }
 
 // Render SVG to PNG
-async function renderSvgToPng(svgContent) {
+async function renderSvgToPng(svgContent, contentScale = 1.0) {
   try {
     const container = document.getElementById('svg-container');
     container.innerHTML = svgContent;
@@ -242,11 +242,11 @@ async function renderSvgToPng(svgContent) {
 
     if (viewBox) {
       const parts = viewBox.split(/\s+/);
-      width = Math.ceil(parseFloat(parts[2]));
-      height = Math.ceil(parseFloat(parts[3]));
+      width = Math.ceil(parseFloat(parts[2]) * contentScale);
+      height = Math.ceil(parseFloat(parts[3]) * contentScale);
     } else {
-      width = Math.ceil(parseFloat(svgEl.getAttribute('width')) || 800);
-      height = Math.ceil(parseFloat(svgEl.getAttribute('height')) || 600);
+      width = Math.ceil((parseFloat(svgEl.getAttribute('width')) || 800) * contentScale);
+      height = Math.ceil((parseFloat(svgEl.getAttribute('height')) || 600) * contentScale);
     }
 
     // Create canvas

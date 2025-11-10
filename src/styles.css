@@ -213,7 +213,7 @@ body.toc-hidden #markdown-wrapper {
   padding: 40px;
   box-sizing: border-box;
   font-family: 'SimSun', 'Times New Roman', Times, serif;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.5;
 }
 
@@ -229,43 +229,43 @@ body.toc-hidden #markdown-wrapper {
 }
 
 #markdown-content h1 {
-  font-size: 29px;
+  font-size: 26px;
   text-align: center;
-  margin: 0 0 0.5em 0;
+  margin: 0 0 10px 0;
 }
 
 #markdown-content h2 {
-  font-size: 24px;
-  margin-top: 1.2em;
-  margin-bottom: 0.5em;
+  font-size: 22px;
+  margin-top: 22px;
+  margin-bottom: 9px;
 }
 
 #markdown-content h3 {
-  font-size: 22px;
-  margin-top: 1.1em;
-  margin-bottom: 0.5em;
+  font-size: 20px;
+  margin-top: 18px;
+  margin-bottom: 8px;
 }
 
 #markdown-content h4 {
-  font-size: 19px;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
+  font-size: 18px;
+  margin-top: 15px;
+  margin-bottom: 7px;
 }
 
 #markdown-content h5 {
-  font-size: 16px;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
+  font-size: 14px;
+  margin-top: 12px;
+  margin-bottom: 6px;
 }
 
 #markdown-content h6 {
-  font-size: 14px;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
+  font-size: 12px;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 #markdown-content p {
-  margin: 16px 0;
+  margin: 13px 0;
 }
 
 #markdown-content a {
@@ -280,18 +280,18 @@ body.toc-hidden #markdown-wrapper {
 #markdown-content code {
   background-color: #f6f8fa;
   border-radius: 3px;
-  padding: 0.2em 0.4em;
+  padding: 2px 5px;
   font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', monospace;
-  font-size: 0.9em;
+  font-size: 10px;
 }
 
 #markdown-content pre {
   background-color: #f6f8fa;
   border-radius: 6px;
-  padding: 16px;
+  padding: 13px;
   overflow: auto;
   line-height: 1.45;
-  margin: 16px 0;
+  margin: 13px 0;
   font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', monospace;
   white-space: pre-wrap;
   word-break: break-all;
@@ -312,15 +312,15 @@ body.toc-hidden #markdown-wrapper {
 #markdown-content blockquote {
   border-left: 4px solid #dfe2e5;
   color: #6a737d;
-  padding: 1px 15px;
+  padding: 1px 13px;
   margin: 0;
   background-color: #f6f8fa;
 }
 
 #markdown-content ul,
 #markdown-content ol {
-  padding-left: 2em;
-  margin: 16px 0;
+  padding-left: 20px;
+  margin: 13px 0;
 }
 
 /* Ordered list style by level */
@@ -340,7 +340,7 @@ body.toc-hidden #markdown-wrapper {
 }
 
 #markdown-content li {
-  margin: 0.25em 0;
+  margin: 3px 0;
 }
 
 #markdown-content img {
@@ -349,23 +349,24 @@ body.toc-hidden #markdown-wrapper {
 }
 
 #markdown-content hr {
-  height: 0.25em;
+  height: 3px;
   padding: 0;
-  margin: 24px 0;
+  margin: 20px 0;
   background-color: #e1e4e8;
   border: 0;
 }
 
 #markdown-content table {
   border-collapse: collapse;
-  margin: 16px auto;
+  margin: 13px auto;
   overflow: auto;
 }
 
 #markdown-content table th,
 #markdown-content table td {
   border: 1px solid #dfe2e5;
-  padding: 12px;
+  padding: 8px;
+  font-size: 10px;
 }
 
 #markdown-content table th {
@@ -385,7 +386,7 @@ body.toc-hidden #markdown-wrapper {
   line-height: 1.2 !important;
   /* Reset any box-sizing that might affect positioning */
   box-sizing: content-box !important;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .katex * {
@@ -394,7 +395,7 @@ body.toc-hidden #markdown-wrapper {
 }
 
 .katex-display {
-  margin: 1em 0;
+  margin: 12px 0;
   overflow-x: auto;
   overflow-y: hidden;
 }

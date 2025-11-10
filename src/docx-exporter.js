@@ -115,7 +115,7 @@ class DocxExporter {
         runs.push(new TextRun({
           text: segment,
           font: 'Consolas',
-          size: 24,
+          size: 20,
           preserve: true,
           color: appliedColor,
         }));
@@ -156,7 +156,7 @@ class DocxExporter {
       runs.push(new TextRun({
         text: '',
         font: 'Consolas',
-        size: 24,
+        size: 20,
         preserve: true,
         color: DOCX_DEFAULT_CODE_COLOR,
       }));
@@ -256,8 +256,8 @@ class DocxExporter {
                   style: {
                     paragraph: {
                       indent: {
-                        left: convertInchesToTwip(0.5),  // 0.5 inch left indent
-                        hanging: convertInchesToTwip(0.30) // 0.30 inch hanging indent for number spacing
+                        left: convertInchesToTwip(0.42),  // 0.42 inch left indent (20px ≈ 0.28")
+                        hanging: convertInchesToTwip(0.28) // 0.28 inch hanging indent for number spacing
                       },
                     },
                   },
@@ -270,8 +270,8 @@ class DocxExporter {
                   style: {
                     paragraph: {
                       indent: {
-                        left: convertInchesToTwip(1.0),  // 1.0 inch for nested level
-                        hanging: convertInchesToTwip(0.30)
+                        left: convertInchesToTwip(0.84),  // 0.84 inch for nested level
+                        hanging: convertInchesToTwip(0.28)
                       },
                     },
                   },
@@ -284,8 +284,8 @@ class DocxExporter {
                   style: {
                     paragraph: {
                       indent: {
-                        left: convertInchesToTwip(1.5),  // 1.5 inch for double-nested level
-                        hanging: convertInchesToTwip(0.30)
+                        left: convertInchesToTwip(1.26),  // 1.26 inch for double-nested level
+                        hanging: convertInchesToTwip(0.28)
                       },
                     },
                   },
@@ -298,8 +298,8 @@ class DocxExporter {
                   style: {
                     paragraph: {
                       indent: {
-                        left: convertInchesToTwip(2.0),  // 2.0 inch for level 4
-                        hanging: convertInchesToTwip(0.30)
+                        left: convertInchesToTwip(1.68),  // 1.68 inch for level 4
+                        hanging: convertInchesToTwip(0.28)
                       },
                     },
                   },
@@ -312,8 +312,8 @@ class DocxExporter {
                   style: {
                     paragraph: {
                       indent: {
-                        left: convertInchesToTwip(2.5),  // 2.5 inch for level 5
-                        hanging: convertInchesToTwip(0.30)
+                        left: convertInchesToTwip(2.10),  // 2.10 inch for level 5
+                        hanging: convertInchesToTwip(0.28)
                       },
                     },
                   },
@@ -326,8 +326,8 @@ class DocxExporter {
                   style: {
                     paragraph: {
                       indent: {
-                        left: convertInchesToTwip(3.0),  // 3.0 inch for level 6
-                        hanging: convertInchesToTwip(0.30)
+                        left: convertInchesToTwip(2.52),  // 2.52 inch for level 6
+                        hanging: convertInchesToTwip(0.28)
                       },
                     },
                   },
@@ -340,8 +340,8 @@ class DocxExporter {
                   style: {
                     paragraph: {
                       indent: {
-                        left: convertInchesToTwip(3.5),  // 3.5 inch for level 7
-                        hanging: convertInchesToTwip(0.30)
+                        left: convertInchesToTwip(2.94),  // 2.94 inch for level 7
+                        hanging: convertInchesToTwip(0.28)
                       },
                     },
                   },
@@ -354,8 +354,8 @@ class DocxExporter {
                   style: {
                     paragraph: {
                       indent: {
-                        left: convertInchesToTwip(4.0),  // 4.0 inch for level 8
-                        hanging: convertInchesToTwip(0.30)
+                        left: convertInchesToTwip(3.36),  // 3.36 inch for level 8
+                        hanging: convertInchesToTwip(0.28)
                       },
                     },
                   },
@@ -388,18 +388,18 @@ class DocxExporter {
                   hAnsi: 'Times New Roman',
                   cs: 'Times New Roman',
                 },
-                size: 28, // 14pt in half-points
+                size: 24, // 12pt in half-points
               },
               paragraph: {
                 spacing: {
                   line: 360, // 1.5 line spacing
-                  after: 240, // Default paragraph spacing
+                  after: 200, // 13px ≈ 200 twips
                 },
               },
             },
             heading1: {
               run: {
-                size: 58, // 29pt in half-points
+                size: 52, // 26pt in half-points
                 bold: true,
                 font: {
                   ascii: 'Times New Roman',
@@ -410,33 +410,14 @@ class DocxExporter {
               },
               paragraph: {
                 spacing: {
-                  before: 240,
-                  after: 120,
+                  before: 0,
+                  after: 150, // 10px
                   line: 360,
                 },
                 alignment: AlignmentType.CENTER,
               },
             },
             heading2: {
-              run: {
-                size: 48, // 24pt
-                bold: true,
-                font: {
-                  ascii: 'Times New Roman',
-                  eastAsia: 'SimSun',
-                  hAnsi: 'Times New Roman',
-                  cs: 'Times New Roman',
-                },
-              },
-              paragraph: {
-                spacing: {
-                  before: 240,
-                  after: 120,
-                  line: 360,
-                },
-              },
-            },
-            heading3: {
               run: {
                 size: 44, // 22pt
                 bold: true,
@@ -449,15 +430,34 @@ class DocxExporter {
               },
               paragraph: {
                 spacing: {
-                  before: 240,
-                  after: 120,
+                  before: 330, // 22px
+                  after: 135, // 9px
+                  line: 360,
+                },
+              },
+            },
+            heading3: {
+              run: {
+                size: 40, // 20pt
+                bold: true,
+                font: {
+                  ascii: 'Times New Roman',
+                  eastAsia: 'SimSun',
+                  hAnsi: 'Times New Roman',
+                  cs: 'Times New Roman',
+                },
+              },
+              paragraph: {
+                spacing: {
+                  before: 270, // 18px
+                  after: 120, // 8px
                   line: 360,
                 },
               },
             },
             heading4: {
               run: {
-                size: 38, // 19pt
+                size: 36, // 18pt
                 bold: true,
                 font: {
                   ascii: 'Times New Roman',
@@ -468,32 +468,13 @@ class DocxExporter {
               },
               paragraph: {
                 spacing: {
-                  before: 240,
-                  after: 120,
+                  before: 225, // 15px
+                  after: 105, // 7px
                   line: 360,
                 },
               },
             },
             heading5: {
-              run: {
-                size: 32, // 16pt
-                bold: true,
-                font: {
-                  ascii: 'Times New Roman',
-                  eastAsia: 'SimSun',
-                  hAnsi: 'Times New Roman',
-                  cs: 'Times New Roman',
-                },
-              },
-              paragraph: {
-                spacing: {
-                  before: 240,
-                  after: 120,
-                  line: 360,
-                },
-              },
-            },
-            heading6: {
               run: {
                 size: 28, // 14pt
                 bold: true,
@@ -506,8 +487,27 @@ class DocxExporter {
               },
               paragraph: {
                 spacing: {
-                  before: 240,
-                  after: 120,
+                  before: 180, // 12px
+                  after: 90, // 6px
+                  line: 360,
+                },
+              },
+            },
+            heading6: {
+              run: {
+                size: 24, // 12pt
+                bold: true,
+                font: {
+                  ascii: 'Times New Roman',
+                  eastAsia: 'SimSun',
+                  hAnsi: 'Times New Roman',
+                  cs: 'Times New Roman',
+                },
+              },
+              paragraph: {
+                spacing: {
+                  before: 150, // 10px
+                  after: 75, // 5px
                   line: 360,
                 },
               },
@@ -749,12 +749,12 @@ class DocxExporter {
    */
   getHeadingLevel(depth) {
     const levels = {
-      1: HeadingLevel.HEADING_1, // 29px -> 29pt
-      2: HeadingLevel.HEADING_2, // 24px -> 24pt
-      3: HeadingLevel.HEADING_3, // 22px -> 22pt
-      4: HeadingLevel.HEADING_4, // 19px -> 19pt
-      5: HeadingLevel.HEADING_5, // 16px -> 16pt
-      6: HeadingLevel.HEADING_6, // 14px -> 14pt
+      1: HeadingLevel.HEADING_1, // 26px -> 26pt
+      2: HeadingLevel.HEADING_2, // 22px -> 22pt
+      3: HeadingLevel.HEADING_3, // 20px -> 20pt
+      4: HeadingLevel.HEADING_4, // 18px -> 18pt
+      5: HeadingLevel.HEADING_5, // 14px -> 14pt
+      6: HeadingLevel.HEADING_6, // 12px -> 12pt
     };
     return levels[depth] || HeadingLevel.HEADING_1;
   }
@@ -780,7 +780,7 @@ class DocxExporter {
     if (children.length === 0) {
       // Empty paragraph
       const spacing = this.applyPendingSpacing({
-        after: 240,
+        after: 200, // 13px
         line: 360,
       });
 
@@ -791,7 +791,7 @@ class DocxExporter {
     }
 
     const spacing = this.applyPendingSpacing({
-      after: 240,
+      after: 200, // 13px
       line: 360,
     });
 
@@ -807,7 +807,7 @@ class DocxExporter {
   async convertInlineNodes(nodes, parentStyle = {}) {
     const runs = [];
 
-    // Default font settings matching CSS: 14px = 28 half-points
+    // Default font settings matching CSS: 12px = 24 half-points
     // Use SimSun for better Chinese character support
     const defaultStyle = {
       font: {
@@ -816,7 +816,7 @@ class DocxExporter {
         hAnsi: 'Times New Roman',
         cs: 'Times New Roman',
       },
-      size: 28, // 14pt (half-points)
+      size: 24, // 12pt (half-points)
       ...parentStyle,
     };
 
@@ -858,7 +858,7 @@ class DocxExporter {
         return new TextRun({
           text: node.value,
           font: 'Consolas', // Monospace font matching CSS
-          size: 25, // 0.9em of 14pt = 12.6pt ≈ 13pt = 25 half-points
+          size: 20, // 10pt = 20 half-points
           shading: {
             fill: 'F6F8FA', // Light gray background matching CSS
           },
@@ -1308,14 +1308,14 @@ class DocxExporter {
               hAnsi: 'Times New Roman',
               cs: 'Times New Roman',
             },
-            size: 28,
+            size: 24,
           }));
         }
 
         const paragraphConfig = {
           children: children,
           spacing: this.applyPendingSpacing({
-            after: 60,  // 0.25em spacing between items
+            after: 45,  // 3px spacing between items
             line: 360,  // 1.5 line spacing
           }),
         };
@@ -1361,18 +1361,18 @@ class DocxExporter {
       children: runs,
       wordWrap: true, // 启用自动换行，支持长行代码在 DOCX 中换行
       spacing: this.applyPendingSpacing({
-        before: 240, // 16px = 12pt
-        after: 240,  // 16px = 12pt
+        before: 200, // 13px
+        after: 200,  // 13px
         line: 348,   // 1.45 line height for code blocks
       }),
       shading: {
         fill: 'F6F8FA', // Light gray background matching CSS
       },
       border: {
-        top: { color: 'E1E4E8', space: 12, value: BorderStyle.SINGLE, size: 6 }, // space: 12pt = 16px padding
-        bottom: { color: 'E1E4E8', space: 12, value: BorderStyle.SINGLE, size: 6 },
-        left: { color: 'E1E4E8', space: 12, value: BorderStyle.SINGLE, size: 6 },
-        right: { color: 'E1E4E8', space: 12, value: BorderStyle.SINGLE, size: 6 },
+        top: { color: 'E1E4E8', space: 10, value: BorderStyle.SINGLE, size: 6 }, // space: 10pt ≈ 13px padding
+        bottom: { color: 'E1E4E8', space: 10, value: BorderStyle.SINGLE, size: 6 },
+        left: { color: 'E1E4E8', space: 10, value: BorderStyle.SINGLE, size: 6 },
+        right: { color: 'E1E4E8', space: 10, value: BorderStyle.SINGLE, size: 6 },
       },
     });
   }
@@ -1393,13 +1393,13 @@ class DocxExporter {
     const outerIndent = 0.3 + (nestLevel * 0.3);  // Start at 0.3", add 0.3" per level
 
     // Calculate total width added by borders and padding on left side
-    // Left border: 3pt (24/8) ≈ 0.04", Left space: 7pt ≈ 0.1"
-    // Total left side ≈ 0.14 inch
-    const leftBorderAndPadding = 0.14;
+    // Left border: 3pt (24/8) ≈ 0.04", Left space: 6pt ≈ 0.09"
+    // Total left side ≈ 0.13 inch
+    const leftBorderAndPadding = 0.13;
 
     // Calculate total width added by right padding
-    // Right space: 7pt ≈ 0.1"
-    const rightBorderAndPadding = 0.1;
+    // Right space: 6pt ≈ 0.09"
+    const rightBorderAndPadding = 0.09;
 
     for (const child of node.children) {
       if (child.type === 'paragraph') {
@@ -1418,7 +1418,7 @@ class DocxExporter {
           border: {
             left: {
               color: 'DFE2E5',         // Light gray border (matching CSS border-left: 4px solid #dfe2e5)
-              space: 7,                // 7pt ≈ inner left padding (half of 15pt)
+              space: 6,                // 6pt ≈ inner left padding (13px ≈ 6pt)
               style: BorderStyle.SINGLE,
               size: 24,                // 24 = 3pt (24/8) ≈ 4px border width
             },
@@ -1436,7 +1436,7 @@ class DocxExporter {
             },
             right: {
               color: 'F6F8FA',         // Same as background - invisible border
-              space: 7,                // 7pt ≈ inner right padding (half of 15pt)
+              space: 6,                // 6pt ≈ inner right padding (13px ≈ 6pt)
               style: BorderStyle.SINGLE,
               size: 1,                 // Minimal border
             },
@@ -1476,8 +1476,8 @@ class DocxExporter {
           if (cell.type === 'tableCell') {
             // For header row, make text bold
             const children = isHeaderRow
-              ? await this.convertInlineNodes(cell.children, { bold: true })
-              : await this.convertInlineNodes(cell.children);
+              ? await this.convertInlineNodes(cell.children, { bold: true, size: 20 })
+              : await this.convertInlineNodes(cell.children, { size: 20 });
 
             // Get cell alignment from table definition
             const cellAlignment = alignments[colIndex];
@@ -1511,10 +1511,10 @@ class DocxExporter {
               })],
               verticalAlign: VerticalAlignTable.CENTER, // Vertical center all cells
               margins: {
-                top: convertInchesToTwip(0.1),     // Reduced from 0.125 to 0.1 inch
-                bottom: convertInchesToTwip(0.1),  // Reduced from 0.125 to 0.1 inch
-                left: convertInchesToTwip(0.125),   // 0.125 inch = 9pt ≈ 12px
-                right: convertInchesToTwip(0.125),  // 0.125 inch = 9pt ≈ 12px
+                top: convertInchesToTwip(0.083),    // 8px ≈ 6pt ≈ 0.083 inch
+                bottom: convertInchesToTwip(0.083), // 8px ≈ 6pt ≈ 0.083 inch
+                left: convertInchesToTwip(0.083),   // 8px ≈ 6pt ≈ 0.083 inch
+                right: convertInchesToTwip(0.083),  // 8px ≈ 6pt ≈ 0.083 inch
               },
             };
 
@@ -1563,8 +1563,8 @@ class DocxExporter {
     return new Paragraph({
       text: '',
       spacing: {
-        before: 120,  // 6pt spacing before
-        after: 120,   // 6pt spacing after
+        before: 300,  // 20px spacing before
+        after: 300,   // 20px spacing after
         line: 120,    // Exact line height: 6pt
         lineRule: 'exact',  // Use exact line height
       },
