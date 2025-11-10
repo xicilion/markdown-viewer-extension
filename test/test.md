@@ -343,23 +343,18 @@ async function fetchUserData(userId) {
     }
 }
 
+// 长行换行测试 - 超长的十六进制字符串，没有任何断点
+const extremelyLongHexString = "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+
+// 长行换行测试 - Base64编码的超长字符串
+const base64EncodedData = "SGVsbG9Xb3JsZEhlbGxvV29ybGRIZWxsb1dvcmxkSGVsbG9Xb3JsZEhlbGxvV29ybGRIZWxsb1dvcmxkSGVsbG9Xb3JsZEhlbGxvV29ybGRIZWxsb1dvcmxkSGVsbG9Xb3JsZEhlbGxvV29ybGRIZWxsb1dvcmxkSGVsbG9Xb3JsZEhlbGxvV29ybGRIZWxsb1dvcmxkSGVsbG9Xb3JsZA==";
+
 // Arrow function and destructuring
 const processData = ({ name, age, ...rest }) => ({
     displayName: name.toUpperCase(),
     category: age >= 18 ? 'adult' : 'minor',
     metadata: rest
 });
-
-// Class syntax
-class User {
-    constructor(name) {
-        this.name = name;
-    }
-    
-    greet() {
-        return `Hello, ${this.name}!`;
-    }
-}
 ```
 
 **Python：**
@@ -383,44 +378,14 @@ class DataProcessor:
         
         return {"total": len(processed), "items": processed}
     
-    async def _process_single_item(self, item: str) -> str:
-        # Simulate async processing
-        await asyncio.sleep(0.1)
-        return f"Processed: {item}"
+    # 长行换行测试 - 超长的十六进制哈希值
+    hash_value = "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    
+    # 长行换行测试 - 超长的Base64字符串
+    encoded = "QWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTY3ODlBYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaQWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXo="
 
 # List comprehension
 squares = [x**2 for x in range(10) if x % 2 == 0]
-```
-
-**Java：**
-```java
-// Spring Boot REST Controller
-@RestController
-@RequestMapping("/api/v1")
-public class UserController {
-    
-    @Autowired
-    private UserService userService;
-    
-    @GetMapping("/users/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
-        try {
-            Optional<User> user = userService.findById(id);
-            return user.map(u -> ResponseEntity.ok(UserDTO.fromEntity(u)))
-                      .orElse(ResponseEntity.notFound().build());
-        } catch (Exception e) {
-            logger.error("Failed to get user: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-    
-    @PostMapping("/users")
-    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody CreateUserRequest request) {
-        User newUser = userService.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                           .body(UserDTO.fromEntity(newUser));
-    }
-}
 ```
 
 **SQL：**
@@ -444,118 +409,11 @@ top_users AS (
     ORDER BY avg_rating DESC
     LIMIT 20
 )
-SELECT 
-    tu.username,
-    tu.post_count,
-    ROUND(tu.avg_rating, 2) as rating,
-    CASE 
-        WHEN tu.avg_rating >= 4.5 THEN 'Excellent'
-        WHEN tu.avg_rating >= 3.5 THEN 'Good'
-        ELSE 'Average'
-    END as level
-FROM top_users tu
-ORDER BY tu.avg_rating DESC;
-```
+-- 长行换行测试 - 超长的十六进制字符串作为WHERE条件
+SELECT * FROM transactions WHERE transaction_hash = '0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000' AND status = 'confirmed';
 
-**HTML/CSS：**
-```html
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Card Component</title>
-    <style>
-        .card-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            padding: 2rem;
-        }
-        
-        .card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            padding: 1.5rem;
-            color: white;
-            transition: transform 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-    </style>
-</head>
-<body>
-    <div class="card-container">
-        <div class="card">
-            <h3>Feature</h3>
-            <p>Multi-language syntax highlighting support</p>
-        </div>
-    </div>
-</body>
-</html>
-```
-
-**Bash/Shell：**
-```bash
-#!/bin/bash
-# Automated deployment script
-
-set -e  # Exit on error
-
-APP_NAME="markdown-viewer"
-VERSION=${1:-"latest"}
-DEPLOY_DIR="/opt/apps/$APP_NAME"
-LOG_FILE="/var/log/${APP_NAME}-deploy.log"
-
-function log() {
-    local message="[$(date +'%Y-%m-%d %H:%M:%S')] $1"
-    echo "$message"
-    echo "$message" >> "$LOG_FILE"
-}
-
-function check_requirements() {
-    log "Checking system requirements..."
-    
-    if ! command -v docker &> /dev/null; then
-        log "Error: Docker not installed"
-        exit 1
-    fi
-    
-    if ! command -v docker-compose &> /dev/null; then
-        log "Error: docker-compose not installed"
-        exit 1
-    fi
-    
-    log "Requirements check passed"
-}
-
-function deploy() {
-    log "Starting deployment of $APP_NAME:$VERSION"
-    check_requirements
-    
-    sudo mkdir -p "$DEPLOY_DIR"
-    cd "$DEPLOY_DIR"
-    
-    log "Stopping existing containers..."
-    docker-compose down 2>/dev/null || true
-    
-    log "Starting new containers..."
-    if docker-compose up -d; then
-        log "✅ Deployment completed successfully"
-    else
-        log "❌ Container startup failed"
-        exit 1
-    fi
-}
-
-case "${1:-deploy}" in
-    "deploy") deploy ;;
-    "help") echo "Usage: $0 [deploy|help]" ;;
-    *) echo "Unknown action: $1"; exit 1 ;;
-esac
+-- 长行换行测试 - INSERT语句包含超长的十六进制数据
+INSERT INTO blockchain_data (block_hash, data_hex) VALUES ('0x0000000000000000000000000000000000000000000000000000000000000000', '0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000');
 ```
 
 **JSON：**
@@ -579,46 +437,21 @@ esac
       "js": ["content.js"],
       "css": ["styles.css"]
     }
-  ]
+  ],
+  "_comment_long_line_test": "This is a very long JSON value string that should test the line wrapping capability in code blocks when exported to DOCX format, including special characters and URLs like https://example.com/api/v1/users/12345/profile?include=posts,comments,likes&fields=id,name,email,avatar,bio&sort=-created_at&page=1&per_page=100"
 }
 ```
 
-**TypeScript：**
-```typescript
-// Generic types and interfaces
-interface User {
-    id: number;
-    name: string;
-    email: string;
-    roles: Role[];
-}
+**Bash：**
+```bash
+#!/bin/bash
+# 长行换行测试 - 超长的十六进制字符串作为环境变量
+export TRANSACTION_HASH="0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
 
-type Role = 'admin' | 'user' | 'guest';
+# 长行换行测试 - 包含超长Base64编码数据的命令
+echo "QWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTY3ODlBYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaQWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXo=" | base64 -d
 
-class UserManager<T extends User> {
-    private users: Map<number, T> = new Map();
-    
-    add(user: T): void {
-        this.users.set(user.id, user);
-    }
-    
-    get(id: number): T | undefined {
-        return this.users.get(id);
-    }
-    
-    filter(predicate: (user: T) => boolean): T[] {
-        return Array.from(this.users.values()).filter(predicate);
-    }
-}
-
-// Async/await with generics
-async function fetchData<T>(url: string): Promise<T> {
-    const response = await fetch(url);
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
-}
+deploy
 ```
 
 ---

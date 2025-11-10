@@ -56,7 +56,6 @@ const DOCX_HIGHLIGHT_COLOR_MAP = {
 };
 
 const DOCX_DEFAULT_CODE_COLOR = '24292E';
-const ZERO_WIDTH_SPACE = '\u200B';
 
 /**
  * Main class for exporting Markdown to DOCX
@@ -102,14 +101,6 @@ class DocxExporter {
     return null;
   }
 
-  applyCharacterWrap(text) {
-    if (!text) {
-      return text;
-    }
-
-    return text.replace(/([^\r\n])/g, `$1${ZERO_WIDTH_SPACE}`);
-  }
-
   appendCodeTextRuns(text, runs, color) {
     if (text === '') {
       return;
@@ -121,9 +112,8 @@ class DocxExporter {
 
     segments.forEach((segment, index) => {
       if (segment.length > 0) {
-        const wrappedSegment = this.applyCharacterWrap(segment);
         runs.push(new TextRun({
-          text: wrappedSegment,
+          text: segment,
           font: 'Consolas',
           size: 24,
           preserve: true,
@@ -1369,6 +1359,7 @@ class DocxExporter {
 
     return new Paragraph({
       children: runs,
+      wordWrap: true, // 启用自动换行，支持长行代码在 DOCX 中换行
       spacing: this.applyPendingSpacing({
         before: 240, // 16px = 12pt
         after: 240,  // 16px = 12pt
