@@ -662,7 +662,18 @@ pie title 功能使用分布
     "其他功能" : 5
 ```
 
-### 7.7 扩展整体架构图
+### 7.7 Graph 图（流程图）
+
+```mermaid
+graph TD
+    A[开始] --> B{是否登录?}
+    B -->|是| C[显示主页]
+    B -->|否| D[跳转登录页]
+    C --> E[结束]
+    D --> E
+```
+
+### 7.8 扩展整体架构图
 
 
 <div style="width: 1280px; font-family: 'SimSun', 'Times New Roman', Times, serif; box-sizing: border-box; position: relative;">
