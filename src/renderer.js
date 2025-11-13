@@ -30,8 +30,8 @@ class ExtensionRenderer {
     try {
       return new Promise((resolve, reject) => {
         const timeout = setTimeout(() => {
-          reject(new Error('Message timeout after 30 seconds'));
-        }, 30000);
+          reject(new Error('Message timeout after 5 minutes'));
+        }, 300000);
 
         chrome.runtime.sendMessage(message, (response) => {
           clearTimeout(timeout);
