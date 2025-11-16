@@ -491,12 +491,16 @@ ${truncatedMarkup}`;
   function createAsyncPlaceholder(id, type, description = '') {
     const typeLabelKeys = {
       mermaid: 'async_placeholder_type_mermaid',
+      vega: 'async_placeholder_type_vega',
+      vegalite: 'async_placeholder_type_vegalite',
       html: 'async_placeholder_type_html',
       svg: 'async_placeholder_type_svg'
     };
 
     const typeLabelFallbacks = {
       mermaid: 'Mermaid diagram',
+      vega: 'Vega chart',
+      vegalite: 'Vega-Lite chart',
       html: 'HTML chart',
       svg: 'SVG image'
     };
@@ -724,13 +728,13 @@ ${truncatedMarkup}`;
                   || `HTML conversion error: ${errorDetail}`;
                 const truncated = code.length > 500 ? `${code.slice(0, 500)}...` : code;
                 const snippet = escapeHtml(truncated);
-                placeholder.outerHTML = `<pre style="background: #fee; border-left: 4px solid #f00; padding: 10px; font-size: 12px;">${localizedError}\n\n${snippet}</pre>`;
+                placeholder.outerHTML = `<pre style="background: #fee; border-left: 4px solid #f00; padding: 10px; font-size: 12px; white-space: pre-wrap; word-wrap: break-word;">${localizedError}<br><br>${snippet}</pre>`;
                 return;
               }
 
               const displayWidth = Math.round(pngResult.width / 4);
               placeholder.outerHTML = `<div class="html-diagram" style="text-align: center; margin: 20px 0;">
-                <img src="data:image/png;base64,${renderedBase64}" alt="HTML diagram" width="${displayWidth}px" />
+                <img src="data:image/png;base64,${pngResult.base64}" alt="HTML chart" width="${displayWidth}px" />
               </div>`;
             } catch (error) {
               const placeholder = document.getElementById(id);
@@ -738,14 +742,93 @@ ${truncatedMarkup}`;
                 const errorDetail = escapeHtml(error.message || '');
                 const localizedError = translate('async_html_convert_error', [errorDetail])
                   || `HTML conversion error: ${errorDetail}`;
-                const truncated = code.length > 500 ? `${code.slice(0, 500)}...` : code;
-                const snippet = escapeHtml(truncated);
-                placeholder.outerHTML = `<pre style="background: #fee; border-left: 4px solid #f00; padding: 10px; font-size: 12px;">${localizedError}\n\n${snippet}</pre>`;
+                placeholder.outerHTML = `<pre style="background: #fee; border-left: 4px solid #f00; padding: 10px; font-size: 12px;">${localizedError}</pre>`;
               }
             }
           }, { code: sanitizedHtml }, 'html', '', 'ready');
 
-          if (result && result.placeholder) {
+          // Replace HTML node with placeholder
+          parent.children[index] = result.placeholder;
+        });
+      };
+    };
+  }
+
+  /**
+   * Remark plugin to convert Vega-Lite code blocks to PNG (async callback version)
+   */
+  function remarkVegaLiteToPng(renderer) {
+    return function () {
+      return (tree) => {
+        // Collect all vega-lite code blocks
+        visit(tree, 'code', (node, index, parent) => {
+          if (node.lang === 'vega-lite' || node.lang === 'vegalite') {
+            // Create async task for Vega-Lite processing
+            const result = asyncTask(async (data) => {
+              const { id, code } = data;
+              try {
+                const pngResult = await renderer.renderVegaLiteToPng(code);
+                const placeholder = document.getElementById(id);
+                if (placeholder) {
+                  // Calculate display size (1/4 of original PNG size)
+                  const displayWidth = Math.round(pngResult.width / 4);
+                  placeholder.outerHTML = `<div class="vegalite-chart" style="text-align: center; margin: 20px 0;">
+                  <img src="data:image/png;base64,${pngResult.base64}" alt="Vega-Lite chart" width="${displayWidth}px" />
+                </div>`;
+                }
+              } catch (error) {
+                const placeholder = document.getElementById(id);
+                if (placeholder) {
+                  const errorDetail = escapeHtml(error.message || '');
+                  const localizedError = translate('async_vegalite_error', [errorDetail])
+                    || `Vega-Lite error: ${errorDetail}`;
+                  placeholder.outerHTML = `<pre style="background: #fee; border-left: 4px solid #f00; padding: 10px; font-size: 12px;">${localizedError}</pre>`;
+                }
+              }
+            }, { code: node.value }, 'vegalite', '', 'ready');
+
+            // Replace code block with placeholder
+            parent.children[index] = result.placeholder;
+          }
+        });
+      };
+    };
+  }
+
+  /**
+   * Remark plugin to convert Vega code blocks to PNG (async callback version)
+   */
+  function remarkVegaToPng(renderer) {
+    return function () {
+      return (tree) => {
+        // Collect all vega code blocks
+        visit(tree, 'code', (node, index, parent) => {
+          if (node.lang === 'vega') {
+            // Create async task for Vega processing
+            const result = asyncTask(async (data) => {
+              const { id, code } = data;
+              try {
+                const pngResult = await renderer.renderVegaToPng(code);
+                const placeholder = document.getElementById(id);
+                if (placeholder) {
+                  // Calculate display size (1/4 of original PNG size)
+                  const displayWidth = Math.round(pngResult.width / 4);
+                  placeholder.outerHTML = `<div class="vega-chart" style="text-align: center; margin: 20px 0;">
+                  <img src="data:image/png;base64,${pngResult.base64}" alt="Vega chart" width="${displayWidth}px" />
+                </div>`;
+                }
+              } catch (error) {
+                const placeholder = document.getElementById(id);
+                if (placeholder) {
+                  const errorDetail = escapeHtml(error.message || '');
+                  const localizedError = translate('async_vega_error', [errorDetail])
+                    || `Vega error: ${errorDetail}`;
+                  placeholder.outerHTML = `<pre style="background: #fee; border-left: 4px solid #f00; padding: 10px; font-size: 12px;">${localizedError}</pre>`;
+                }
+              }
+            }, { code: node.value }, 'vega', '', 'ready');
+
+            // Replace code block with placeholder
             parent.children[index] = result.placeholder;
           }
         });
@@ -1229,7 +1312,9 @@ ${truncatedMarkup}`;
         .use(remarkBreaks) // Add line break processing
         .use(remarkMath)
         .use(remarkHtmlToPng(renderer)) // Add HTML processing FIRST
-        .use(remarkMermaidToPng(renderer)) // Add Mermaid processing AFTER HTML
+        .use(remarkMermaidToPng(renderer)) // Add Mermaid processing
+        .use(remarkVegaLiteToPng(renderer)) // Add Vega-Lite processing
+        .use(remarkVegaToPng(renderer)) // Add Vega processing
         .use(remarkRehype, { allowDangerousHtml: true })
         .use(rehypeSlug)
         .use(rehypeHighlight) // Add syntax highlighting

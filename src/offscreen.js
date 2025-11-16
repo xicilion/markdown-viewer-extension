@@ -1,5 +1,7 @@
 // Offscreen document script for rendering
 import mermaid from 'mermaid';
+import embed from 'vega-embed';
+import { expressionInterpreter } from 'vega-interpreter';
 
 // Add error listeners for debugging
 window.addEventListener('error', (event) => {
@@ -100,6 +102,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       sendResponse({ error: error.message });
     });
     return true; // Keep the message channel open for async response
+  } else if (message.type === 'renderVega') {
+    renderVegaToPng(message.spec, 'vega').then(result => {
+      sendResponse(result);
+    }).catch(error => {
+      sendResponse({ error: error.message });
+    });
+    return true;
+  } else if (message.type === 'renderVegaLite') {
+    renderVegaToPng(message.spec, 'vega-lite').then(result => {
+      sendResponse(result);
+    }).catch(error => {
+      sendResponse({ error: error.message });
+    });
+    return true;
   } else if (message.type === 'renderHtml') {
     renderHtmlToPng(message.html, message.width).then(result => {
       sendResponse(result);
@@ -159,6 +175,110 @@ async function renderMermaidToPng(code) {
     const result = await renderSvgToPng(processedSvg, scale);
     return result;
   } catch (error) {
+    return { error: error.message };
+  }
+}
+
+// Render Vega or Vega-Lite to PNG
+async function renderVegaToPng(spec, mode = 'vega-lite') {
+  try {
+    if (!spec) {
+      throw new Error(`Empty ${mode} specification provided`);
+    }
+
+    // Parse spec if it's a string
+    let vegaSpec = spec;
+    if (typeof spec === 'string') {
+      try {
+        vegaSpec = JSON.parse(spec);
+      } catch (e) {
+        throw new Error(`Invalid JSON in ${mode} specification: ${e.message}`);
+      }
+    }
+
+    // Validate spec
+    if (!vegaSpec || typeof vegaSpec !== 'object') {
+      throw new Error(`Invalid ${mode} specification: must be an object`);
+    }
+
+    // Get font family from theme config
+    const fontFamily = currentThemeConfig?.fontFamily || "'SimSun', 'Times New Roman', Times, serif";
+    
+    // Create container for vega rendering
+    const container = document.getElementById('vega-container');
+    if (!container) {
+      throw new Error('Vega container not found');
+    }
+    
+    container.innerHTML = '';
+    container.style.cssText = 'display: inline-block; background: transparent; padding: 0; margin: 0;';
+
+    // Prepare embed options with autosize for responsive layout
+    const embedOptions = {
+      mode: mode,
+      actions: false, // Hide action links
+      renderer: 'svg', // Use SVG renderer
+      ast: true, // Use AST mode to avoid eval
+      expr: expressionInterpreter, // Use expression interpreter instead of eval
+      config: {
+        background: null, // Transparent background
+        font: fontFamily,
+        view: {
+          stroke: null // Remove border
+        },
+        axis: {
+          labelFontSize: 11,
+          titleFontSize: 12
+        },
+        legend: {
+          labelFontSize: 11,
+          titleFontSize: 12
+        },
+        // Let Vega-Lite use its default step-based sizing for better automatic layout
+        mark: {
+          tooltip: true
+        }
+      }
+    };
+
+    // Render the spec using vega-embed
+    const result = await embed(container, vegaSpec, embedOptions);
+    
+    // Wait for rendering to complete
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    // Get the SVG element
+    const svgEl = container.querySelector('svg');
+    if (!svgEl) {
+      throw new Error('No SVG generated from Vega specification');
+    }
+
+    // Serialize SVG
+    const svgString = new XMLSerializer().serializeToString(svgEl);
+
+    // Validate SVG content
+    if (!svgString || svgString.length < 100) {
+      throw new Error('Generated SVG is too small or empty');
+    }
+
+    // Calculate scale based on theme font size (similar to Mermaid)
+    const baseFontSize = 12; // pt
+    const themeFontSize = currentThemeConfig?.fontSize || baseFontSize;
+    const scale = themeFontSize / baseFontSize;
+
+    // Convert SVG to PNG
+    const pngResult = await renderSvgToPng(svgString, scale);
+
+    // Cleanup
+    container.innerHTML = '';
+    
+    return pngResult;
+  } catch (error) {
+    // Cleanup on error
+    const container = document.getElementById('vega-container');
+    if (container) {
+      container.innerHTML = '';
+    }
     return { error: error.message };
   }
 }

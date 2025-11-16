@@ -143,6 +143,14 @@
     "message": "Диаграмма Mermaid",
     "description": "Подпись плейсхолдера Mermaid"
   },
+  "async_placeholder_type_vega": {
+    "message": "График Vega",
+    "description": "Подпись плейсхолдера Vega"
+  },
+  "async_placeholder_type_vegalite": {
+    "message": "График Vega-Lite",
+    "description": "Подпись плейсхолдера Vega-Lite"
+  },
   "async_placeholder_type_html": {
     "message": "HTML-график",
     "description": "Подпись плейсхолдера HTML"
@@ -170,6 +178,14 @@
   "async_mermaid_error": {
     "message": "Ошибка Mermaid: {0}",
     "description": "Ошибка рендера Mermaid"
+  },
+  "async_vega_error": {
+    "message": "Ошибка Vega: {0}",
+    "description": "Ошибка рендера Vega"
+  },
+  "async_vegalite_error": {
+    "message": "Ошибка Vega-Lite: {0}",
+    "description": "Ошибка рендера Vega-Lite"
   },
   "async_html_convert_error": {
     "message": "Ошибка преобразования HTML: {0}",
@@ -354,6 +370,18 @@
   "cache_manual_clear_step_3": {
     "message": "Выполните \"{0}\" в консоли",
     "description": "Шаг очистки"
+  },
+  "settings_theme_title": {
+    "message": "Настройки темы",
+    "description": "Заголовок раздела темы"
+  },
+  "settings_theme_label": {
+    "message": "Выбрать тему:",
+    "description": "Подпись для выбора темы"
+  },
+  "settings_theme_changed": {
+    "message": "Тема успешно изменена. Пожалуйста, перезагрузите страницу, чтобы увидеть изменения.",
+    "description": "Сообщение при изменении темы"
   },
   "settings_general_title": {
     "message": "Настройки расширения",

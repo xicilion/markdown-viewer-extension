@@ -112,6 +112,70 @@ class ExtensionRenderer {
   }
 
   /**
+   * Render Vega-Lite specification to PNG base64
+   */
+  async renderVegaLiteToPng(spec) {
+    const specString = typeof spec === 'string' ? spec : JSON.stringify(spec);
+    const cacheKey = await this.cache.generateKey(specString, 'VEGALITE_PNG', this.themeConfig);
+
+    // Check cache first
+    const cached = await this.cache.get(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    const response = await this._sendMessage({
+      type: 'renderVegaLite',
+      spec: specString
+    });
+
+    if (response.error) {
+      throw new Error(response.error);
+    }
+
+    // Cache the complete response (base64 + dimensions)
+    try {
+      await this.cache.set(cacheKey, response, 'VEGALITE_PNG');
+    } catch (error) {
+      // Ignore cache errors
+    }
+
+    return response;
+  }
+
+  /**
+   * Render Vega specification to PNG base64
+   */
+  async renderVegaToPng(spec) {
+    const specString = typeof spec === 'string' ? spec : JSON.stringify(spec);
+    const cacheKey = await this.cache.generateKey(specString, 'VEGA_PNG', this.themeConfig);
+
+    // Check cache first
+    const cached = await this.cache.get(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    const response = await this._sendMessage({
+      type: 'renderVega',
+      spec: specString
+    });
+
+    if (response.error) {
+      throw new Error(response.error);
+    }
+
+    // Cache the complete response (base64 + dimensions)
+    try {
+      await this.cache.set(cacheKey, response, 'VEGA_PNG');
+    } catch (error) {
+      // Ignore cache errors
+    }
+
+    return response;
+  }
+
+  /**
    * Render HTML to PNG base64
    */
   async renderHtmlToPng(html, width = 1200) {

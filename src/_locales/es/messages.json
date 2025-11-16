@@ -143,6 +143,14 @@
     "message": "Diagrama Mermaid",
     "description": "Etiqueta para el marcador Mermaid"
   },
+  "async_placeholder_type_vega": {
+    "message": "Gráfico Vega",
+    "description": "Etiqueta para el marcador vega"
+  },
+  "async_placeholder_type_vegalite": {
+    "message": "Gráfico Vega-Lite",
+    "description": "Etiqueta para el marcador vega-lite"
+  },
   "async_placeholder_type_html": {
     "message": "Gráfico HTML",
     "description": "Etiqueta para el marcador HTML"
@@ -170,6 +178,14 @@
   "async_mermaid_error": {
     "message": "Error de Mermaid: {0}",
     "description": "Error para el renderizado Mermaid"
+  },
+  "async_vega_error": {
+    "message": "Error de Vega: {0}",
+    "description": "Error para el renderizado vega"
+  },
+  "async_vegalite_error": {
+    "message": "Error de Vega-Lite: {0}",
+    "description": "Error para el renderizado vega-lite"
   },
   "async_html_convert_error": {
     "message": "Error de conversión HTML: {0}",
@@ -354,6 +370,18 @@
   "cache_manual_clear_step_3": {
     "message": "Ejecuta \"{0}\" en la consola",
     "description": "Paso de limpieza"
+  },
+  "settings_theme_title": {
+    "message": "Configuración de tema",
+    "description": "Título de la sección de tema"
+  },
+  "settings_theme_label": {
+    "message": "Seleccionar tema:",
+    "description": "Etiqueta para el selector de tema"
+  },
+  "settings_theme_changed": {
+    "message": "Tema cambiado con éxito. Por favor, recargue la página para ver los cambios.",
+    "description": "Mensaje cuando se cambia el tema"
   },
   "settings_general_title": {
     "message": "Ajustes de la extensión",

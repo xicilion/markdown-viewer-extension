@@ -10,10 +10,11 @@
 4. **表格** - 基础表格、对齐表格
 5. **代码** - 行内代码、代码块、多语言语法高亮
 6. **数学公式** - KaTeX 行内和块级公式
-7. **图表** - Mermaid 流程图、序列图、甘特图
-8. **图片处理** - SVG 转换、Data URL、内联图片
-9. **HTML 混合** - 复杂布局和组件
-10. **边界测试** - 错误处理、极端情况
+7. **Mermaid 图表** - 流程图、序列图、甘特图、类图
+8. **Vega-Lite 图表** - 柱状图、散点图、折线图、饼图
+9. **图片处理** - SVG 转换、Data URL、内联图片
+10. **HTML 混合** - 复杂布局和组件
+11. **边界测试** - 错误处理、极端情况
 
 ---
 
@@ -673,7 +674,504 @@ graph TD
     D --> E
 ```
 
-### 7.8 扩展整体架构图
+---
+
+## 8. Vega-Lite 图表
+
+### 8.1 简单柱状图
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A simple bar chart with embedded data.",
+  "data": {
+    "values": [
+      {"category": "A", "value": 28},
+      {"category": "B", "value": 55},
+      {"category": "C", "value": 43},
+      {"category": "D", "value": 91},
+      {"category": "E", "value": 81},
+      {"category": "F", "value": 53},
+      {"category": "G", "value": 19},
+      {"category": "H", "value": 87}
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {"field": "category", "type": "nominal", "axis": {"labelAngle": 0}},
+    "y": {"field": "value", "type": "quantitative"}
+  }
+}
+```
+
+### 8.2 散点图
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A scatterplot showing horsepower and miles per gallon.",
+  "data": {
+    "values": [
+      {"x": 10, "y": 20},
+      {"x": 20, "y": 40},
+      {"x": 30, "y": 25},
+      {"x": 40, "y": 50},
+      {"x": 50, "y": 45},
+      {"x": 60, "y": 60}
+    ]
+  },
+  "mark": "point",
+  "encoding": {
+    "x": {"field": "x", "type": "quantitative"},
+    "y": {"field": "y", "type": "quantitative"},
+    "size": {"value": 100},
+    "color": {"value": "steelblue"}
+  }
+}
+```
+
+### 8.3 折线图
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A simple line chart.",
+  "data": {
+    "values": [
+      {"month": "Jan", "sales": 100},
+      {"month": "Feb", "sales": 150},
+      {"month": "Mar", "sales": 120},
+      {"month": "Apr", "sales": 180},
+      {"month": "May", "sales": 200},
+      {"month": "Jun", "sales": 170}
+    ]
+  },
+  "mark": {
+    "type": "line",
+    "point": true
+  },
+  "encoding": {
+    "x": {"field": "month", "type": "ordinal"},
+    "y": {"field": "sales", "type": "quantitative"}
+  }
+}
+```
+
+### 8.4 饼图
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A simple pie chart.",
+  "data": {
+    "values": [
+      {"category": "A", "value": 4},
+      {"category": "B", "value": 6},
+      {"category": "C", "value": 10},
+      {"category": "D", "value": 3},
+      {"category": "E", "value": 7}
+    ]
+  },
+  "mark": "arc",
+  "encoding": {
+    "theta": {"field": "value", "type": "quantitative"},
+    "color": {"field": "category", "type": "nominal"}
+  },
+  "view": {"stroke": null}
+}
+```
+
+### 8.5 热力图
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A simple heatmap.",
+  "data": {
+    "values": [
+      {"x": "A", "y": "1", "value": 10},
+      {"x": "A", "y": "2", "value": 20},
+      {"x": "A", "y": "3", "value": 15},
+      {"x": "B", "y": "1", "value": 25},
+      {"x": "B", "y": "2", "value": 30},
+      {"x": "B", "y": "3", "value": 18},
+      {"x": "C", "y": "1", "value": 12},
+      {"x": "C", "y": "2", "value": 22},
+      {"x": "C", "y": "3", "value": 28}
+    ]
+  },
+  "mark": "rect",
+  "encoding": {
+    "x": {"field": "x", "type": "nominal"},
+    "y": {"field": "y", "type": "nominal"},
+    "color": {"field": "value", "type": "quantitative"}
+  }
+}
+```
+
+### 8.6 堆叠柱状图
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A stacked bar chart.",
+  "data": {
+    "values": [
+      {"category": "A", "group": "x", "value": 10},
+      {"category": "A", "group": "y", "value": 20},
+      {"category": "A", "group": "z", "value": 15},
+      {"category": "B", "group": "x", "value": 15},
+      {"category": "B", "group": "y", "value": 25},
+      {"category": "B", "group": "z", "value": 10},
+      {"category": "C", "group": "x", "value": 20},
+      {"category": "C", "group": "y", "value": 15},
+      {"category": "C", "group": "z", "value": 25}
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {"field": "category", "type": "nominal"},
+    "y": {"field": "value", "type": "quantitative"},
+    "color": {"field": "group", "type": "nominal"}
+  }
+}
+```
+
+### 8.7 分组柱状图
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A grouped bar chart.",
+  "data": {
+    "values": [
+      {"category": "A", "group": "x", "value": 28},
+      {"category": "A", "group": "y", "value": 55},
+      {"category": "B", "group": "x", "value": 43},
+      {"category": "B", "group": "y", "value": 91},
+      {"category": "C", "group": "x", "value": 81},
+      {"category": "C", "group": "y", "value": 53}
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {"field": "group", "type": "nominal"},
+    "y": {"field": "value", "type": "quantitative"},
+    "color": {"field": "group", "type": "nominal"},
+    "xOffset": {"field": "category"}
+  }
+}
+```
+
+### 8.8 面积图
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "An area chart.",
+  "data": {
+    "values": [
+      {"x": 1, "y": 10},
+      {"x": 2, "y": 30},
+      {"x": 3, "y": 20},
+      {"x": 4, "y": 45},
+      {"x": 5, "y": 35},
+      {"x": 6, "y": 50}
+    ]
+  },
+  "mark": "area",
+  "encoding": {
+    "x": {"field": "x", "type": "quantitative"},
+    "y": {"field": "y", "type": "quantitative"}
+  }
+}
+```
+
+### 8.9 多系列折线图
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Multi-series line chart.",
+  "data": {
+    "values": [
+      {"month": 1, "series": "A", "value": 28},
+      {"month": 2, "series": "A", "value": 55},
+      {"month": 3, "series": "A", "value": 43},
+      {"month": 4, "series": "A", "value": 91},
+      {"month": 1, "series": "B", "value": 35},
+      {"month": 2, "series": "B", "value": 48},
+      {"month": 3, "series": "B", "value": 52},
+      {"month": 4, "series": "B", "value": 63}
+    ]
+  },
+  "mark": "line",
+  "encoding": {
+    "x": {"field": "month", "type": "ordinal"},
+    "y": {"field": "value", "type": "quantitative"},
+    "color": {"field": "series", "type": "nominal"}
+  }
+}
+```
+
+### 8.10 箱线图
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A box plot.",
+  "data": {
+    "values": [
+      {"group": "A", "value": 12},
+      {"group": "A", "value": 23},
+      {"group": "A", "value": 15},
+      {"group": "A", "value": 28},
+      {"group": "A", "value": 19},
+      {"group": "A", "value": 35},
+      {"group": "B", "value": 18},
+      {"group": "B", "value": 25},
+      {"group": "B", "value": 22},
+      {"group": "B", "value": 31},
+      {"group": "B", "value": 27},
+      {"group": "B", "value": 40}
+    ]
+  },
+  "mark": "boxplot",
+  "encoding": {
+    "x": {"field": "group", "type": "nominal"},
+    "y": {"field": "value", "type": "quantitative"}
+  }
+}
+```
+
+### 8.11 带趋势线的散点图
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Scatter plot with a trend line.",
+  "data": {
+    "values": [
+      {"x": 10, "y": 22},
+      {"x": 20, "y": 38},
+      {"x": 30, "y": 31},
+      {"x": 40, "y": 52},
+      {"x": 50, "y": 48},
+      {"x": 60, "y": 65},
+      {"x": 70, "y": 59},
+      {"x": 80, "y": 78}
+    ]
+  },
+  "layer": [
+    {
+      "mark": "point",
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative"},
+        "y": {"field": "y", "type": "quantitative"}
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "color": "firebrick"
+      },
+      "transform": [
+        {
+          "regression": "y",
+          "on": "x"
+        }
+      ],
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative"},
+        "y": {"field": "y", "type": "quantitative"}
+      }
+    }
+  ]
+}
+```
+
+### 8.12 水平柱状图
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A horizontal bar chart.",
+  "data": {
+    "values": [
+      {"category": "Alpha", "value": 28},
+      {"category": "Beta", "value": 55},
+      {"category": "Gamma", "value": 43},
+      {"category": "Delta", "value": 91},
+      {"category": "Epsilon", "value": 81}
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "y": {"field": "category", "type": "nominal", "sort": "-x"},
+    "x": {"field": "value", "type": "quantitative"}
+  }
+}
+```
+
+### 8.13 直方图
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A histogram showing distribution.",
+  "data": {
+    "values": [
+      {"value": 12}, {"value": 15}, {"value": 18}, {"value": 22},
+      {"value": 25}, {"value": 28}, {"value": 31}, {"value": 35},
+      {"value": 38}, {"value": 42}, {"value": 45}, {"value": 48},
+      {"value": 52}, {"value": 55}, {"value": 58}, {"value": 62},
+      {"value": 65}, {"value": 68}, {"value": 72}, {"value": 75}
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "bin": {"maxbins": 10},
+      "field": "value",
+      "type": "quantitative"
+    },
+    "y": {
+      "aggregate": "count",
+      "type": "quantitative"
+    }
+  }
+}
+```
+
+### 8.14 甜甜圈图
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A donut chart.",
+  "data": {
+    "values": [
+      {"category": "A", "value": 30},
+      {"category": "B", "value": 45},
+      {"category": "C", "value": 25}
+    ]
+  },
+  "mark": {"type": "arc", "innerRadius": 50},
+  "encoding": {
+    "theta": {"field": "value", "type": "quantitative"},
+    "color": {"field": "category", "type": "nominal"}
+  }
+}
+```
+
+---
+
+## 9. 图片处理
+
+### 9.1 SVG 文件测试
+
+**本地 SVG 文件：**
+![Basic SVG](./test.svg)
+
+![Feature SVG](./test-features.svg)
+
+### 9.2 Data URL SVG 测试
+
+**Base64 编码格式：**
+
+![Simple Shapes](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB4PSIxMCIgeT0iMTAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI0MCIgZmlsbD0iIzMzNzNkYyIgcng9IjUiLz4KICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSIzMCIgcj0iMjAiIGZpbGw9IiNlZjQ0NDQiLz4KICA8dGV4dCB4PSIxMCIgeT0iODAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzM3NDE1MSI+RGF0YSBVUkwgU1ZHPC90ZXh0Pgo8L3N2Zz4=)
+
+![Colorful Icon](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM2NjdlZWEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNjRiM2Y0Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8Y2lyY2xlIGN4PSI2MCIgY3k9IjYwIiByPSI1MCIgZmlsbD0idXJsKCNncmFkKSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjQiLz4KICA8cGF0aCBkPSJNNDAgNjAgTDU1IDc1IEw4NSA0NSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjYiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4=)
+
+**URL 编码格式：**
+
+![URL Encoded SVG](data:image/svg+xml,%3Csvg%20width%3D%2280%22%20height%3D%2280%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%2260%22%20height%3D%2260%22%20fill%3D%22%23f97316%22%20rx%3D%2210%22/%3E%3Ctext%20x%3D%2240%22%20y%3D%2250%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%22%20font-size%3D%2220%22%20fill%3D%22white%22%3EURL%3C/text%3E%3C/svg%3E)
+
+**复杂 Data URL SVG：**
+
+![Chart SVG](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIEJhY2tncm91bmQgLS0+CiAgPHJlY3Qgd2lkdGg9IjI1MCIgaGVpZ2h0PSIxNTAiIGZpbGw9IiNmOWZhZmMiIHJ4PSI4Ii8+CiAgPCEtLSBUaXRsZSAtLT4KICA8dGV4dCB4PSIxMjUiIHk9IjIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMzc0MTUxIj5TYWxlcyBEYXRhPC90ZXh0PgogIDwhLS0gQmFycyAtLT4KICA8cmVjdCB4PSI0MCIgeT0iMTAwIiB3aWR0aD0iMjAiIGhlaWdodD0iMzAiIGZpbGw9IiMzNGQ5OTkiLz4KICA8cmVjdCB4PSI4MCIgeT0iODAiIHdpZHRoPSIyMCIgaGVpZ2h0PSI1MCIgZmlsbD0iIzM0ZDk5OSIvPgogIDxyZWN0IHg9IjEyMCIgeT0iNjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSI3MCIgZmlsbD0iIzM0ZDk5OSIvPgogIDxyZWN0IHg9IjE2MCIgeT0iNzAiIHdpZHRoPSIyMCIgaGVpZ2h0PSI2MCIgZmlsbD0iIzM0ZDk5OSIvPgogIDwhLS0gQXhpcyAtLT4KICA8bGluZSB4MT0iMzAiIHkxPSIxMzAiIHgyPSIyMDAiIHkyPSIxMzAiIHN0cm9rZT0iI2Q5ZDlkOSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjwvc3ZnPg==)
+
+### 9.3 内联 SVG 测试
+
+这是文本中的小图标 ![info](./small-icon.svg) 应该内联显示。
+
+测试多个小图标：![check](./check-icon.svg) ![arrow](./arrow-down.svg) ![info](./small-icon.svg)
+
+**混合文本：**
+操作成功时显示 ![success](./check-icon.svg) 图标，点击 ![arrow](./arrow-down.svg) 展开详情，查看 ![info](./small-icon.svg) 获取帮助。
+
+---
+
+## 10. HTML 混合内容
+
+### 10.1 简单 HTML 元素
+
+<div style="padding: 15px; background: #f0f9ff; border-left: 4px solid #0284c7; margin: 10px 0;">
+  <strong>💡 提示：</strong>这是一个使用 HTML 编写的提示框，测试 HTML 和 Markdown 混合使用。
+</div>
+
+<div style="display: flex; gap: 10px; margin: 20px 0;">
+  <div style="flex: 1; padding: 15px; background: #dcfce7; border-radius: 8px;">
+    <h4 style="margin: 0 0 8px 0; color: #166534;">✅ 成功</h4>
+    <p style="margin: 0; font-size: 14px;">操作已成功完成</p>
+  </div>
+  <div style="flex: 1; padding: 15px; background: #fee2e2; border-radius: 8px;">
+    <h4 style="margin: 0 0 8px 0; color: #991b1b;">❌ 错误</h4>
+    <p style="margin: 0; font-size: 14px;">发生了一个错误</p>
+  </div>
+</div>
+
+### 10.2 复杂布局示例
+
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; margin: 20px 0;">
+  <h3 style="margin: 0 0 15px 0;">扩展功能特性</h3>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+      <strong>⚡ 高性能</strong><br/>
+      双层缓存架构
+    </div>
+    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+      <strong>🎨 美观</strong><br/>
+      现代化UI设计
+    </div>
+    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+      <strong>🔒 安全</strong><br/>
+      Manifest V3
+    </div>
+  </div>
+</div>
+
+### 10.3 数据展示
+
+<table style="border-collapse: collapse; margin: 20px 0;">
+  <thead>
+    <tr style="background: #f3f4f6;">
+      <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb;">模块</th>
+      <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb;">功能</th>
+      <th style="padding: 12px; text-align: center; border: 1px solid #e5e7eb;">状态</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 12px; border: 1px solid #e5e7eb;">Content Script</td>
+      <td style="padding: 12px; border: 1px solid #e5e7eb;">Markdown 渲染</td>
+      <td style="padding: 12px; text-align: center; border: 1px solid #e5e7eb;">✅</td>
+    </tr>
+    <tr style="background: #f9fafb;">
+      <td style="padding: 12px; border: 1px solid #e5e7eb;">Offscreen Document</td>
+      <td style="padding: 12px; border: 1px solid #e5e7eb;">图表转换</td>
+      <td style="padding: 12px; text-align: center; border: 1px solid #e5e7eb;">✅</td>
+    </tr>
+    <tr>
+      <td style="padding: 12px; border: 1px solid #e5e7eb;">Cache Manager</td>
+      <td style="padding: 12px; border: 1px solid #e5e7eb;">性能优化</td>
+      <td style="padding: 12px; text-align: center; border: 1px solid #e5e7eb;">✅</td>
+    </tr>
+  </tbody>
+</table>
+
+
+### 10.4 扩展整体架构图
 
 
 <div style="width: 1280px; box-sizing: border-box; position: relative;">
@@ -1042,129 +1540,23 @@ graph TD
 
 ---
 
-## 8. 图片处理
+## 11. 边界测试
 
-### 8.1 SVG 文件测试
-
-**本地 SVG 文件：**
-![Basic SVG](./test.svg)
-
-![Feature SVG](./test-features.svg)
-
-### 8.2 Data URL SVG 测试
-
-**Base64 编码格式：**
-
-![Simple Shapes](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB4PSIxMCIgeT0iMTAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI0MCIgZmlsbD0iIzMzNzNkYyIgcng9IjUiLz4KICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSIzMCIgcj0iMjAiIGZpbGw9IiNlZjQ0NDQiLz4KICA8dGV4dCB4PSIxMCIgeT0iODAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzM3NDE1MSI+RGF0YSBVUkwgU1ZHPC90ZXh0Pgo8L3N2Zz4=)
-
-![Colorful Icon](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM2NjdlZWEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNjRiM2Y0Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8Y2lyY2xlIGN4PSI2MCIgY3k9IjYwIiByPSI1MCIgZmlsbD0idXJsKCNncmFkKSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjQiLz4KICA8cGF0aCBkPSJNNDAgNjAgTDU1IDc1IEw4NSA0NSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjYiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4=)
-
-**URL 编码格式：**
-
-![URL Encoded SVG](data:image/svg+xml,%3Csvg%20width%3D%2280%22%20height%3D%2280%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%2260%22%20height%3D%2260%22%20fill%3D%22%23f97316%22%20rx%3D%2210%22/%3E%3Ctext%20x%3D%2240%22%20y%3D%2250%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%22%20font-size%3D%2220%22%20fill%3D%22white%22%3EURL%3C/text%3E%3C/svg%3E)
-
-**复杂 Data URL SVG：**
-
-![Chart SVG](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIEJhY2tncm91bmQgLS0+CiAgPHJlY3Qgd2lkdGg9IjI1MCIgaGVpZ2h0PSIxNTAiIGZpbGw9IiNmOWZhZmMiIHJ4PSI4Ii8+CiAgPCEtLSBUaXRsZSAtLT4KICA8dGV4dCB4PSIxMjUiIHk9IjIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMzc0MTUxIj5TYWxlcyBEYXRhPC90ZXh0PgogIDwhLS0gQmFycyAtLT4KICA8cmVjdCB4PSI0MCIgeT0iMTAwIiB3aWR0aD0iMjAiIGhlaWdodD0iMzAiIGZpbGw9IiMzNGQ5OTkiLz4KICA8cmVjdCB4PSI4MCIgeT0iODAiIHdpZHRoPSIyMCIgaGVpZ2h0PSI1MCIgZmlsbD0iIzM0ZDk5OSIvPgogIDxyZWN0IHg9IjEyMCIgeT0iNjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSI3MCIgZmlsbD0iIzM0ZDk5OSIvPgogIDxyZWN0IHg9IjE2MCIgeT0iNzAiIHdpZHRoPSIyMCIgaGVpZ2h0PSI2MCIgZmlsbD0iIzM0ZDk5OSIvPgogIDwhLS0gQXhpcyAtLT4KICA8bGluZSB4MT0iMzAiIHkxPSIxMzAiIHgyPSIyMDAiIHkyPSIxMzAiIHN0cm9rZT0iI2Q5ZDlkOSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjwvc3ZnPg==)
-
-### 8.3 内联 SVG 测试
-
-这是文本中的小图标 ![info](./small-icon.svg) 应该内联显示。
-
-测试多个小图标：![check](./check-icon.svg) ![arrow](./arrow-down.svg) ![info](./small-icon.svg)
-
-**混合文本：**
-操作成功时显示 ![success](./check-icon.svg) 图标，点击 ![arrow](./arrow-down.svg) 展开详情，查看 ![info](./small-icon.svg) 获取帮助。
-
----
-
-## 9. HTML 混合内容
-
-### 9.1 简单 HTML 元素
-
-<div style="padding: 15px; background: #f0f9ff; border-left: 4px solid #0284c7; margin: 10px 0;">
-  <strong>💡 提示：</strong>这是一个使用 HTML 编写的提示框，测试 HTML 和 Markdown 混合使用。
-</div>
-
-<div style="display: flex; gap: 10px; margin: 20px 0;">
-  <div style="flex: 1; padding: 15px; background: #dcfce7; border-radius: 8px;">
-    <h4 style="margin: 0 0 8px 0; color: #166534;">✅ 成功</h4>
-    <p style="margin: 0; font-size: 14px;">操作已成功完成</p>
-  </div>
-  <div style="flex: 1; padding: 15px; background: #fee2e2; border-radius: 8px;">
-    <h4 style="margin: 0 0 8px 0; color: #991b1b;">❌ 错误</h4>
-    <p style="margin: 0; font-size: 14px;">发生了一个错误</p>
-  </div>
-</div>
-
-### 9.2 复杂布局示例
-
-<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; margin: 20px 0;">
-  <h3 style="margin: 0 0 15px 0;">扩展功能特性</h3>
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
-      <strong>⚡ 高性能</strong><br/>
-      双层缓存架构
-    </div>
-    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
-      <strong>🎨 美观</strong><br/>
-      现代化UI设计
-    </div>
-    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
-      <strong>🔒 安全</strong><br/>
-      Manifest V3
-    </div>
-  </div>
-</div>
-
-### 9.3 数据展示
-
-<table style="border-collapse: collapse; margin: 20px 0;">
-  <thead>
-    <tr style="background: #f3f4f6;">
-      <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb;">模块</th>
-      <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb;">功能</th>
-      <th style="padding: 12px; text-align: center; border: 1px solid #e5e7eb;">状态</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="padding: 12px; border: 1px solid #e5e7eb;">Content Script</td>
-      <td style="padding: 12px; border: 1px solid #e5e7eb;">Markdown 渲染</td>
-      <td style="padding: 12px; text-align: center; border: 1px solid #e5e7eb;">✅</td>
-    </tr>
-    <tr style="background: #f9fafb;">
-      <td style="padding: 12px; border: 1px solid #e5e7eb;">Offscreen Document</td>
-      <td style="padding: 12px; border: 1px solid #e5e7eb;">图表转换</td>
-      <td style="padding: 12px; text-align: center; border: 1px solid #e5e7eb;">✅</td>
-    </tr>
-    <tr>
-      <td style="padding: 12px; border: 1px solid #e5e7eb;">Cache Manager</td>
-      <td style="padding: 12px; border: 1px solid #e5e7eb;">性能优化</td>
-      <td style="padding: 12px; text-align: center; border: 1px solid #e5e7eb;">✅</td>
-    </tr>
-  </tbody>
-</table>
-
----
-
-## 10. 边界测试
-
-### 10.1 错误的 Mermaid 语法
+### 11.1 错误的 Mermaid 语法
 
 ```mermaid
 invalid syntax here
 this should show an error message
 ```
 
-### 10.2 错误的数学公式
+### 11.2 错误的数学公式
 
 $$
 \invalid{command}
 \undefined{function}
 $$
 
-### 10.3 空代码块
+### 11.3 空代码块
 
 ```javascript
 ```
@@ -1175,7 +1567,7 @@ $$
 ```
 ```
 
-### 10.4 极端情况
+### 11.4 极端情况
 
 **超长文本行：**
 这是一个非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常长的文本行，用于测试文本的自动换行和布局处理能力，包含中文字符和English characters以及1234567890数字和!@#$%^&*()特殊符号。
@@ -1207,4 +1599,5 @@ $$
 | | |
 
 ---
+
 

@@ -197,7 +197,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   // Forward rendering messages to offscreen document
-  if (message.type === 'renderMermaid' || message.type === 'renderHtml' || message.type === 'renderSvg') {
+  if (message.type === 'renderMermaid' || 
+      message.type === 'renderHtml' || 
+      message.type === 'renderSvg' ||
+      message.type === 'renderVega' ||
+      message.type === 'renderVegaLite') {
     handleRenderingRequest(message, sendResponse);
     return true; // Keep message channel open for async response
   }
@@ -410,7 +414,7 @@ async function ensureOffscreenDocument() {
     await chrome.offscreen.createDocument({
       url: offscreenUrl,
       reasons: ['DOM_SCRAPING'],
-      justification: 'Render Mermaid diagrams, SVG and HTML to PNG'
+      justification: 'Render Mermaid diagrams, Vega/Vega-Lite charts, SVG and HTML to PNG'
     });
 
     offscreenCreated = true;

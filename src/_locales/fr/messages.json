@@ -143,6 +143,14 @@
     "message": "Diagramme Mermaid",
     "description": "Libellé pour le placeholder Mermaid"
   },
+  "async_placeholder_type_vega": {
+    "message": "Graphique Vega",
+    "description": "Libellé pour le placeholder vega"
+  },
+  "async_placeholder_type_vegalite": {
+    "message": "Graphique Vega-Lite",
+    "description": "Libellé pour le placeholder vega-lite"
+  },
   "async_placeholder_type_html": {
     "message": "Graphique HTML",
     "description": "Libellé pour le placeholder HTML"
@@ -170,6 +178,14 @@
   "async_mermaid_error": {
     "message": "Erreur Mermaid : {0}",
     "description": "Erreur pour le rendu Mermaid"
+  },
+  "async_vega_error": {
+    "message": "Erreur Vega : {0}",
+    "description": "Erreur pour le rendu vega"
+  },
+  "async_vegalite_error": {
+    "message": "Erreur Vega-Lite : {0}",
+    "description": "Erreur pour le rendu vega-lite"
   },
   "async_html_convert_error": {
     "message": "Erreur de conversion HTML : {0}",
@@ -354,6 +370,18 @@
   "cache_manual_clear_step_3": {
     "message": "Exécutez \"{0}\" dans la console",
     "description": "Étape de nettoyage"
+  },
+  "settings_theme_title": {
+    "message": "Paramètres de thème",
+    "description": "Titre de la section thème"
+  },
+  "settings_theme_label": {
+    "message": "Sélectionner le thème :",
+    "description": "Libellé du sélecteur de thème"
+  },
+  "settings_theme_changed": {
+    "message": "Thème modifié avec succès. Veuillez recharger la page pour voir les modifications.",
+    "description": "Message lors du changement de thème"
   },
   "settings_general_title": {
     "message": "Paramètres de l'extension",

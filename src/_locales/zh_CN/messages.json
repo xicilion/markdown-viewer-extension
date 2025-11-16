@@ -141,7 +141,15 @@
   },
   "async_placeholder_type_mermaid": {
     "message": "Mermaid 图表",
-    "description": "Mermaid 异步占位标签"
+    "description": "Mermaid 异步占位符标签"
+  },
+  "async_placeholder_type_vega": {
+    "message": "Vega 图表",
+    "description": "Vega 异步占位符标签"
+  },
+  "async_placeholder_type_vegalite": {
+    "message": "Vega-Lite 图表",
+    "description": "Vega-Lite 异步占位符标签"
   },
   "async_placeholder_type_html": {
     "message": "HTML 图表",
@@ -170,6 +178,14 @@
   "async_mermaid_error": {
     "message": "Mermaid 错误: {0}",
     "description": "Mermaid 渲染错误"
+  },
+  "async_vega_error": {
+    "message": "Vega 错误: {0}",
+    "description": "Vega 渲染错误"
+  },
+  "async_vegalite_error": {
+    "message": "Vega-Lite 错误: {0}",
+    "description": "Vega-Lite 渲染错误"
   },
   "async_html_convert_error": {
     "message": "HTML 转换错误: {0}",

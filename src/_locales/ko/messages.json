@@ -143,6 +143,14 @@
     "message": "Mermaid 다이어그램",
     "description": "Mermaid 플레이스홀더 라벨"
   },
+  "async_placeholder_type_vega": {
+    "message": "Vega 차트",
+    "description": "Vega 플레이스홀더 라벨"
+  },
+  "async_placeholder_type_vegalite": {
+    "message": "Vega-Lite 차트",
+    "description": "Vega-Lite 플레이스홀더 라벨"
+  },
   "async_placeholder_type_html": {
     "message": "HTML 차트",
     "description": "HTML 플레이스홀더 라벨"
@@ -170,6 +178,14 @@
   "async_mermaid_error": {
     "message": "Mermaid 오류: {0}",
     "description": "Mermaid 렌더링 오류"
+  },
+  "async_vega_error": {
+    "message": "Vega 오류: {0}",
+    "description": "Vega 렌더링 오류"
+  },
+  "async_vegalite_error": {
+    "message": "Vega-Lite 오류: {0}",
+    "description": "Vega-Lite 렌더링 오류"
   },
   "async_html_convert_error": {
     "message": "HTML 변환 오류: {0}",
@@ -354,6 +370,18 @@
   "cache_manual_clear_step_3": {
     "message": "콘솔에서 \"{0}\" 실행",
     "description": "청소 단계"
+  },
+  "settings_theme_title": {
+    "message": "테마 설정",
+    "description": "테마 설정 섹션 제목"
+  },
+  "settings_theme_label": {
+    "message": "테마 선택:",
+    "description": "테마 선택 라벨"
+  },
+  "settings_theme_changed": {
+    "message": "테마가 성공적으로 변경되었습니다. 변경 사항을 보려면 페이지를 새로 고침하세요.",
+    "description": "테마 변경 시 표시되는 메시지"
   },
   "settings_general_title": {
     "message": "확장 프로그램 설정",

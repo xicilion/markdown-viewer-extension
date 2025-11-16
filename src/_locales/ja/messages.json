@@ -143,6 +143,14 @@
     "message": "Mermaid 図",
     "description": "Mermaid プレースホルダーのラベル"
   },
+  "async_placeholder_type_vega": {
+    "message": "Vega グラフ",
+    "description": "Vega プレースホルダーのラベル"
+  },
+  "async_placeholder_type_vegalite": {
+    "message": "Vega-Lite グラフ",
+    "description": "Vega-Lite プレースホルダーのラベル"
+  },
   "async_placeholder_type_html": {
     "message": "HTML グラフ",
     "description": "HTML プレースホルダーのラベル"
@@ -170,6 +178,14 @@
   "async_mermaid_error": {
     "message": "Mermaid エラー: {0}",
     "description": "Mermaid レンダリングエラー"
+  },
+  "async_vega_error": {
+    "message": "Vega エラー: {0}",
+    "description": "Vega レンダリングエラー"
+  },
+  "async_vegalite_error": {
+    "message": "Vega-Lite エラー: {0}",
+    "description": "Vega-Lite レンダリングエラー"
   },
   "async_html_convert_error": {
     "message": "HTML 変換エラー: {0}",
@@ -354,6 +370,18 @@
   "cache_manual_clear_step_3": {
     "message": "コンソールで \"{0}\" を実行",
     "description": "削除ステップ"
+  },
+  "settings_theme_title": {
+    "message": "テーマ設定",
+    "description": "テーマ設定セクションの見出し"
+  },
+  "settings_theme_label": {
+    "message": "テーマを選択：",
+    "description": "テーマ選択のラベル"
+  },
+  "settings_theme_changed": {
+    "message": "テーマが正常に変更されました。変更を確認するにはページを再読み込みしてください。",
+    "description": "テーマ変更時のメッセージ"
   },
   "settings_general_title": {
     "message": "拡張機能の設定",

@@ -236,7 +236,7 @@ class DocxExporter {
       // Parse markdown to AST
       const ast = this.parseMarkdown(markdown);
 
-      // Count resources that need processing (images, mermaid, html, svg)
+      // Count resources that need processing (images, mermaid, vega, html, svg)
       this.totalResources = this.countResources(ast);
 
       // Report initial progress
@@ -434,7 +434,7 @@ class DocxExporter {
   }
 
   /**
-   * Count resources that need processing (images and mermaid diagrams)
+   * Count resources that need processing (images, mermaid diagrams, vega charts)
    */
   countResources(ast) {
     let count = 0;
@@ -447,6 +447,16 @@ class DocxExporter {
 
       // Count mermaid code blocks
       if (node.type === 'code' && node.lang === 'mermaid') {
+        count++;
+      }
+
+      // Count vega-lite code blocks
+      if (node.type === 'code' && (node.lang === 'vega-lite' || node.lang === 'vegalite')) {
+        count++;
+      }
+
+      // Count vega code blocks
+      if (node.type === 'code' && node.lang === 'vega') {
         count++;
       }
 
@@ -1252,6 +1262,16 @@ class DocxExporter {
       return await this.convertMermaidDiagram(node.value);
     }
 
+    // Check if it's a Vega-Lite chart
+    if (node.lang === 'vega-lite' || node.lang === 'vegalite') {
+      return await this.convertVegaLiteChart(node.value);
+    }
+
+    // Check if it's a Vega chart
+    if (node.lang === 'vega') {
+      return await this.convertVegaChart(node.value);
+    }
+
     const runs = this.getHighlightedRunsForCode(node.value ?? '', node.lang);
 
     const codeBackground = this.themeStyles.characterStyles.code.background;
@@ -1719,6 +1739,188 @@ class DocxExporter {
           }),
         ],
         alignment: AlignmentType.LEFT, // Explicitly set left alignment for error message
+        spacing: this.applyPendingSpacing({ before: 240, after: 240 }),
+      });
+    }
+  }
+
+  /**
+   * Convert Vega-Lite chart to PNG and embed as image
+   * @param {string} vegaLiteSpec - Vega-Lite specification (JSON string or object)
+   */
+  async convertVegaLiteChart(vegaLiteSpec) {
+    if (!this.renderer) {
+      // No renderer available, return placeholder
+      this.reportResourceProgress();
+      return new Paragraph({
+        children: [
+          new TextRun({
+            text: '[Vega-Lite Chart - Renderer not available]',
+            italics: true,
+            color: '666666',
+          }),
+        ],
+        alignment: AlignmentType.LEFT,
+        spacing: this.applyPendingSpacing({ before: 240, after: 240 }),
+      });
+    }
+
+    try {
+      // Render Vega-Lite to PNG
+      const pngResult = await this.renderer.renderVegaLiteToPng(vegaLiteSpec);
+
+      // Convert base64 to Uint8Array
+      const binaryString = atob(pngResult.base64);
+      const len = binaryString.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+
+      // Calculate display size (1/4 of original PNG size for high DPI)
+      let displayWidth = Math.round(pngResult.width / 4);
+      let displayHeight = Math.round(pngResult.height / 4);
+
+      // Apply max-width constraint (same as regular images)
+      const maxWidthInches = 6;
+      const maxWidthPixels = maxWidthInches * 96; // 576 pixels
+
+      if (displayWidth > maxWidthPixels) {
+        const ratio = maxWidthPixels / displayWidth;
+        displayWidth = maxWidthPixels;
+        displayHeight = Math.round(displayHeight * ratio);
+      }
+
+      // Report progress after processing vega-lite
+      this.reportResourceProgress();
+
+      // Create ImageRun
+      return new Paragraph({
+        children: [
+          new ImageRun({
+            data: bytes,
+            transformation: {
+              width: displayWidth,
+              height: displayHeight,
+            },
+            type: 'png',
+            altText: {
+              title: 'Vega-Lite Chart',
+              description: 'Vega-Lite chart',
+              name: 'vegalite-chart',
+            },
+          }),
+        ],
+        alignment: AlignmentType.CENTER,
+        spacing: this.applyPendingSpacing({
+          before: 240,
+          after: 240,
+        }),
+      });
+    } catch (error) {
+      console.warn('Failed to render Vega-Lite chart:', error);
+      // Report progress even on error
+      this.reportResourceProgress();
+      return new Paragraph({
+        children: [
+          new TextRun({
+            text: `[Vega-Lite Error: ${error.message}]`,
+            italics: true,
+            color: 'FF0000',
+          }),
+        ],
+        alignment: AlignmentType.LEFT,
+        spacing: this.applyPendingSpacing({ before: 240, after: 240 }),
+      });
+    }
+  }
+
+  /**
+   * Convert Vega chart to PNG and embed as image
+   * @param {string} vegaSpec - Vega specification (JSON string or object)
+   */
+  async convertVegaChart(vegaSpec) {
+    if (!this.renderer) {
+      // No renderer available, return placeholder
+      this.reportResourceProgress();
+      return new Paragraph({
+        children: [
+          new TextRun({
+            text: '[Vega Chart - Renderer not available]',
+            italics: true,
+            color: '666666',
+          }),
+        ],
+        alignment: AlignmentType.LEFT,
+        spacing: this.applyPendingSpacing({ before: 240, after: 240 }),
+      });
+    }
+
+    try {
+      // Render Vega to PNG
+      const pngResult = await this.renderer.renderVegaToPng(vegaSpec);
+
+      // Convert base64 to Uint8Array
+      const binaryString = atob(pngResult.base64);
+      const len = binaryString.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+
+      // Calculate display size (1/4 of original PNG size for high DPI)
+      let displayWidth = Math.round(pngResult.width / 4);
+      let displayHeight = Math.round(pngResult.height / 4);
+
+      // Apply max-width constraint (same as regular images)
+      const maxWidthInches = 6;
+      const maxWidthPixels = maxWidthInches * 96; // 576 pixels
+
+      if (displayWidth > maxWidthPixels) {
+        const ratio = maxWidthPixels / displayWidth;
+        displayWidth = maxWidthPixels;
+        displayHeight = Math.round(displayHeight * ratio);
+      }
+
+      // Report progress after processing vega
+      this.reportResourceProgress();
+
+      // Create ImageRun
+      return new Paragraph({
+        children: [
+          new ImageRun({
+            data: bytes,
+            transformation: {
+              width: displayWidth,
+              height: displayHeight,
+            },
+            type: 'png',
+            altText: {
+              title: 'Vega Chart',
+              description: 'Vega chart',
+              name: 'vega-chart',
+            },
+          }),
+        ],
+        alignment: AlignmentType.CENTER,
+        spacing: this.applyPendingSpacing({
+          before: 240,
+          after: 240,
+        }),
+      });
+    } catch (error) {
+      console.warn('Failed to render Vega chart:', error);
+      // Report progress even on error
+      this.reportResourceProgress();
+      return new Paragraph({
+        children: [
+          new TextRun({
+            text: `[Vega Error: ${error.message}]`,
+            italics: true,
+            color: 'FF0000',
+          }),
+        ],
+        alignment: AlignmentType.LEFT,
         spacing: this.applyPendingSpacing({ before: 240, after: 240 }),
       });
     }

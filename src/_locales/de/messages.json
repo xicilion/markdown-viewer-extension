@@ -143,6 +143,14 @@
     "message": "Mermaid-Diagramm",
     "description": "Beschriftung für Mermaid-Platzhalter"
   },
+  "async_placeholder_type_vega": {
+    "message": "Vega-Diagramm",
+    "description": "Beschriftung für Vega-Platzhalter"
+  },
+  "async_placeholder_type_vegalite": {
+    "message": "Vega-Lite-Diagramm",
+    "description": "Beschriftung für Vega-Lite-Platzhalter"
+  },
   "async_placeholder_type_html": {
     "message": "HTML-Grafik",
     "description": "Beschriftung für HTML-Platzhalter"
@@ -170,6 +178,14 @@
   "async_mermaid_error": {
     "message": "Mermaid-Fehler: {0}",
     "description": "Fehler für Mermaid-Rendering"
+  },
+  "async_vega_error": {
+    "message": "Vega-Fehler: {0}",
+    "description": "Fehler für Vega-Rendering"
+  },
+  "async_vegalite_error": {
+    "message": "Vega-Lite-Fehler: {0}",
+    "description": "Fehler für Vega-Lite-Rendering"
   },
   "async_html_convert_error": {
     "message": "HTML-Konvertierungsfehler: {0}",
@@ -354,6 +370,18 @@
   "cache_manual_clear_step_3": {
     "message": "Führen Sie \"{0}\" in der Konsole aus",
     "description": "Reinigungsschritt"
+  },
+  "settings_theme_title": {
+    "message": "Theme-Einstellungen",
+    "description": "Überschrift für Theme-Einstellungen"
+  },
+  "settings_theme_label": {
+    "message": "Theme auswählen:",
+    "description": "Beschriftung für Theme-Auswahl"
+  },
+  "settings_theme_changed": {
+    "message": "Theme erfolgreich geändert. Bitte laden Sie die Seite neu, um die Änderungen zu sehen.",
+    "description": "Meldung bei Theme-Änderung"
   },
   "settings_general_title": {
     "message": "Erweiterungseinstellungen",
