@@ -139,26 +139,6 @@
     "message": "打印功能仅适用于本地文件",
     "description": "远程文件时打印按钮禁用提示"
   },
-  "async_placeholder_type_mermaid": {
-    "message": "Mermaid 图表",
-    "description": "Mermaid 异步占位符标签"
-  },
-  "async_placeholder_type_vega": {
-    "message": "Vega 图表",
-    "description": "Vega 异步占位符标签"
-  },
-  "async_placeholder_type_vegalite": {
-    "message": "Vega-Lite 图表",
-    "description": "Vega-Lite 异步占位符标签"
-  },
-  "async_placeholder_type_html": {
-    "message": "HTML 图表",
-    "description": "HTML 异步占位标签"
-  },
-  "async_placeholder_type_svg": {
-    "message": "SVG 图像",
-    "description": "SVG 异步占位标签"
-  },
   "async_processing_message": {
     "message": "正在处理 {0}{1}...",
     "description": "异步占位加载提示"
@@ -168,28 +148,12 @@
     "description": "错误信息缺失时的提示"
   },
   "async_processing_error": {
-    "message": "处理错误: {0}",
-    "description": "异步占位错误提示"
+    "message": "{0} 错误：{1}",
+    "description": "Generic error message with type and detail"
   },
   "async_task_processing_error": {
     "message": "任务处理错误: {0}",
     "description": "异步任务失败提示"
-  },
-  "async_mermaid_error": {
-    "message": "Mermaid 错误: {0}",
-    "description": "Mermaid 渲染错误"
-  },
-  "async_vega_error": {
-    "message": "Vega 错误: {0}",
-    "description": "Vega 渲染错误"
-  },
-  "async_vegalite_error": {
-    "message": "Vega-Lite 错误: {0}",
-    "description": "Vega-Lite 渲染错误"
-  },
-  "async_html_convert_error": {
-    "message": "HTML 转换错误: {0}",
-    "description": "HTML 渲染错误"
   },
   "docx_export_failed_default": {
     "message": "导出失败",

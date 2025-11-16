@@ -139,26 +139,6 @@
     "message": "Печать доступна только для локальных файлов",
     "description": "Подсказка когда кнопка печати отключена для удаленных файлов"
   },
-  "async_placeholder_type_mermaid": {
-    "message": "Диаграмма Mermaid",
-    "description": "Подпись плейсхолдера Mermaid"
-  },
-  "async_placeholder_type_vega": {
-    "message": "График Vega",
-    "description": "Подпись плейсхолдера Vega"
-  },
-  "async_placeholder_type_vegalite": {
-    "message": "График Vega-Lite",
-    "description": "Подпись плейсхолдера Vega-Lite"
-  },
-  "async_placeholder_type_html": {
-    "message": "HTML-график",
-    "description": "Подпись плейсхолдера HTML"
-  },
-  "async_placeholder_type_svg": {
-    "message": "Изображение SVG",
-    "description": "Подпись плейсхолдера SVG"
-  },
   "async_processing_message": {
     "message": "Обработка {0}{1}...",
     "description": "Текст во время асинхронной обработки"
@@ -168,28 +148,12 @@
     "description": "Резервный текст"
   },
   "async_processing_error": {
-    "message": "Ошибка обработки: {0}",
-    "description": "Текст ошибки в плейсхолдере"
+    "message": "Ошибка {0}: {1}",
+    "description": "Generic error message with type and detail"
   },
   "async_task_processing_error": {
     "message": "Ошибка задачи: {0}",
     "description": "Ошибка при сбое задачи"
-  },
-  "async_mermaid_error": {
-    "message": "Ошибка Mermaid: {0}",
-    "description": "Ошибка рендера Mermaid"
-  },
-  "async_vega_error": {
-    "message": "Ошибка Vega: {0}",
-    "description": "Ошибка рендера Vega"
-  },
-  "async_vegalite_error": {
-    "message": "Ошибка Vega-Lite: {0}",
-    "description": "Ошибка рендера Vega-Lite"
-  },
-  "async_html_convert_error": {
-    "message": "Ошибка преобразования HTML: {0}",
-    "description": "Ошибка рендера HTML"
   },
   "docx_export_failed_default": {
     "message": "Не удалось экспортировать",

@@ -139,26 +139,6 @@
     "message": "Drucken ist nur für lokale Dateien verfügbar",
     "description": "Tooltip wenn Drucken-Button für Remote-Dateien deaktiviert ist"
   },
-  "async_placeholder_type_mermaid": {
-    "message": "Mermaid-Diagramm",
-    "description": "Beschriftung für Mermaid-Platzhalter"
-  },
-  "async_placeholder_type_vega": {
-    "message": "Vega-Diagramm",
-    "description": "Beschriftung für Vega-Platzhalter"
-  },
-  "async_placeholder_type_vegalite": {
-    "message": "Vega-Lite-Diagramm",
-    "description": "Beschriftung für Vega-Lite-Platzhalter"
-  },
-  "async_placeholder_type_html": {
-    "message": "HTML-Grafik",
-    "description": "Beschriftung für HTML-Platzhalter"
-  },
-  "async_placeholder_type_svg": {
-    "message": "SVG-Bild",
-    "description": "Beschriftung für SVG-Platzhalter"
-  },
   "async_processing_message": {
     "message": "Verarbeite {0}{1}...",
     "description": "Text während der asynchronen Verarbeitung"
@@ -168,28 +148,12 @@
     "description": "Fallback-Text bei fehlenden Details"
   },
   "async_processing_error": {
-    "message": "Verarbeitungsfehler: {0}",
-    "description": "Fehlertext im Platzhalter"
+    "message": "{0}-Fehler: {1}",
+    "description": "Generic error message with type and detail"
   },
   "async_task_processing_error": {
     "message": "Task-Fehler: {0}",
     "description": "Fehler, wenn eine Aufgabe fehlschlägt"
-  },
-  "async_mermaid_error": {
-    "message": "Mermaid-Fehler: {0}",
-    "description": "Fehler für Mermaid-Rendering"
-  },
-  "async_vega_error": {
-    "message": "Vega-Fehler: {0}",
-    "description": "Fehler für Vega-Rendering"
-  },
-  "async_vegalite_error": {
-    "message": "Vega-Lite-Fehler: {0}",
-    "description": "Fehler für Vega-Lite-Rendering"
-  },
-  "async_html_convert_error": {
-    "message": "HTML-Konvertierungsfehler: {0}",
-    "description": "Fehler für HTML-Rendering"
   },
   "docx_export_failed_default": {
     "message": "Export fehlgeschlagen",

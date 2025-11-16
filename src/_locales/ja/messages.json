@@ -139,26 +139,6 @@
     "message": "印刷はローカルファイルでのみ利用可能です",
     "description": "リモートファイルで印刷ボタンが無効な時のツールチップ"
   },
-  "async_placeholder_type_mermaid": {
-    "message": "Mermaid 図",
-    "description": "Mermaid プレースホルダーのラベル"
-  },
-  "async_placeholder_type_vega": {
-    "message": "Vega グラフ",
-    "description": "Vega プレースホルダーのラベル"
-  },
-  "async_placeholder_type_vegalite": {
-    "message": "Vega-Lite グラフ",
-    "description": "Vega-Lite プレースホルダーのラベル"
-  },
-  "async_placeholder_type_html": {
-    "message": "HTML グラフ",
-    "description": "HTML プレースホルダーのラベル"
-  },
-  "async_placeholder_type_svg": {
-    "message": "SVG 画像",
-    "description": "SVG プレースホルダーのラベル"
-  },
   "async_processing_message": {
     "message": "{0}{1} を処理中...",
     "description": "非同期処理中に表示されるテキスト"
@@ -168,28 +148,12 @@
     "description": "詳細がない場合の文言"
   },
   "async_processing_error": {
-    "message": "処理エラー: {0}",
-    "description": "プレースホルダーに表示されるエラー"
+    "message": "{0}エラー：{1}",
+    "description": "Generic error message with type and detail"
   },
   "async_task_processing_error": {
     "message": "タスクエラー: {0}",
     "description": "タスク失敗時のエラー"
-  },
-  "async_mermaid_error": {
-    "message": "Mermaid エラー: {0}",
-    "description": "Mermaid レンダリングエラー"
-  },
-  "async_vega_error": {
-    "message": "Vega エラー: {0}",
-    "description": "Vega レンダリングエラー"
-  },
-  "async_vegalite_error": {
-    "message": "Vega-Lite エラー: {0}",
-    "description": "Vega-Lite レンダリングエラー"
-  },
-  "async_html_convert_error": {
-    "message": "HTML 変換エラー: {0}",
-    "description": "HTML レンダリングエラー"
   },
   "docx_export_failed_default": {
     "message": "エクスポートに失敗しました",

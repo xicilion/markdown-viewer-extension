@@ -139,26 +139,6 @@
     "message": "Print is only available for local files",
     "description": "Tooltip when print button is disabled for remote files"
   },
-  "async_placeholder_type_mermaid": {
-    "message": "Mermaid diagram",
-    "description": "Label for mermaid async placeholder"
-  },
-  "async_placeholder_type_vega": {
-    "message": "Vega chart",
-    "description": "Label for vega async placeholder"
-  },
-  "async_placeholder_type_vegalite": {
-    "message": "Vega-Lite chart",
-    "description": "Label for vega-lite async placeholder"
-  },
-  "async_placeholder_type_html": {
-    "message": "HTML chart",
-    "description": "Label for html async placeholder"
-  },
-  "async_placeholder_type_svg": {
-    "message": "SVG image",
-    "description": "Label for svg async placeholder"
-  },
   "async_processing_message": {
     "message": "Processing {0}{1}...",
     "description": "Async placeholder processing text"
@@ -168,28 +148,12 @@
     "description": "Fallback when error message missing"
   },
   "async_processing_error": {
-    "message": "Processing error: {0}",
-    "description": "Error shown on async placeholder"
+    "message": "{0} error: {1}",
+    "description": "Generic error message with type and detail"
   },
   "async_task_processing_error": {
     "message": "Task processing error: {0}",
     "description": "Error when async task fails"
-  },
-  "async_mermaid_error": {
-    "message": "Mermaid error: {0}",
-    "description": "Error for mermaid rendering"
-  },
-  "async_vega_error": {
-    "message": "Vega error: {0}",
-    "description": "Error for vega rendering"
-  },
-  "async_vegalite_error": {
-    "message": "Vega-Lite error: {0}",
-    "description": "Error for vega-lite rendering"
-  },
-  "async_html_convert_error": {
-    "message": "HTML conversion error: {0}",
-    "description": "Error for html rendering"
   },
   "docx_export_failed_default": {
     "message": "Export failed",

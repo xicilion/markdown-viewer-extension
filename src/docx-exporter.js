@@ -32,6 +32,7 @@ import { uploadInChunks, abortUpload } from './upload-manager.js';
 import hljs from 'highlight.js/lib/common';
 import { loadThemeForDOCX } from './theme-to-docx.js';
 import themeManager from './theme-manager.js';
+import { getPluginForNode } from './plugins/index.js';
 
 /**
  * Main class for exporting Markdown to DOCX
@@ -236,7 +237,7 @@ class DocxExporter {
       // Parse markdown to AST
       const ast = this.parseMarkdown(markdown);
 
-      // Count resources that need processing (images, mermaid, vega, html, svg)
+      // Count resources that need processing (images and plugin-handled diagrams)
       this.totalResources = this.countResources(ast);
 
       // Report initial progress
@@ -434,7 +435,7 @@ class DocxExporter {
   }
 
   /**
-   * Count resources that need processing (images, mermaid diagrams, vega charts)
+   * Count resources that need processing (images and diagrams)
    */
   countResources(ast) {
     let count = 0;
@@ -445,18 +446,8 @@ class DocxExporter {
         count++;
       }
 
-      // Count mermaid code blocks
-      if (node.type === 'code' && node.lang === 'mermaid') {
-        count++;
-      }
-
-      // Count vega-lite code blocks
-      if (node.type === 'code' && (node.lang === 'vega-lite' || node.lang === 'vegalite')) {
-        count++;
-      }
-
-      // Count vega code blocks
-      if (node.type === 'code' && node.lang === 'vega') {
+      // Count any node that can be handled by a plugin
+      if (getPluginForNode(node)) {
         count++;
       }
 
@@ -571,6 +562,25 @@ class DocxExporter {
    * Convert a single AST node to docx element
    */
   async convertNode(node, parentStyle = {}) {
+    // First, try to find a plugin that can handle this node
+    const plugin = getPluginForNode(node);
+    if (plugin) {
+      const docxHelpers = {
+        Paragraph,
+        TextRun,
+        ImageRun,
+        AlignmentType,
+        convertInchesToTwip,
+        applyPendingSpacing: this.applyPendingSpacing.bind(this),
+        themeStyles: this.themeStyles
+      };
+      const result = await plugin.convertToDOCX(this.renderer, node.value, docxHelpers);
+      // Report progress for plugin-handled nodes
+      this.reportResourceProgress();
+      return result;
+    }
+
+    // Handle node types that don't use plugins
     switch (node.type) {
       case 'heading':
         return this.convertHeading(node);
@@ -743,6 +753,32 @@ class DocxExporter {
    * Convert single inline node
    */
   async convertInlineNode(node, parentStyle = {}) {
+    // First, check if a plugin can handle this node
+    const plugin = getPluginForNode(node);
+    if (plugin) {
+      const docxHelpers = {
+        Paragraph,
+        TextRun,
+        ImageRun,
+        AlignmentType,
+        convertInchesToTwip,
+        applyPendingSpacing: this.applyPendingSpacing.bind(this),
+        themeStyles: this.themeStyles
+      };
+      
+      // For inline nodes, we need to handle URL fetching here
+      let content = plugin.extractContent(node);
+      if (content && plugin.isUrl && plugin.isUrl(content)) {
+        // Fetch the content synchronously
+        content = await plugin.fetchContent(content);
+      }
+      
+      const result = await plugin.convertToDOCX(this.renderer, content, docxHelpers);
+      this.reportResourceProgress();
+      return result;
+    }
+
+    // Handle standard inline nodes
     switch (node.type) {
       case 'text':
         return new TextRun({
@@ -1049,28 +1085,8 @@ class DocxExporter {
    */
   async convertImage(node) {
     try {
-      // Check if image is SVG
-      const isSvg = node.url.toLowerCase().endsWith('.svg') ||
-        node.url.toLowerCase().includes('image/svg+xml');
-
-      if (isSvg) {
-        // Handle SVG images by converting to PNG
-        const result = await this.convertSvgImageFromUrl(node.url);
-        this.reportResourceProgress();
-        return result;
-      }
-
       // Fetch image as buffer (returns Uint8Array)
       const { buffer, contentType } = await this.fetchImageAsBuffer(node.url);
-
-      // Double-check content type to ensure it's not SVG
-      if (contentType && contentType.includes('svg')) {
-        // Get SVG content and convert to PNG
-        const svgContent = new TextDecoder().decode(buffer);
-        const result = await this.convertSvgImage(svgContent);
-        this.reportResourceProgress();
-        return result;
-      }
 
       // Get image dimensions
       const { width: originalWidth, height: originalHeight } =
@@ -1132,43 +1148,58 @@ class DocxExporter {
   }
 
   /**
-   * Convert SVG image from URL by fetching and converting to PNG
-   * @param {string} url - SVG image URL
+   * Extract ImageRun from a Paragraph returned by plugin.convertToDOCX
+   * @param {Paragraph} paragraph - Paragraph containing ImageRun
+   * @returns {ImageRun|TextRun} - Extracted ImageRun or error TextRun
    */
-  async convertSvgImageFromUrl(url) {
-    try {
-      let svgContent;
+  /**
+   * Convert code block node
+   * Handles regular code blocks with syntax highlighting.
+   * Special code blocks (diagrams, charts, etc.) are handled by plugins.
+   */
+  convertCodeBlock(node) {
+    // Get syntax highlighted runs
+    const runs = this.getHighlightedRunsForCode(node.value ?? '', node.lang);
 
-      // Handle data: URLs
-      if (url.startsWith('data:image/svg+xml')) {
-        const base64Match = url.match(/^data:image\/svg\+xml;base64,(.+)$/);
-        if (base64Match) {
-          svgContent = atob(base64Match[1]);
-        } else {
-          // Try URL encoded format
-          const urlMatch = url.match(/^data:image\/svg\+xml[;,](.+)$/);
-          if (urlMatch) {
-            svgContent = decodeURIComponent(urlMatch[1]);
-          } else {
-            throw new Error('Unsupported SVG data URL format');
-          }
-        }
-      } else {
-        // Fetch SVG file (local or remote)
-        const { buffer } = await this.fetchImageAsBuffer(url);
-        svgContent = new TextDecoder().decode(buffer);
-      }
+    const codeBackground = this.themeStyles.characterStyles.code.background;
+    
+    return new Paragraph({
+      children: runs,
+      wordWrap: true, // Enable word wrap for long code lines
+      alignment: AlignmentType.LEFT,
+      spacing: this.applyPendingSpacing({
+        before: 200, // 13px
+        after: 200,  // 13px
+        line: 276,   // 1.15 line height for code blocks
+      }),
+      shading: {
+        fill: codeBackground,
+      },
+      border: {
+        top: { color: 'E1E4E8', space: 10, value: BorderStyle.SINGLE, size: 6 },
+        bottom: { color: 'E1E4E8', space: 10, value: BorderStyle.SINGLE, size: 6 },
+        left: { color: 'E1E4E8', space: 10, value: BorderStyle.SINGLE, size: 6 },
+        right: { color: 'E1E4E8', space: 10, value: BorderStyle.SINGLE, size: 6 },
+      },
+    });
+  }
 
-      // Convert SVG to PNG
-      return await this.convertSvgImage(svgContent);
-    } catch (error) {
-      console.warn('Failed to load SVG image:', url, error);
-      return new TextRun({
-        text: `[SVG Image: ${url}]`,
-        italics: true,
-        color: '999999',
-      });
-    }
+  /**
+   * Convert HTML node
+   * Returns a simple placeholder for HTML content that no plugin handles.
+   */
+  convertHtml(node) {
+    return new Paragraph({
+      children: [
+        new TextRun({
+          text: '[HTML Content]',
+          italics: true,
+          color: '666666',
+        }),
+      ],
+      alignment: AlignmentType.LEFT,
+      spacing: this.applyPendingSpacing({ before: 120, after: 120 }),
+    });
   }
 
   /**
@@ -1251,50 +1282,6 @@ class DocxExporter {
     }
 
     return items;
-  }
-
-  /**
-   * Convert code block node
-   */
-  async convertCodeBlock(node) {
-    // Check if it's a Mermaid diagram
-    if (node.lang === 'mermaid') {
-      return await this.convertMermaidDiagram(node.value);
-    }
-
-    // Check if it's a Vega-Lite chart
-    if (node.lang === 'vega-lite' || node.lang === 'vegalite') {
-      return await this.convertVegaLiteChart(node.value);
-    }
-
-    // Check if it's a Vega chart
-    if (node.lang === 'vega') {
-      return await this.convertVegaChart(node.value);
-    }
-
-    const runs = this.getHighlightedRunsForCode(node.value ?? '', node.lang);
-
-    const codeBackground = this.themeStyles.characterStyles.code.background;
-    
-    return new Paragraph({
-      children: runs,
-      wordWrap: true, // 启用自动换行，支持长行代码在 DOCX 中换行
-      alignment: AlignmentType.LEFT, // Explicitly set left alignment for code blocks
-      spacing: this.applyPendingSpacing({
-        before: 200, // 13px (hardcoded for now)
-        after: 200,  // 13px (hardcoded for now)
-        line: 276,   // 1.15 line height for code blocks to match HTML visual appearance
-      }),
-      shading: {
-        fill: codeBackground,
-      },
-      border: {
-        top: { color: 'E1E4E8', space: 10, value: BorderStyle.SINGLE, size: 6 }, // space: 10pt ≈ 13px padding
-        bottom: { color: 'E1E4E8', space: 10, value: BorderStyle.SINGLE, size: 6 },
-        left: { color: 'E1E4E8', space: 10, value: BorderStyle.SINGLE, size: 6 },
-        right: { color: 'E1E4E8', space: 10, value: BorderStyle.SINGLE, size: 6 },
-      },
-    });
   }
 
   /**
@@ -1553,33 +1540,6 @@ class DocxExporter {
   }
 
   /**
-   * Convert HTML block (including complex HTML tables and diagrams)
-   */
-  async convertHtml(node) {
-    const htmlContent = node.value.trim();
-
-    // Check if it's a significant HTML block that should be converted to image
-    // Allow common block elements: div, table, svg, dl, ul, ol, form, fieldset, etc.
-    const isBlockElement = /^<(div|table|svg|dl|ul|ol|form|fieldset|section|article|aside|header|footer|nav|main|figure)/i.test(htmlContent);
-    if (isBlockElement && htmlContent.length > 100) {
-      return await this.convertHtmlDiagram(htmlContent);
-    }
-
-    // For simple HTML, return placeholder
-    return new Paragraph({
-      children: [
-        new TextRun({
-          text: '[HTML Content]',
-          italics: true,
-          color: '666666',
-        }),
-      ],
-      alignment: AlignmentType.LEFT, // Explicitly set left alignment
-      spacing: this.applyPendingSpacing({ before: 120, after: 120 }),
-    });
-  }
-
-  /**
    * Convert math block (display math)
    */
   async convertMathBlock(node) {
@@ -1651,420 +1611,6 @@ class DocxExporter {
     }
 
     return text;
-  }
-
-  /**
-   * Convert Mermaid diagram to PNG and embed as image
-   * @param {string} mermaidCode - Mermaid diagram code
-   */
-  async convertMermaidDiagram(mermaidCode) {
-    if (!this.renderer) {
-      // No renderer available, return placeholder
-      this.reportResourceProgress();
-      return new Paragraph({
-        children: [
-          new TextRun({
-            text: '[Mermaid Diagram - Renderer not available]',
-            italics: true,
-            color: '666666',
-          }),
-        ],
-        alignment: AlignmentType.LEFT, // Explicitly set left alignment for placeholder
-        spacing: this.applyPendingSpacing({ before: 240, after: 240 }),
-      });
-    }
-
-    try {
-      // Render Mermaid to PNG
-      const pngResult = await this.renderer.renderMermaidToPng(mermaidCode);
-
-      // Convert base64 to Uint8Array
-      const binaryString = atob(pngResult.base64);
-      const len = binaryString.length;
-      const bytes = new Uint8Array(len);
-      for (let i = 0; i < len; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-      }
-
-      // Calculate display size (1/4 of original PNG size for high DPI)
-      let displayWidth = Math.round(pngResult.width / 4);
-      let displayHeight = Math.round(pngResult.height / 4);
-
-      // Apply max-width constraint (same as regular images)
-      const maxWidthInches = 6;
-      const maxWidthPixels = maxWidthInches * 96; // 576 pixels
-
-      if (displayWidth > maxWidthPixels) {
-        const ratio = maxWidthPixels / displayWidth;
-        displayWidth = maxWidthPixels;
-        displayHeight = Math.round(displayHeight * ratio);
-      }
-
-      // Report progress after processing mermaid
-      this.reportResourceProgress();
-
-      // Create ImageRun
-      return new Paragraph({
-        children: [
-          new ImageRun({
-            data: bytes,
-            transformation: {
-              width: displayWidth,
-              height: displayHeight,
-            },
-            type: 'png',
-            altText: {
-              title: 'Mermaid Diagram',
-              description: 'Mermaid diagram',
-              name: 'mermaid-diagram',
-            },
-          }),
-        ],
-        alignment: AlignmentType.CENTER,
-        spacing: this.applyPendingSpacing({
-          before: 240,
-          after: 240,
-        }),
-      });
-    } catch (error) {
-      console.warn('Failed to render Mermaid diagram:', error);
-      // Report progress even on error
-      this.reportResourceProgress();
-      return new Paragraph({
-        children: [
-          new TextRun({
-            text: `[Mermaid Error: ${error.message}]`,
-            italics: true,
-            color: 'FF0000',
-          }),
-        ],
-        alignment: AlignmentType.LEFT, // Explicitly set left alignment for error message
-        spacing: this.applyPendingSpacing({ before: 240, after: 240 }),
-      });
-    }
-  }
-
-  /**
-   * Convert Vega-Lite chart to PNG and embed as image
-   * @param {string} vegaLiteSpec - Vega-Lite specification (JSON string or object)
-   */
-  async convertVegaLiteChart(vegaLiteSpec) {
-    if (!this.renderer) {
-      // No renderer available, return placeholder
-      this.reportResourceProgress();
-      return new Paragraph({
-        children: [
-          new TextRun({
-            text: '[Vega-Lite Chart - Renderer not available]',
-            italics: true,
-            color: '666666',
-          }),
-        ],
-        alignment: AlignmentType.LEFT,
-        spacing: this.applyPendingSpacing({ before: 240, after: 240 }),
-      });
-    }
-
-    try {
-      // Render Vega-Lite to PNG
-      const pngResult = await this.renderer.renderVegaLiteToPng(vegaLiteSpec);
-
-      // Convert base64 to Uint8Array
-      const binaryString = atob(pngResult.base64);
-      const len = binaryString.length;
-      const bytes = new Uint8Array(len);
-      for (let i = 0; i < len; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-      }
-
-      // Calculate display size (1/4 of original PNG size for high DPI)
-      let displayWidth = Math.round(pngResult.width / 4);
-      let displayHeight = Math.round(pngResult.height / 4);
-
-      // Apply max-width constraint (same as regular images)
-      const maxWidthInches = 6;
-      const maxWidthPixels = maxWidthInches * 96; // 576 pixels
-
-      if (displayWidth > maxWidthPixels) {
-        const ratio = maxWidthPixels / displayWidth;
-        displayWidth = maxWidthPixels;
-        displayHeight = Math.round(displayHeight * ratio);
-      }
-
-      // Report progress after processing vega-lite
-      this.reportResourceProgress();
-
-      // Create ImageRun
-      return new Paragraph({
-        children: [
-          new ImageRun({
-            data: bytes,
-            transformation: {
-              width: displayWidth,
-              height: displayHeight,
-            },
-            type: 'png',
-            altText: {
-              title: 'Vega-Lite Chart',
-              description: 'Vega-Lite chart',
-              name: 'vegalite-chart',
-            },
-          }),
-        ],
-        alignment: AlignmentType.CENTER,
-        spacing: this.applyPendingSpacing({
-          before: 240,
-          after: 240,
-        }),
-      });
-    } catch (error) {
-      console.warn('Failed to render Vega-Lite chart:', error);
-      // Report progress even on error
-      this.reportResourceProgress();
-      return new Paragraph({
-        children: [
-          new TextRun({
-            text: `[Vega-Lite Error: ${error.message}]`,
-            italics: true,
-            color: 'FF0000',
-          }),
-        ],
-        alignment: AlignmentType.LEFT,
-        spacing: this.applyPendingSpacing({ before: 240, after: 240 }),
-      });
-    }
-  }
-
-  /**
-   * Convert Vega chart to PNG and embed as image
-   * @param {string} vegaSpec - Vega specification (JSON string or object)
-   */
-  async convertVegaChart(vegaSpec) {
-    if (!this.renderer) {
-      // No renderer available, return placeholder
-      this.reportResourceProgress();
-      return new Paragraph({
-        children: [
-          new TextRun({
-            text: '[Vega Chart - Renderer not available]',
-            italics: true,
-            color: '666666',
-          }),
-        ],
-        alignment: AlignmentType.LEFT,
-        spacing: this.applyPendingSpacing({ before: 240, after: 240 }),
-      });
-    }
-
-    try {
-      // Render Vega to PNG
-      const pngResult = await this.renderer.renderVegaToPng(vegaSpec);
-
-      // Convert base64 to Uint8Array
-      const binaryString = atob(pngResult.base64);
-      const len = binaryString.length;
-      const bytes = new Uint8Array(len);
-      for (let i = 0; i < len; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-      }
-
-      // Calculate display size (1/4 of original PNG size for high DPI)
-      let displayWidth = Math.round(pngResult.width / 4);
-      let displayHeight = Math.round(pngResult.height / 4);
-
-      // Apply max-width constraint (same as regular images)
-      const maxWidthInches = 6;
-      const maxWidthPixels = maxWidthInches * 96; // 576 pixels
-
-      if (displayWidth > maxWidthPixels) {
-        const ratio = maxWidthPixels / displayWidth;
-        displayWidth = maxWidthPixels;
-        displayHeight = Math.round(displayHeight * ratio);
-      }
-
-      // Report progress after processing vega
-      this.reportResourceProgress();
-
-      // Create ImageRun
-      return new Paragraph({
-        children: [
-          new ImageRun({
-            data: bytes,
-            transformation: {
-              width: displayWidth,
-              height: displayHeight,
-            },
-            type: 'png',
-            altText: {
-              title: 'Vega Chart',
-              description: 'Vega chart',
-              name: 'vega-chart',
-            },
-          }),
-        ],
-        alignment: AlignmentType.CENTER,
-        spacing: this.applyPendingSpacing({
-          before: 240,
-          after: 240,
-        }),
-      });
-    } catch (error) {
-      console.warn('Failed to render Vega chart:', error);
-      // Report progress even on error
-      this.reportResourceProgress();
-      return new Paragraph({
-        children: [
-          new TextRun({
-            text: `[Vega Error: ${error.message}]`,
-            italics: true,
-            color: 'FF0000',
-          }),
-        ],
-        alignment: AlignmentType.LEFT,
-        spacing: this.applyPendingSpacing({ before: 240, after: 240 }),
-      });
-    }
-  }
-
-  /**
-   * Convert HTML diagram to PNG and embed as image
-   * @param {string} htmlContent - HTML content
-   */
-  async convertHtmlDiagram(htmlContent) {
-    if (!this.renderer) {
-      return new Paragraph({
-        children: [
-          new TextRun({
-            text: '[HTML Diagram - Renderer not available]',
-            italics: true,
-            color: '666666',
-          }),
-        ],
-        alignment: AlignmentType.LEFT, // Explicitly set left alignment for placeholder
-        spacing: this.applyPendingSpacing({ before: 240, after: 240 }),
-      });
-    }
-
-    try {
-      // Render HTML to PNG
-      const pngResult = await this.renderer.renderHtmlToPng(htmlContent);
-
-      // Convert base64 to Uint8Array
-      const binaryString = atob(pngResult.base64);
-      const len = binaryString.length;
-      const bytes = new Uint8Array(len);
-      for (let i = 0; i < len; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-      }
-
-      // Calculate display size (1/4 of original PNG size)
-      let displayWidth = Math.round(pngResult.width / 4);
-      let displayHeight = Math.round(pngResult.height / 4);
-
-      // Apply max-width constraint (same as regular images)
-      const maxWidthInches = 6;
-      const maxWidthPixels = maxWidthInches * 96; // 576 pixels
-
-      if (displayWidth > maxWidthPixels) {
-        const ratio = maxWidthPixels / displayWidth;
-        displayWidth = maxWidthPixels;
-        displayHeight = Math.round(displayHeight * ratio);
-      }
-
-      // Create ImageRun
-      return new Paragraph({
-        children: [
-          new ImageRun({
-            data: bytes,
-            transformation: {
-              width: displayWidth,
-              height: displayHeight,
-            },
-            type: 'png',
-            altText: {
-              title: 'HTML Diagram',
-              description: 'HTML diagram',
-              name: 'html-diagram',
-            },
-          }),
-        ],
-        alignment: AlignmentType.CENTER,
-        spacing: this.applyPendingSpacing({
-          before: 240,
-          after: 240,
-        }),
-      });
-    } catch (error) {
-      console.warn('Failed to render HTML diagram:', error);
-      return new Paragraph({
-        children: [
-          new TextRun({
-            text: `[HTML Error: ${error.message}]`,
-            italics: true,
-            color: 'FF0000',
-          }),
-        ],
-        alignment: AlignmentType.LEFT, // Explicitly set left alignment for error message
-        spacing: this.applyPendingSpacing({ before: 240, after: 240 }),
-      });
-    }
-  }
-
-  /**
-   * Convert SVG to PNG and embed as image
-   * @param {string} svgContent - SVG content
-   */
-  async convertSvgImage(svgContent) {
-    if (!this.renderer) {
-      return new TextRun({
-        text: '[SVG Image - Renderer not available]',
-        italics: true,
-        color: '666666',
-      });
-    }
-
-    try {
-      // Render SVG to PNG
-      const pngResult = await this.renderer.renderSvgToPng(svgContent);
-
-      // Convert base64 to Uint8Array
-      const binaryString = atob(pngResult.base64);
-      const len = binaryString.length;
-      const bytes = new Uint8Array(len);
-      for (let i = 0; i < len; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-      }
-
-      // Calculate display size (1/4 of original PNG size)
-      let displayWidth = Math.round(pngResult.width / 4);
-      let displayHeight = Math.round(pngResult.height / 4);
-
-      // Apply max-width constraint (same as regular images)
-      const { width: constrainedWidth, height: constrainedHeight } =
-        this.calculateImageDimensions(displayWidth, displayHeight);
-
-      // Create ImageRun
-      return new ImageRun({
-        data: bytes,
-        transformation: {
-          width: constrainedWidth,
-          height: constrainedHeight,
-        },
-        type: 'png',
-        altText: {
-          title: 'SVG Image',
-          description: 'SVG image',
-          name: 'svg-image',
-        },
-      });
-    } catch (error) {
-      console.warn('Failed to render SVG:', error);
-      return new TextRun({
-        text: `[SVG Error: ${error.message}]`,
-        italics: true,
-        color: 'FF0000',
-      });
-    }
   }
 
   /**

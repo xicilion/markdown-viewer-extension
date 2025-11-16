@@ -485,29 +485,30 @@ body.toc-hidden #markdown-wrapper {
   margin: 0;
 }
 
-/* Specific placeholder styles for different content types */
-.mermaid-placeholder {
-  border-color: #17a2b8;
+/* Inline placeholder styles */
+.inline-placeholder {
+  display: inline-flex;
+  min-height: auto;
+  padding: 2px 8px;
+  margin: 0 4px;
+  vertical-align: middle;
 }
 
-.mermaid-placeholder .async-spinner {
-  border-top-color: #17a2b8;
+.inline-placeholder .async-loading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.html-placeholder {
-  border-color: #28a745;
+.inline-placeholder .async-spinner {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  border-width: 2px;
 }
 
-.html-placeholder .async-spinner {
-  border-top-color: #28a745;
-}
-
-.svg-placeholder {
-  border-color: #ffc107;
-}
-
-.svg-placeholder .async-spinner {
-  border-top-color: #ffc107;
+.inline-placeholder .async-text {
+  font-size: 13px;
 }
 
 /* Print Styles - Only show content area */

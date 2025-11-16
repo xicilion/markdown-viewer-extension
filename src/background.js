@@ -196,12 +196,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true; // Keep message channel open for async response
   }
 
-  // Forward rendering messages to offscreen document
-  if (message.type === 'renderMermaid' || 
-      message.type === 'renderHtml' || 
-      message.type === 'renderSvg' ||
-      message.type === 'renderVega' ||
-      message.type === 'renderVegaLite') {
+  // Forward unified rendering messages to offscreen document
+  if (message.action === 'RENDER_DIAGRAM') {
     handleRenderingRequest(message, sendResponse);
     return true; // Keep message channel open for async response
   }
@@ -378,25 +374,29 @@ async function handleRenderingRequest(message, sendResponse) {
   try {
     // Ensure offscreen document exists
     await ensureOffscreenDocument();
-
-    // Send message to offscreen document
-    chrome.runtime.sendMessage(message, (response) => {
-      if (chrome.runtime.lastError) {
-        // Don't immediately reset on communication failure - it might be temporary
-        // Only reset if the error suggests the document is gone
-        if (chrome.runtime.lastError.message.includes('receiving end does not exist')) {
-          offscreenCreated = false;
+    
+    // Send message to offscreen document and wait for response
+    const response = await new Promise((resolve, reject) => {
+      chrome.runtime.sendMessage(message, (response) => {
+        if (chrome.runtime.lastError) {
+          // Don't immediately reset on communication failure - it might be temporary
+          // Only reset if the error suggests the document is gone
+          if (chrome.runtime.lastError.message.includes('receiving end does not exist')) {
+            offscreenCreated = false;
+          }
+          reject(new Error(`Offscreen communication failed: ${chrome.runtime.lastError.message}`));
+        } else if (!response) {
+          reject(new Error('No response from offscreen document. Document may have failed to load.'));
+        } else {
+          resolve(response);
         }
-        sendResponse({ error: `Offscreen communication failed: ${chrome.runtime.lastError.message}` });
-      } else if (!response) {
-        sendResponse({ error: 'No response from offscreen document. Document may have failed to load.' });
-      } else {
-        sendResponse(response);
-      }
+      });
     });
+    
+    sendResponse(response);
 
   } catch (error) {
-    sendResponse({ error: `Offscreen setup failed: ${error.message}` });
+    sendResponse({ error: error.message });
   }
 }
 
@@ -414,7 +414,7 @@ async function ensureOffscreenDocument() {
     await chrome.offscreen.createDocument({
       url: offscreenUrl,
       reasons: ['DOM_SCRAPING'],
-      justification: 'Render Mermaid diagrams, Vega/Vega-Lite charts, SVG and HTML to PNG'
+      justification: 'Render diagrams and charts to PNG images'
     });
 
     offscreenCreated = true;

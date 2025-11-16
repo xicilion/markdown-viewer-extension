@@ -13,9 +13,9 @@ import { visit } from 'unist-util-visit';
 import ExtensionRenderer from './renderer.js';
 import DocxExporter from './docx-exporter.js';
 import Localization, { DEFAULT_SETTING_LOCALE } from './localization.js';
-import { uploadInChunks, abortUpload } from './upload-manager.js';
 import themeManager from './theme-manager.js';
 import { loadAndApplyTheme } from './theme-to-css.js';
+import { registerRemarkPlugins, getPluginByType } from './plugins/index.js';
 
 async function initializeContentScript() {
 
@@ -447,13 +447,14 @@ ${truncatedMarkup}`;
    * Register async task for later execution with status management
    * @param {Function} callback - The async callback function
    * @param {Object} data - Data to pass to callback
-   * @param {string} type - Type for placeholder styling ('mermaid', 'html', 'svg')
-   * @param {string} description - Optional description for placeholder
+   * @param {Object} plugin - Plugin instance that provides type and placeholder generation
+   * @param {Function} translate - Translation function
    * @param {string} initialStatus - Initial task status ('ready', 'fetching')
    * @returns {Object} - Object with task control and placeholder content
    */
-  function asyncTask(callback, data = {}, type = 'unknown', description = '', initialStatus = 'ready') {
+  function asyncTask(callback, data = {}, plugin = null, translate = null, initialStatus = 'ready') {
     const placeholderId = generateAsyncId();
+    const type = plugin?.type || 'unknown';
 
     // Create task object with status management
     const task = {
@@ -476,59 +477,16 @@ ${truncatedMarkup}`;
 
     asyncTaskQueue.push(task);
 
+    // Generate placeholder using plugin
+    const placeholderHtml = plugin.createPlaceholderElement(placeholderId, translate);
+
     return {
       task, // Return task object for business logic control
       placeholder: {
         type: 'html',
-        value: createAsyncPlaceholder(placeholderId, type, description)
+        value: placeholderHtml
       }
     };
-  }
-
-  /**
-   * Create placeholder HTML for async content
-   */
-  function createAsyncPlaceholder(id, type, description = '') {
-    const typeLabelKeys = {
-      mermaid: 'async_placeholder_type_mermaid',
-      vega: 'async_placeholder_type_vega',
-      vegalite: 'async_placeholder_type_vegalite',
-      html: 'async_placeholder_type_html',
-      svg: 'async_placeholder_type_svg'
-    };
-
-    const typeLabelFallbacks = {
-      mermaid: 'Mermaid diagram',
-      vega: 'Vega chart',
-      vegalite: 'Vega-Lite chart',
-      html: 'HTML chart',
-      svg: 'SVG image'
-    };
-
-    const typeLabelKey = typeLabelKeys[type];
-    const typeLabel = typeLabelKey ? translate(typeLabelKey) : '';
-    const resolvedTypeLabel = typeLabel || typeLabelFallbacks[type] || type;
-    const descriptionSuffix = description ? `: ${description}` : '';
-    const processingText = translate('async_processing_message', [resolvedTypeLabel, descriptionSuffix])
-      || `Processing ${resolvedTypeLabel}${descriptionSuffix}...`;
-
-    // SVG images should use inline placeholders to preserve text flow
-    if (type === 'svg') {
-      return `<span id="${id}" class="async-placeholder ${type}-placeholder inline-placeholder">
-      <span class="async-loading">
-        <span class="async-spinner"></span>
-        <span class="async-text">${processingText}</span>
-      </span>
-    </span>`;
-    }
-
-    // Other content types use block placeholders
-    return `<div id="${id}" class="async-placeholder ${type}-placeholder">
-    <div class="async-loading">
-      <div class="async-spinner"></div>
-      <div class="async-text">${processingText}</div>
-    </div>
-  </div>`;
   }
 
   /**
@@ -644,315 +602,6 @@ ${truncatedMarkup}`;
     if (indicator) {
       indicator.classList.add('hidden');
     }
-  }/**
- * Remark plugin to convert Mermaid code blocks to PNG (async callback version)
- */
-  function remarkMermaidToPng(renderer) {
-    return function () {
-      return (tree) => {
-        // Collect all mermaid code blocks
-        visit(tree, 'code', (node, index, parent) => {
-          if (node.lang === 'mermaid') {
-            // Create async task for Mermaid processing
-            // Mermaid code is embedded data, so it's ready immediately
-            const result = asyncTask(async (data) => {
-              const { id, code } = data;
-              try {
-                const pngResult = await renderer.renderMermaidToPng(code);
-                const placeholder = document.getElementById(id);
-                if (placeholder) {
-                  // Calculate display size (1/4 of original PNG size)
-                  const displayWidth = Math.round(pngResult.width / 4);
-                  placeholder.outerHTML = `<div class="mermaid-diagram" style="text-align: center; margin: 20px 0;">
-                  <img src="data:image/png;base64,${pngResult.base64}" alt="Mermaid diagram" width="${displayWidth}px" />
-                </div>`;
-                }
-              } catch (error) {
-                const placeholder = document.getElementById(id);
-                if (placeholder) {
-                  const errorDetail = escapeHtml(error.message || '');
-                  const localizedError = translate('async_mermaid_error', [errorDetail])
-                    || `Mermaid error: ${errorDetail}`;
-                  placeholder.outerHTML = `<pre style="background: #fee; border-left: 4px solid #f00; padding: 10px; font-size: 12px;">${localizedError}</pre>`;
-                }
-              }
-            }, { code: node.value }, 'mermaid', '', 'ready'); // Embedded code is ready immediately
-
-            // Replace code block with placeholder
-            parent.children[index] = result.placeholder;
-          }
-        });
-      };
-    };
-  }
-
-  /**
-   * Remark plugin to convert HTML blocks to PNG (async callback version)
-   */
-  function remarkHtmlToPng(renderer) {
-    return function () {
-      return (tree) => {
-        // Collect all significant HTML nodes
-        visit(tree, 'html', (node, index, parent) => {
-          const htmlContent = node.value.trim();
-          if (!htmlContent) {
-            return;
-          }
-
-          if (/^(?:<br\s*\/?>(?:\s|&nbsp;)*)+$/i.test(htmlContent)) {
-            return;
-          }
-
-          const sanitizedHtml = sanitizeRenderedHtml(htmlContent);
-          if (!sanitizedHtml || sanitizedHtml.replace(/\s+/g, '').length <= 0) {
-            return;
-          }
-
-          const result = asyncTask(async (data) => {
-            const { id, code } = data;
-            try {
-              const pngResult = await renderer.renderHtmlToPng(code);
-              const placeholder = document.getElementById(id);
-              if (!placeholder) {
-                return;
-              }
-
-              const renderedBase64 = pngResult?.base64 ? pngResult.base64.trim() : '';
-              const isLikelyPng = renderedBase64.startsWith('iVBOR');
-              if (!pngResult || pngResult.error || !renderedBase64 || !isLikelyPng) {
-                const fallbackReason = !pngResult || pngResult.error
-                  ? (pngResult?.error || 'Renderer returned empty image data')
-                  : (!renderedBase64 ? 'Renderer returned empty image data' : 'Renderer returned invalid image data');
-                const errorDetail = escapeHtml(fallbackReason);
-                const localizedError = translate('async_html_convert_error', [errorDetail])
-                  || `HTML conversion error: ${errorDetail}`;
-                const truncated = code.length > 500 ? `${code.slice(0, 500)}...` : code;
-                const snippet = escapeHtml(truncated);
-                placeholder.outerHTML = `<pre style="background: #fee; border-left: 4px solid #f00; padding: 10px; font-size: 12px; white-space: pre-wrap; word-wrap: break-word;">${localizedError}<br><br>${snippet}</pre>`;
-                return;
-              }
-
-              const displayWidth = Math.round(pngResult.width / 4);
-              placeholder.outerHTML = `<div class="html-diagram" style="text-align: center; margin: 20px 0;">
-                <img src="data:image/png;base64,${pngResult.base64}" alt="HTML chart" width="${displayWidth}px" />
-              </div>`;
-            } catch (error) {
-              const placeholder = document.getElementById(id);
-              if (placeholder) {
-                const errorDetail = escapeHtml(error.message || '');
-                const localizedError = translate('async_html_convert_error', [errorDetail])
-                  || `HTML conversion error: ${errorDetail}`;
-                placeholder.outerHTML = `<pre style="background: #fee; border-left: 4px solid #f00; padding: 10px; font-size: 12px;">${localizedError}</pre>`;
-              }
-            }
-          }, { code: sanitizedHtml }, 'html', '', 'ready');
-
-          // Replace HTML node with placeholder
-          parent.children[index] = result.placeholder;
-        });
-      };
-    };
-  }
-
-  /**
-   * Remark plugin to convert Vega-Lite code blocks to PNG (async callback version)
-   */
-  function remarkVegaLiteToPng(renderer) {
-    return function () {
-      return (tree) => {
-        // Collect all vega-lite code blocks
-        visit(tree, 'code', (node, index, parent) => {
-          if (node.lang === 'vega-lite' || node.lang === 'vegalite') {
-            // Create async task for Vega-Lite processing
-            const result = asyncTask(async (data) => {
-              const { id, code } = data;
-              try {
-                const pngResult = await renderer.renderVegaLiteToPng(code);
-                const placeholder = document.getElementById(id);
-                if (placeholder) {
-                  // Calculate display size (1/4 of original PNG size)
-                  const displayWidth = Math.round(pngResult.width / 4);
-                  placeholder.outerHTML = `<div class="vegalite-chart" style="text-align: center; margin: 20px 0;">
-                  <img src="data:image/png;base64,${pngResult.base64}" alt="Vega-Lite chart" width="${displayWidth}px" />
-                </div>`;
-                }
-              } catch (error) {
-                const placeholder = document.getElementById(id);
-                if (placeholder) {
-                  const errorDetail = escapeHtml(error.message || '');
-                  const localizedError = translate('async_vegalite_error', [errorDetail])
-                    || `Vega-Lite error: ${errorDetail}`;
-                  placeholder.outerHTML = `<pre style="background: #fee; border-left: 4px solid #f00; padding: 10px; font-size: 12px;">${localizedError}</pre>`;
-                }
-              }
-            }, { code: node.value }, 'vegalite', '', 'ready');
-
-            // Replace code block with placeholder
-            parent.children[index] = result.placeholder;
-          }
-        });
-      };
-    };
-  }
-
-  /**
-   * Remark plugin to convert Vega code blocks to PNG (async callback version)
-   */
-  function remarkVegaToPng(renderer) {
-    return function () {
-      return (tree) => {
-        // Collect all vega code blocks
-        visit(tree, 'code', (node, index, parent) => {
-          if (node.lang === 'vega') {
-            // Create async task for Vega processing
-            const result = asyncTask(async (data) => {
-              const { id, code } = data;
-              try {
-                const pngResult = await renderer.renderVegaToPng(code);
-                const placeholder = document.getElementById(id);
-                if (placeholder) {
-                  // Calculate display size (1/4 of original PNG size)
-                  const displayWidth = Math.round(pngResult.width / 4);
-                  placeholder.outerHTML = `<div class="vega-chart" style="text-align: center; margin: 20px 0;">
-                  <img src="data:image/png;base64,${pngResult.base64}" alt="Vega chart" width="${displayWidth}px" />
-                </div>`;
-                }
-              } catch (error) {
-                const placeholder = document.getElementById(id);
-                if (placeholder) {
-                  const errorDetail = escapeHtml(error.message || '');
-                  const localizedError = translate('async_vega_error', [errorDetail])
-                    || `Vega error: ${errorDetail}`;
-                  placeholder.outerHTML = `<pre style="background: #fee; border-left: 4px solid #f00; padding: 10px; font-size: 12px;">${localizedError}</pre>`;
-                }
-              }
-            }, { code: node.value }, 'vega', '', 'ready');
-
-            // Replace code block with placeholder
-            parent.children[index] = result.placeholder;
-          }
-        });
-      };
-    };
-  }
-
-  /**
-   * Process HTML to convert SVG images to PNG with intelligent resource handling
-   */
-  async function processSvgImages(html, renderer) {
-    const imgRegex = /<img\s+[^>]*src="([^"]+\.svg)"[^>]*>/gi;
-    const matches = [];
-    let match;
-
-    // Collect all SVG image tags
-    while ((match = imgRegex.exec(html)) !== null) {
-      matches.push({
-        fullMatch: match[0],
-        src: match[1],
-        index: match.index
-      });
-    }
-
-    if (matches.length === 0) {
-      return html;
-    }
-
-    // Replace SVG images with async placeholders (process in reverse order to preserve indices)
-    for (let i = matches.length - 1; i >= 0; i--) {
-      const { fullMatch, src } = matches[i];
-      const fileName = src.split('/').pop();
-
-      // Determine initial status: data: URLs are ready, everything else needs fetching
-      const initialStatus = src.startsWith('data:') ? 'ready' : 'fetching';
-
-      // For data: URLs, parse SVG content immediately
-      let initialSvgContent = null;
-      if (src.startsWith('data:')) {
-        const base64Match = src.match(/^data:image\/svg\+xml;base64,(.+)$/);
-        if (base64Match) {
-          initialSvgContent = atob(base64Match[1]);
-        } else {
-          // Try URL encoded format
-          const urlMatch = src.match(/^data:image\/svg\+xml[;,](.+)$/);
-          if (urlMatch) {
-            initialSvgContent = decodeURIComponent(urlMatch[1]);
-          } else {
-            // Handle unsupported format - this will be caught in the callback
-            initialSvgContent = null;
-          }
-        }
-      }
-
-      // Create async task with appropriate status
-      const result = asyncTask(async (data) => {
-        const { id, src, originalTag, svgContent } = data;
-        try {
-          if (!svgContent) {
-            throw new Error('No SVG content available');
-          }
-
-          const pngResult = await renderer.renderSvgToPng(svgContent);
-          const placeholder = document.getElementById(id);
-          if (placeholder) {
-            // Calculate display size (1/4 of original PNG size)
-            const displayWidth = Math.round(pngResult.width / 4);
-            placeholder.outerHTML = `<span class="svg-diagram" style="text-align: center; margin: 20px 0;">
-            <img src="data:image/png;base64,${pngResult.base64}" alt="SVG diagram" width="${displayWidth}px" />
-          </span>`;
-          }
-        } catch (error) {
-          const placeholder = document.getElementById(id);
-          if (placeholder) {
-            placeholder.outerHTML = `<pre style="background: #fee; border-left: 4px solid #f00; padding: 10px; font-size: 12px;">SVG Error: Cannot load file "${escapeHtml(src)}" - ${escapeHtml(error.message)}</pre>`;
-          }
-        }
-      }, { src: src, originalTag: fullMatch, svgContent: initialSvgContent }, 'svg', fileName, initialStatus);
-
-      // For fetching resources, start the fetch process immediately
-      if (initialStatus === 'fetching') {
-        if (src.startsWith('http://') || src.startsWith('https://')) {
-          // Fetch remote resource
-          fetch(src)
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-              }
-              return response.text();
-            })
-            .then(content => {
-              result.task.data.svgContent = content;
-              result.task.setReady();
-            })
-            .catch(error => {
-              result.task.setError(error);
-            });
-        } else {
-          // Fetch local file
-          const baseUrl = window.location.href;
-          const absoluteUrl = new URL(src, baseUrl).href;
-
-          chrome.runtime.sendMessage({
-            type: 'READ_LOCAL_FILE',
-            filePath: absoluteUrl
-          })
-            .then(response => {
-              if (response.error) {
-                throw new Error(response.error);
-              }
-              result.task.data.svgContent = response.content;
-              result.task.setReady();
-            })
-            .catch(error => {
-              result.task.setError(error);
-            });
-        }
-      }
-
-      // Replace the image tag with placeholder
-      html = html.substring(0, matches[i].index) + result.placeholder.value + html.substring(matches[i].index + fullMatch.length);
-    }
-
-    return html;
   }
 
   /**
@@ -987,9 +636,10 @@ ${truncatedMarkup}`;
   // Initialize DOCX exporter
   const docxExporter = new DocxExporter(renderer);
 
-  // Store renderer globally for debugging and access from other parts
+  // Store renderer and utility functions globally for plugins and debugging
   window.extensionRenderer = renderer;
   window.docxExporter = docxExporter;
+  window.sanitizeRenderedHtml = sanitizeRenderedHtml;
 
   // Since this script is only injected when content-detector.js confirms this is a markdown file,
   // we can directly proceed with processing
@@ -1287,10 +937,10 @@ ${truncatedMarkup}`;
       const theme = await themeManager.loadTheme(themeId);
       await loadAndApplyTheme(themeId);
       
-      // Set theme configuration for renderer (HTML and Mermaid)
+      // Set theme configuration for renderer
       if (theme && theme.fontScheme && theme.fontScheme.body) {
         const fontFamily = themeManager.buildFontFamily(theme.fontScheme.body.fontFamily);
-        // fontSize should be a number in pt for renderer (Mermaid scaling)
+        // fontSize should be a number in pt for renderer scaling
         const fontSize = parseFloat(theme.fontScheme.body.fontSize);
         await renderer.setThemeConfig({
           fontFamily: fontFamily,
@@ -1310,11 +960,13 @@ ${truncatedMarkup}`;
         .use(remarkParse)
         .use(remarkGfm)
         .use(remarkBreaks) // Add line break processing
-        .use(remarkMath)
-        .use(remarkHtmlToPng(renderer)) // Add HTML processing FIRST
-        .use(remarkMermaidToPng(renderer)) // Add Mermaid processing
-        .use(remarkVegaLiteToPng(renderer)) // Add Vega-Lite processing
-        .use(remarkVegaToPng(renderer)) // Add Vega processing
+        .use(remarkMath);
+      
+      // Register all plugins from plugin registry
+      registerRemarkPlugins(processor, renderer, asyncTask, translate, escapeHtml, visit);
+      
+      // Continue with rehype processing
+      processor
         .use(remarkRehype, { allowDangerousHtml: true })
         .use(rehypeSlug)
         .use(rehypeHighlight) // Add syntax highlighting
@@ -1323,9 +975,6 @@ ${truncatedMarkup}`;
 
       const file = await processor.process(normalizedMarkdown);
       let htmlContent = String(file);
-
-      // Process SVG images (creates placeholders)
-      htmlContent = await processSvgImages(htmlContent, renderer);
 
       // Add table centering for better Word compatibility
       htmlContent = processTablesForWordCompatibility(htmlContent);

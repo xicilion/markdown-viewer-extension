@@ -139,26 +139,6 @@
     "message": "La impresión solo está disponible para archivos locales",
     "description": "Tooltip cuando el botón de impresión está deshabilitado para archivos remotos"
   },
-  "async_placeholder_type_mermaid": {
-    "message": "Diagrama Mermaid",
-    "description": "Etiqueta para el marcador Mermaid"
-  },
-  "async_placeholder_type_vega": {
-    "message": "Gráfico Vega",
-    "description": "Etiqueta para el marcador vega"
-  },
-  "async_placeholder_type_vegalite": {
-    "message": "Gráfico Vega-Lite",
-    "description": "Etiqueta para el marcador vega-lite"
-  },
-  "async_placeholder_type_html": {
-    "message": "Gráfico HTML",
-    "description": "Etiqueta para el marcador HTML"
-  },
-  "async_placeholder_type_svg": {
-    "message": "Imagen SVG",
-    "description": "Etiqueta para el marcador SVG"
-  },
   "async_processing_message": {
     "message": "Procesando {0}{1}...",
     "description": "Texto durante el procesamiento asíncrono"
@@ -168,28 +148,12 @@
     "description": "Texto de error sin detalles"
   },
   "async_processing_error": {
-    "message": "Error de procesamiento: {0}",
-    "description": "Error mostrado en el marcador asíncrono"
+    "message": "Error de {0}: {1}",
+    "description": "Generic error message with type and detail"
   },
   "async_task_processing_error": {
     "message": "Error en la tarea: {0}",
     "description": "Error cuando falla una tarea asíncrona"
-  },
-  "async_mermaid_error": {
-    "message": "Error de Mermaid: {0}",
-    "description": "Error para el renderizado Mermaid"
-  },
-  "async_vega_error": {
-    "message": "Error de Vega: {0}",
-    "description": "Error para el renderizado vega"
-  },
-  "async_vegalite_error": {
-    "message": "Error de Vega-Lite: {0}",
-    "description": "Error para el renderizado vega-lite"
-  },
-  "async_html_convert_error": {
-    "message": "Error de conversión HTML: {0}",
-    "description": "Error para el renderizado HTML"
   },
   "docx_export_failed_default": {
     "message": "Error al exportar",

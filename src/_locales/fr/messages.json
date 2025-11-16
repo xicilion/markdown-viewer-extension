@@ -139,26 +139,6 @@
     "message": "L'impression n'est disponible que pour les fichiers locaux",
     "description": "Infobulle quand le bouton d'impression est désactivé pour les fichiers distants"
   },
-  "async_placeholder_type_mermaid": {
-    "message": "Diagramme Mermaid",
-    "description": "Libellé pour le placeholder Mermaid"
-  },
-  "async_placeholder_type_vega": {
-    "message": "Graphique Vega",
-    "description": "Libellé pour le placeholder vega"
-  },
-  "async_placeholder_type_vegalite": {
-    "message": "Graphique Vega-Lite",
-    "description": "Libellé pour le placeholder vega-lite"
-  },
-  "async_placeholder_type_html": {
-    "message": "Graphique HTML",
-    "description": "Libellé pour le placeholder HTML"
-  },
-  "async_placeholder_type_svg": {
-    "message": "Image SVG",
-    "description": "Libellé pour le placeholder SVG"
-  },
   "async_processing_message": {
     "message": "Traitement de {0}{1}...",
     "description": "Texte affiché pendant le traitement asynchrone"
@@ -168,28 +148,12 @@
     "description": "Texte de secours quand aucun détail n'est disponible"
   },
   "async_processing_error": {
-    "message": "Erreur de traitement : {0}",
-    "description": "Erreur affichée dans le placeholder asynchrone"
+    "message": "Erreur {0}: {1}",
+    "description": "Generic error message with type and detail"
   },
   "async_task_processing_error": {
     "message": "Erreur de tâche : {0}",
     "description": "Erreur lorsqu'une tâche asynchrone échoue"
-  },
-  "async_mermaid_error": {
-    "message": "Erreur Mermaid : {0}",
-    "description": "Erreur pour le rendu Mermaid"
-  },
-  "async_vega_error": {
-    "message": "Erreur Vega : {0}",
-    "description": "Erreur pour le rendu vega"
-  },
-  "async_vegalite_error": {
-    "message": "Erreur Vega-Lite : {0}",
-    "description": "Erreur pour le rendu vega-lite"
-  },
-  "async_html_convert_error": {
-    "message": "Erreur de conversion HTML : {0}",
-    "description": "Erreur pour le rendu HTML"
   },
   "docx_export_failed_default": {
     "message": "Exportation échouée",

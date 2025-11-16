@@ -139,26 +139,6 @@
     "message": "인쇄는 로컬 파일에서만 사용할 수 있습니다",
     "description": "원격 파일에서 인쇄 버튼이 비활성화될 때의 툴팁"
   },
-  "async_placeholder_type_mermaid": {
-    "message": "Mermaid 다이어그램",
-    "description": "Mermaid 플레이스홀더 라벨"
-  },
-  "async_placeholder_type_vega": {
-    "message": "Vega 차트",
-    "description": "Vega 플레이스홀더 라벨"
-  },
-  "async_placeholder_type_vegalite": {
-    "message": "Vega-Lite 차트",
-    "description": "Vega-Lite 플레이스홀더 라벨"
-  },
-  "async_placeholder_type_html": {
-    "message": "HTML 차트",
-    "description": "HTML 플레이스홀더 라벨"
-  },
-  "async_placeholder_type_svg": {
-    "message": "SVG 이미지",
-    "description": "SVG 플레이스홀더 라벨"
-  },
   "async_processing_message": {
     "message": "{0}{1} 처리 중...",
     "description": "비동기 처리 중 표시되는 텍스트"
@@ -168,28 +148,12 @@
     "description": "세부 정보가 없을 때 문구"
   },
   "async_processing_error": {
-    "message": "처리 오류: {0}",
-    "description": "플레이스홀더 오류 메시지"
+    "message": "{0} 오류: {1}",
+    "description": "Generic error message with type and detail"
   },
   "async_task_processing_error": {
     "message": "작업 오류: {0}",
     "description": "작업 실패 시 메시지"
-  },
-  "async_mermaid_error": {
-    "message": "Mermaid 오류: {0}",
-    "description": "Mermaid 렌더링 오류"
-  },
-  "async_vega_error": {
-    "message": "Vega 오류: {0}",
-    "description": "Vega 렌더링 오류"
-  },
-  "async_vegalite_error": {
-    "message": "Vega-Lite 오류: {0}",
-    "description": "Vega-Lite 렌더링 오류"
-  },
-  "async_html_convert_error": {
-    "message": "HTML 변환 오류: {0}",
-    "description": "HTML 렌더링 오류"
   },
   "docx_export_failed_default": {
     "message": "내보내기에 실패했습니다",

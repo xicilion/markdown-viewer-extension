@@ -1,5 +1,6 @@
 // Chrome Extension Renderer Manager using Offscreen API
-import ExtensionCacheManager from './cache-manager.js';
+import { CacheManager } from './cache-manager.js';
+import { UploadManager } from './upload-manager.js';
 
 class ExtensionRenderer {
   constructor(cacheManager = null) {
@@ -81,10 +82,18 @@ class ExtensionRenderer {
   }
 
   /**
-   * Render Mermaid diagram to PNG base64
+   * Unified diagram rendering method
+   * @param {string} renderType - Type of diagram (mermaid, vega, etc.)
+   * @param {string|object} input - Input data for rendering
+   * @param {object} extraParams - Additional parameters
+   * @param {string} cacheType - Cache type identifier
+   * @returns {Promise<object>} Render result with base64, width, height
    */
-  async renderMermaidToPng(code) {
-    const cacheKey = await this.cache.generateKey(code, 'MERMAID_PNG', this.themeConfig);
+  async _renderDiagram(renderType, input, extraParams = {}, cacheType) {
+    // Generate cache key
+    const inputString = typeof input === 'string' ? input : JSON.stringify(input);
+    const contentKey = inputString + JSON.stringify(extraParams);
+    const cacheKey = await this.cache.generateKey(contentKey, cacheType, this.themeConfig);
 
     // Check cache first
     const cached = await this.cache.get(cacheKey);
@@ -92,10 +101,15 @@ class ExtensionRenderer {
       return cached;
     }
 
-    const response = await this._sendMessage({
-      type: 'renderMermaid',
-      mermaid: code
-    });
+    // Send unified message
+    const message = {
+      action: 'RENDER_DIAGRAM',
+      renderType,
+      input,
+      themeConfig: this.themeConfig,
+      extraParams
+    };
+    const response = await this._sendMessage(message);
 
     if (response.error) {
       throw new Error(response.error);
@@ -103,7 +117,7 @@ class ExtensionRenderer {
 
     // Cache the complete response (base64 + dimensions)
     try {
-      await this.cache.set(cacheKey, response, 'MERMAID_PNG');
+      await this.cache.set(cacheKey, response, cacheType);
     } catch (error) {
       // Ignore cache errors
     }
@@ -112,130 +126,17 @@ class ExtensionRenderer {
   }
 
   /**
-   * Render Vega-Lite specification to PNG base64
+   * Unified render method
+   * @param {string} type - Renderer type (mermaid, vega, vega-lite, html, svg, etc.)
+   * @param {string|object} input - Input data for rendering
+   * @param {object} extraParams - Additional parameters
+   * @returns {Promise<object>} Render result with base64, width, height
    */
-  async renderVegaLiteToPng(spec) {
-    const specString = typeof spec === 'string' ? spec : JSON.stringify(spec);
-    const cacheKey = await this.cache.generateKey(specString, 'VEGALITE_PNG', this.themeConfig);
-
-    // Check cache first
-    const cached = await this.cache.get(cacheKey);
-    if (cached) {
-      return cached;
-    }
-
-    const response = await this._sendMessage({
-      type: 'renderVegaLite',
-      spec: specString
-    });
-
-    if (response.error) {
-      throw new Error(response.error);
-    }
-
-    // Cache the complete response (base64 + dimensions)
-    try {
-      await this.cache.set(cacheKey, response, 'VEGALITE_PNG');
-    } catch (error) {
-      // Ignore cache errors
-    }
-
-    return response;
-  }
-
-  /**
-   * Render Vega specification to PNG base64
-   */
-  async renderVegaToPng(spec) {
-    const specString = typeof spec === 'string' ? spec : JSON.stringify(spec);
-    const cacheKey = await this.cache.generateKey(specString, 'VEGA_PNG', this.themeConfig);
-
-    // Check cache first
-    const cached = await this.cache.get(cacheKey);
-    if (cached) {
-      return cached;
-    }
-
-    const response = await this._sendMessage({
-      type: 'renderVega',
-      spec: specString
-    });
-
-    if (response.error) {
-      throw new Error(response.error);
-    }
-
-    // Cache the complete response (base64 + dimensions)
-    try {
-      await this.cache.set(cacheKey, response, 'VEGA_PNG');
-    } catch (error) {
-      // Ignore cache errors
-    }
-
-    return response;
-  }
-
-  /**
-   * Render HTML to PNG base64
-   */
-  async renderHtmlToPng(html, width = 1200) {
-    const contentKey = html + width;
-    const cacheKey = await this.cache.generateKey(contentKey, 'HTML_PNG', this.themeConfig);
-
-    // Check cache first
-    const cached = await this.cache.get(cacheKey);
-    if (cached) {
-      return cached;
-    }
-
-    const response = await this._sendMessage({
-      type: 'renderHtml',
-      html: html,
-      width: width
-    });
-
-    if (response.error) {
-      throw new Error(response.error);
-    }
-
-    // Cache the complete response (base64 + dimensions)
-    try {
-      await this.cache.set(cacheKey, response, 'HTML_PNG');
-    } catch (error) {
-      // Ignore cache errors
-    }
-
-    return response;
-  }
-
-  /**
-   * Render SVG to PNG base64
-   */
-  async renderSvgToPng(svg) {
-    const cacheKey = await this.cache.generateKey(svg, 'SVG_PNG', this.themeConfig);
-
-    // Check cache first
-    const cached = await this.cache.get(cacheKey);
-    if (cached) {
-      return cached;
-    }
-
-    const response = await this._sendMessage({
-      type: 'renderSvg',
-      svg: svg
-    });
-
-    if (response.error) {
-      throw new Error(response.error);
-    }
-
-    // Cache the complete response (base64 + dimensions)
-    this.cache.set(cacheKey, response, 'SVG_PNG').then(() => {
-    }).catch(error => {
-      // Ignore cache errors
-    });
-
-    return response;
+  async render(type, input, extraParams = {}) {
+    // Generate cache type identifier
+    const cacheType = `${type.toUpperCase()}_PNG`;
+    
+    return this._renderDiagram(type, input, extraParams, cacheType);
   }
 
   /**
