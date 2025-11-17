@@ -1308,57 +1308,72 @@ class DocxExporter {
     // Right space: 6pt ≈ 0.09"
     const rightBorderAndPadding = 0.09;
 
+    const defaultLineSpacing = this.themeStyles.default.paragraph.spacing.line;
+
+    // Build common paragraph config
+    const buildParagraphConfig = (children, spacingBefore = 0, spacingAfter = 0) => ({
+      children: children,
+      spacing: this.applyPendingSpacing({
+        before: spacingBefore,
+        after: spacingAfter,
+        line: defaultLineSpacing,
+      }),
+      alignment: AlignmentType.LEFT,
+      indent: {
+        left: convertInchesToTwip(outerIndent - leftBorderAndPadding),
+        right: convertInchesToTwip(rightBorderAndPadding),
+      },
+      border: {
+        left: {
+          color: 'DFE2E5',
+          space: 6,
+          style: BorderStyle.SINGLE,
+          size: 24,
+        },
+        top: {
+          color: 'F6F8FA',
+          space: 4,
+          style: BorderStyle.SINGLE,
+          size: 1,
+        },
+        bottom: {
+          color: 'F6F8FA',
+          space: 4,
+          style: BorderStyle.SINGLE,
+          size: 1,
+        },
+        right: {
+          color: 'F6F8FA',
+          space: 6,
+          style: BorderStyle.SINGLE,
+          size: 1,
+        },
+      },
+      shading: {
+        fill: 'F6F8FA',
+      },
+    });
+
+    const childCount = node.children.length;
+    let childIndex = 0;
+
     for (const child of node.children) {
       if (child.type === 'paragraph') {
-        const children = await this.convertInlineNodes(child.children, { color: '6A737D' }); // Gray text
-        const defaultLineSpacing = this.themeStyles.default.paragraph.spacing.line;
+        const children = await this.convertInlineNodes(child.children, { color: '6A737D' });
         
-        paragraphs.push(new Paragraph({
-          children: children,
-          spacing: this.applyPendingSpacing({
-            before: 0,
-            after: 0,
-            line: defaultLineSpacing,
-          }),
-          alignment: AlignmentType.LEFT, // Explicitly set left alignment for blockquote
-          indent: {
-            left: convertInchesToTwip(outerIndent - leftBorderAndPadding),     // Compensate for left border and padding
-            right: convertInchesToTwip(rightBorderAndPadding),                 // Compensate for right padding
-          },
-          border: {
-            left: {
-              color: 'DFE2E5',         // Light gray border (matching CSS border-left: 4px solid #dfe2e5)
-              space: 6,                // 6pt ≈ inner left padding (13px ≈ 6pt)
-              style: BorderStyle.SINGLE,
-              size: 24,                // 24 = 3pt (24/8) ≈ 4px border width
-            },
-            top: {
-              color: 'F6F8FA',         // Same as background - invisible border
-              space: 4,                // 4pt = top padding (half of 8pt)
-              style: BorderStyle.SINGLE,
-              size: 1,                 // Minimal border
-            },
-            bottom: {
-              color: 'F6F8FA',         // Same as background - invisible border
-              space: 4,                // 4pt = bottom padding (half of 8pt)
-              style: BorderStyle.SINGLE,
-              size: 1,                 // Minimal border
-            },
-            right: {
-              color: 'F6F8FA',         // Same as background - invisible border
-              space: 6,                // 6pt ≈ inner right padding (13px ≈ 6pt)
-              style: BorderStyle.SINGLE,
-              size: 1,                 // Minimal border
-            },
-          },
-          shading: {
-            fill: 'F6F8FA',        // Light gray background (matching CSS background-color: #f6f8fa)
-          },
-        }));
+        // Only top-level blockquote (nestLevel === 0) gets spacing
+        const isFirst = (childIndex === 0) && (nestLevel === 0);
+        const isLast = (childIndex === childCount - 1) && (nestLevel === 0);
+        const spacingBefore = isFirst ? 200 : 0;  // 13px
+        const spacingAfter = isLast ? 300 : 0;    // 13px
+        
+        paragraphs.push(new Paragraph(buildParagraphConfig(children, spacingBefore, spacingAfter)));
+        childIndex++;
       } else if (child.type === 'blockquote') {
         // Handle nested blockquotes with increased nesting level
         const nested = await this.convertBlockquote(child, nestLevel + 1);
         paragraphs.push(...nested);
+        childIndex++;
       }
     }
 
