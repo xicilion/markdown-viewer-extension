@@ -1,5 +1,7 @@
 # Markdown Viewer
 
+[English](docs/readme/README.en.md) · [简体中文](docs/readme/README.zh-CN.md) · [繁體中文](docs/readme/README.zh-TW.md) · [日本語](docs/readme/README.ja.md) · [한국어](docs/readme/README.ko.md) · [Deutsch](docs/readme/README.de.md) · [Español](docs/readme/README.es.md) · [Français](docs/readme/README.fr.md) · [Italiano](docs/readme/README.it.md) · [Português (BR)](docs/readme/README.pt-BR.md) · [Português (PT)](docs/readme/README.pt-PT.md) · [Nederlands](docs/readme/README.nl.md) · [Polski](docs/readme/README.pl.md) · [Русский](docs/readme/README.ru.md) · [Türkçe](docs/readme/README.tr.md) · [ไทย](docs/readme/README.th.md) · [Tiếng Việt](docs/readme/README.vi.md) · [हिन्दी](docs/readme/README.hi.md) · [Bahasa Indonesia](docs/readme/README.id.md) · [Dansk](docs/readme/README.da.md) · [Suomi](docs/readme/README.fi.md) · [Norsk](docs/readme/README.no.md) · [Svenska](docs/readme/README.sv.md)
+
 **Write in Markdown, export to perfect Word with one click.**
 
 *Completely Free · Local Processing · 18+ Professional Themes · 23 Languages Support*

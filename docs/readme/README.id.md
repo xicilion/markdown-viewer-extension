@@ -1,5 +1,7 @@
 # Markdown Viewer
 
+[English](README.en.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Deutsch](README.de.md) · [Español](README.es.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Português (BR)](README.pt-BR.md) · [Português (PT)](README.pt-PT.md) · [Nederlands](README.nl.md) · [Polski](README.pl.md) · [Русский](README.ru.md) · [Türkçe](README.tr.md) · [ไทย](README.th.md) · [Tiếng Việt](README.vi.md) · [हिन्दी](README.hi.md) · [Bahasa Indonesia](README.id.md) · [Dansk](README.da.md) · [Suomi](README.fi.md) · [Norsk](README.no.md) · [Svenska](README.sv.md)
+
 **Tulis dalam Markdown, ekspor ke Word sempurna dengan satu klik.**
 
 *Sepenuhnya gratis · Pemrosesan lokal · 18+ tema profesional · Mendukung 23 bahasa*
