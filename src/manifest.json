@@ -14,7 +14,9 @@
   "host_permissions": [
     "file:///*",
     "https://*/*",
-    "http://*/*"
+    "http://*/*",
+    "https://chatgpt.com/*",
+    "https://gemini.google.com/*"
   ],
   "background": {
     "service_worker": "core/background.js"
@@ -22,13 +24,25 @@
   "content_scripts": [
     {
       "matches": [
-        "file://*/*.md", 
+        "file://*/*.md",
         "file://*/*.markdown",
         "*://*/*.md",
         "*://*/*.markdown"
       ],
-      "js": ["core/content-detector.js"],
+      "js": [
+        "core/content-detector.js"
+      ],
       "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://gemini.google.com/*"
+      ],
+      "js": [
+        "core/ai-integration.js"
+      ],
+      "run_at": "document_idle"
     }
   ],
   "web_accessible_resources": [
@@ -47,7 +61,11 @@
         "themes/code-themes/*.json",
         "themes/spacing-schemes/*.json"
       ],
-      "matches": ["file://*", "https://*/*", "http://*/*"]
+      "matches": [
+        "file://*",
+        "https://*/*",
+        "http://*/*"
+      ]
     }
   ],
   "action": {

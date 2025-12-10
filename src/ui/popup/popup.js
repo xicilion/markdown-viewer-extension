@@ -240,6 +240,14 @@ class PopupManager {
       });
     });
 
+    // Paste Markdown button
+    const pasteBtn = document.getElementById('paste-markdown-btn');
+    if (pasteBtn) {
+      pasteBtn.addEventListener('click', () => {
+        chrome.tabs.create({ url: 'ui/paste/paste.html' });
+      });
+    }
+
     const refreshBtn = document.getElementById('refresh-cache');
     const clearBtn = document.getElementById('clear-cache');
     const saveBtn = document.getElementById('save-settings');
@@ -401,7 +409,7 @@ class PopupManager {
     }
     if (usageEl) {
       usageEl.textContent = `${usagePercent}%`;
-      
+
       // Visual feedback for high usage
       if (usagePercent >= 90) {
         usageEl.style.color = 'var(--color-danger)';
@@ -530,7 +538,7 @@ class PopupManager {
         cleanup();
         resolve(false);
       };
-      
+
       // Close on click outside
       modal.onclick = (e) => {
         if (e.target === modal) {
@@ -544,7 +552,7 @@ class PopupManager {
   async clearCache() {
     const confirmMessage = translate('cache_clear_confirm');
     const confirmed = await this.showConfirm(translate('cache_clear'), confirmMessage);
-    
+
     if (!confirmed) {
       return;
     }
@@ -578,7 +586,7 @@ class PopupManager {
     try {
       const result = await chrome.storage.local.get(['markdownHistory']);
       const history = result.markdownHistory || [];
-      
+
       this.renderHistoryItems(history);
 
     } catch (error) {
@@ -658,7 +666,7 @@ class PopupManager {
   async clearHistory() {
     const confirmMessage = translate('history_clear_confirm');
     const confirmed = await this.showConfirm(translate('history_clear'), confirmMessage);
-    
+
     if (!confirmed) {
       return;
     }
@@ -679,7 +687,7 @@ class PopupManager {
       if (result.markdownViewerSettings) {
         this.settings = { ...this.settings, ...result.markdownViewerSettings };
       }
-      
+
       // Load selected theme
       const themeResult = await chrome.storage.sync.get(['selectedTheme']);
       this.currentTheme = themeResult.selectedTheme || 'default';
@@ -697,7 +705,7 @@ class PopupManager {
     const localeSelect = document.getElementById('interface-language');
     if (localeSelect) {
       localeSelect.value = this.settings.preferredLocale || DEFAULT_SETTING_LOCALE;
-      
+
       // Add change listener for immediate language change (only once)
       if (!localeSelect.dataset.listenerAdded) {
         localeSelect.dataset.listenerAdded = 'true';
@@ -708,14 +716,14 @@ class PopupManager {
             await chrome.storage.local.set({
               markdownViewerSettings: this.settings
             });
-            
+
             await Localization.setPreferredLocale(newLocale);
             chrome.runtime.sendMessage({ type: 'localeChanged', locale: newLocale }).catch(() => { });
             applyI18nText();
-            
+
             // Reload themes to update names
             this.loadThemes();
-            
+
             this.showMessage(translate('settings_language_changed'), 'success');
           } catch (error) {
             console.error('Failed to change language:', error);
@@ -724,23 +732,25 @@ class PopupManager {
         });
       }
     }
-    
+
+    // Load themes
     // Load themes
     this.loadThemes();
   }
-  
+
   async loadThemes() {
     try {
+
       // Load theme registry
       const registryResponse = await fetch(chrome.runtime.getURL('themes/registry.json'));
       const registry = await registryResponse.json();
-      
+
       // Load all theme metadata
       const themePromises = registry.themes.map(async (themeInfo) => {
         try {
           const response = await fetch(chrome.runtime.getURL(`themes/presets/${themeInfo.file}`));
           const theme = await response.json();
-          
+
           return {
             id: theme.id,
             name: theme.name,
@@ -755,19 +765,19 @@ class PopupManager {
           return null;
         }
       });
-      
+
       this.themes = (await Promise.all(themePromises)).filter(t => t !== null);
       this.registry = registry;
-      
+
       // Populate theme selector with categories
       const themeSelector = document.getElementById('theme-selector');
       if (themeSelector) {
         themeSelector.innerHTML = '';
-        
+
         // Get current locale to determine which name to use
         const locale = getUiLocale();
         const useEnglish = !locale.startsWith('zh');
-        
+
         // Group themes by category
         const themesByCategory = {};
         this.themes.forEach(theme => {
@@ -776,36 +786,36 @@ class PopupManager {
           }
           themesByCategory[theme.category].push(theme);
         });
-        
+
         // Add themes grouped by category
         Object.keys(themesByCategory).forEach(categoryId => {
           const categoryInfo = registry.categories[categoryId];
           if (!categoryInfo) return;
-          
+
           const categoryThemes = themesByCategory[categoryId];
           if (categoryThemes.length === 0) return;
-          
+
           const categoryGroup = document.createElement('optgroup');
           categoryGroup.label = useEnglish ? categoryInfo.name_en : categoryInfo.name;
-          
+
           categoryThemes.forEach(theme => {
             const option = document.createElement('option');
             option.value = theme.id;
             option.textContent = useEnglish ? theme.name_en : theme.name;
-            
+
             if (theme.id === this.currentTheme) {
               option.selected = true;
             }
-            
+
             categoryGroup.appendChild(option);
           });
-          
+
           themeSelector.appendChild(categoryGroup);
         });
-        
+
         // Update description
         this.updateThemeDescription(this.currentTheme);
-        
+
         // Add change listener
         themeSelector.addEventListener('change', (event) => {
           this.switchTheme(event.target.value);
@@ -815,27 +825,27 @@ class PopupManager {
       console.error('Failed to load themes:', error);
     }
   }
-  
+
   updateThemeDescription(themeId) {
     const theme = this.themes.find(t => t.id === themeId);
     const descEl = document.getElementById('theme-description');
-    
+
     if (descEl && theme) {
       const locale = getUiLocale();
       const useEnglish = !locale.startsWith('zh');
       descEl.textContent = useEnglish ? theme.description_en : theme.description;
     }
   }
-  
+
   async switchTheme(themeId) {
     try {
       // Save theme selection
       await chrome.storage.sync.set({ selectedTheme: themeId });
       this.currentTheme = themeId;
-      
+
       // Update description
       this.updateThemeDescription(themeId);
-      
+
       // Notify all tabs to reload theme
       const tabs = await chrome.tabs.query({});
       tabs.forEach(tab => {
@@ -846,7 +856,7 @@ class PopupManager {
           // Ignore errors for non-markdown tabs
         });
       });
-      
+
       this.showMessage(translate('settings_theme_changed'), 'success');
     } catch (error) {
       console.error('Failed to switch theme:', error);
@@ -890,7 +900,7 @@ class PopupManager {
   async resetSettings() {
     const confirmMessage = translate('settings_reset_confirm');
     const confirmed = await this.showConfirm(translate('settings_reset_btn'), confirmMessage);
-    
+
     if (!confirmed) {
       return;
     }
@@ -964,29 +974,29 @@ class PopupManager {
     try {
       // Check if file:// access is allowed
       const isAllowed = await chrome.extension.isAllowedFileSchemeAccess();
-      
+
       const warningSection = document.getElementById('file-access-warning');
-      
+
       if (!warningSection) {
         return;
       }
-      
+
       // Only show warning when permission is disabled
       if (!isAllowed) {
         // Get extension ID and create clickable link
         const extensionId = chrome.runtime.id;
         const extensionUrl = `chrome://extensions/?id=${extensionId}`;
-        
+
         const descEl = document.getElementById('file-access-warning-desc');
         if (descEl) {
-          const baseText = translate('file_access_disabled_desc_short') || 
-                          '要查看本地文件，请访问';
+          const baseText = translate('file_access_disabled_desc_short') ||
+            '要查看本地文件，请访问';
           const linkText = translate('file_access_settings_link') || '扩展设置页面';
-          const suffixText = translate('file_access_disabled_suffix') || 
-                            '并启用「允许访问文件网址」选项';
-          
+          const suffixText = translate('file_access_disabled_suffix') ||
+            '并启用「允许访问文件网址」选项';
+
           descEl.innerHTML = `${baseText} <a href="${extensionUrl}" style="color: #d97706; text-decoration: underline; cursor: pointer;">${linkText}</a> ${suffixText}`;
-          
+
           // Add click handler
           const link = descEl.querySelector('a');
           if (link) {
@@ -996,7 +1006,7 @@ class PopupManager {
             });
           }
         }
-        
+
         warningSection.style.display = 'block';
       } else {
         warningSection.style.display = 'none';

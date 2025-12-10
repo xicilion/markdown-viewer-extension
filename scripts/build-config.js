@@ -56,7 +56,9 @@ export const createBuildConfig = () => {
       'ui/popup/popup': 'src/ui/popup/popup.js',
       'ui/print/print': 'src/ui/print/print.js',
       'ui/print/print-page': 'src/ui/print/print-page.css',
-      'ui/styles': 'src/ui/styles.css'
+      'ui/styles': 'src/ui/styles.css',
+      'ui/paste/paste': 'src/ui/paste/paste.js',
+      'core/ai-integration': 'src/core/ai-integration.js'
     },
     bundle: true,
     outdir: 'dist',
@@ -93,6 +95,8 @@ export const createBuildConfig = () => {
                 { src: 'src/ui/popup/popup.css', dest: 'dist/ui/popup/popup.css' },
                 { src: 'src/ui/offscreen.html', dest: 'dist/ui/offscreen.html' },
                 { src: 'src/ui/print/print.html', dest: 'dist/ui/print/print.html' },
+                { src: 'src/ui/paste/paste.html', dest: 'dist/ui/paste/paste.html' },
+                { src: 'src/ui/paste/paste.css', dest: 'dist/ui/paste/paste.css' },
                 { src: 'node_modules/html2canvas/dist/html2canvas.min.js', dest: 'dist/html2canvas.min.js', log: '📄 Copied html2canvas library' }
               ];
 

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paste Markdown</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="paste.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="editor-pane">
+      <div class="toolbar">
+        <h2>Markdown Input</h2>
+        <div class="actions">
+          <button id="convert-btn" class="btn primary">Convert</button>
+        </div>
+      </div>
+      <textarea id="markdown-input" placeholder="Paste your Markdown here..."></textarea>
+    </div>
+    <div class="preview-pane">
+      <div class="toolbar">
+        <h2>Preview</h2>
+        <div class="actions">
+          <label style="margin-right: 10px; font-size: 13px; display: flex; align-items: center; cursor: pointer;">
+            <input type="checkbox" id="mobile-view-toggle" style="margin-right: 5px;"> Mobile View
+          </label>
+          <button id="save-image-btn" class="btn">Save as Image</button>
+        </div>
+      </div>
+      <div id="preview-container" class="markdown-body"></div>
+    </div>
+  </div>
+  <script src="../../html2canvas.min.js"></script>
+  <script src="paste.js"></script>
+</body>
+
+</html>

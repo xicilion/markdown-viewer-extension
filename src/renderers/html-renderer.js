@@ -34,7 +34,7 @@ export class HtmlRenderer extends BaseRenderer {
 
     // Sanitize HTML before rendering
     const sanitizedHtml = sanitizeHtml(htmlContent);
-    
+
     // Check if there's any visible content after sanitization
     if (!hasHtmlContent(sanitizedHtml)) {
       // If only comments or whitespace, return null to skip rendering
@@ -44,11 +44,17 @@ export class HtmlRenderer extends BaseRenderer {
     const container = this.getContainer();
     const targetWidth = extraParams.width || 1200;
     const normalizedTargetWidth = Number.isFinite(targetWidth) && targetWidth > 0 ? targetWidth : null;
-    
+
     // Apply theme font-family to HTML container
-    const fontFamily = themeConfig?.fontFamily || "'SimSun', 'Times New Roman', Times, serif";
-    container.style.cssText = `display: inline-block; position: relative; background: transparent; padding: 0; margin: 0; width: auto; font-family: ${fontFamily};`;
-    container.innerHTML = sanitizedHtml;
+    const fontFamily = themeConfig?.fontFamily || "'-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica', 'Arial', sans-serif";
+
+    // Force width if provided, otherwise auto
+    const widthStyle = normalizedTargetWidth ? `${normalizedTargetWidth}px` : 'auto';
+
+    container.style.cssText = `display: inline-block; position: relative; background: transparent; padding: 0; margin: 0; width: ${widthStyle}; font-family: ${fontFamily};`;
+
+    // Wrap sanitized HTML in markdown-body container for proper styling
+    container.innerHTML = `<div class="markdown-body">${sanitizedHtml}</div>`;
 
     // Give the layout engine a tick in the offscreen document context
     container.offsetHeight;
@@ -56,7 +62,8 @@ export class HtmlRenderer extends BaseRenderer {
 
     const rect = container.getBoundingClientRect();
     const widthFallback = normalizedTargetWidth || 1;
-    const rawWidth = rect.width || container.scrollWidth || container.offsetWidth || widthFallback;
+    // If we forced a width, use it. Otherwise measure.
+    const rawWidth = normalizedTargetWidth || rect.width || container.scrollWidth || container.offsetWidth || widthFallback;
     const measuredWidth = Math.ceil(rawWidth);
     const captureWidth = measuredWidth > 0 ? measuredWidth : widthFallback;
 

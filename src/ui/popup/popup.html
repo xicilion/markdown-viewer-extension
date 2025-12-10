@@ -16,7 +16,8 @@
         <div class="header-text">
           <h1 data-i18n="popup_title" id="extension-title" class="clickable-title">Markdown Viewer</h1>
           <div class="version-row">
-            <span class="version"><span data-i18n="popup_version_label" id="version-text">Version</span> @xicilion</span>
+            <span class="version"><span data-i18n="popup_version_label" id="version-text">Version</span>
+              @xicilion</span>
             <a href="#" id="review-link" class="review-link" title="Rate & Review">
               <span class="star-icon">⭐</span>
               <span data-i18n="popup_review_link">Rate</span>
@@ -29,6 +30,7 @@
       <button class="tab active" data-tab="history" data-i18n="tab_history"></button>
       <button class="tab" data-tab="cache" data-i18n="tab_cache"></button>
       <button class="tab" data-tab="settings" data-i18n="tab_settings"></button>
+      <button class="tab" id="paste-markdown-btn" style="margin-left: auto;">Paste MD</button>
     </div>
 
     <div class="tab-content">
@@ -47,7 +49,7 @@
         <div class="info-section">
           <h3 data-i18n="history_title"></h3>
           <div class="settings-note" style="margin-bottom: 10px;" data-i18n="history_description"></div>
-          
+
           <div class="cache-items" id="history-items" data-empty="true">
             <div class="cache-item cache-item--empty">
               <div class="empty-state-icon">🕒</div>
