@@ -17,12 +17,12 @@ async function getFileState(url) {
   try {
     const result = await chrome.storage.local.get([FILE_STATES_STORAGE_KEY]);
     let allStates = result[FILE_STATES_STORAGE_KEY] || {};
-    
+
     // Clean up old states while we're here
     const maxAge = FILE_STATE_MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
     const now = Date.now();
     let needsCleanup = false;
-    
+
     const cleanedStates = {};
     for (const [stateUrl, state] of Object.entries(allStates)) {
       const age = now - (state.lastModified || 0);
@@ -32,13 +32,13 @@ async function getFileState(url) {
         needsCleanup = true;
       }
     }
-    
+
     // Update storage if we cleaned anything
     if (needsCleanup) {
       await chrome.storage.local.set({ [FILE_STATES_STORAGE_KEY]: cleanedStates });
       allStates = cleanedStates;
     }
-    
+
     return allStates[url] || {};
   } catch (error) {
     console.error('[Background] Failed to get file state:', error);
@@ -50,14 +50,14 @@ async function saveFileState(url, state) {
   try {
     const result = await chrome.storage.local.get([FILE_STATES_STORAGE_KEY]);
     const allStates = result[FILE_STATES_STORAGE_KEY] || {};
-    
+
     // Merge with existing state
     allStates[url] = {
       ...(allStates[url] || {}),
       ...state,
       lastModified: Date.now()
     };
-    
+
     await chrome.storage.local.set({ [FILE_STATES_STORAGE_KEY]: allStates });
     return true;
   } catch (error) {
@@ -70,9 +70,9 @@ async function clearFileState(url) {
   try {
     const result = await chrome.storage.local.get([FILE_STATES_STORAGE_KEY]);
     const allStates = result[FILE_STATES_STORAGE_KEY] || {};
-    
+
     delete allStates[url];
-    
+
     await chrome.storage.local.set({ [FILE_STATES_STORAGE_KEY]: allStates });
     return true;
   } catch (error) {
@@ -88,7 +88,7 @@ async function initGlobalCacheManager() {
     const result = await chrome.storage.local.get(['markdownViewerSettings']);
     const settings = result.markdownViewerSettings || {};
     const maxCacheItems = settings.maxCacheItems || 1000;
-    
+
     globalCacheManager = new ExtensionCacheManager(maxCacheItems);
     await globalCacheManager.initDB();
     return globalCacheManager;
@@ -197,7 +197,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   // Forward unified rendering messages to offscreen document
-  if (message.action === 'RENDER_DIAGRAM') {
+  if (message.action === 'RENDER_DIAGRAM' || message.action === 'RENDER_MARKDOWN_TO_IMAGE') {
     handleRenderingRequest(message, sendResponse);
     return true; // Keep message channel open for async response
   }
@@ -230,6 +230,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'DOCX_DOWNLOAD_FINALIZE') {
     return handleDocxDownloadFinalize(message, sendResponse);
   }
+
+  // Note: downloadImage is now handled inside handleRenderingRequest for RENDER_MARKDOWN_TO_IMAGE
 });
 
 // Remove the tabs.onRemoved listener since we no longer manage tabs
@@ -375,7 +377,7 @@ async function handleRenderingRequest(message, sendResponse) {
   try {
     // Ensure offscreen document exists
     await ensureOffscreenDocument();
-    
+
     // Send message to offscreen document and wait for response
     const response = await new Promise((resolve, reject) => {
       chrome.runtime.sendMessage(message, (response) => {
@@ -393,7 +395,27 @@ async function handleRenderingRequest(message, sendResponse) {
         }
       });
     });
-    
+
+    // Handle download for RENDER_MARKDOWN_TO_IMAGE action
+    if (message.action === 'RENDER_MARKDOWN_TO_IMAGE' && response.success && response.dataUrl) {
+      // Use full path with subfolder to ensure Chrome respects the filename
+      const downloadFilename = `AI_Export/${response.filename || 'ai-response.png'}`;
+      console.log('[MD Viewer Background] Downloading with filename:', downloadFilename);
+
+      chrome.downloads.download({
+        url: response.dataUrl,
+        filename: downloadFilename,
+        saveAs: false,
+        conflictAction: 'uniquify'
+      }, (downloadId) => {
+        if (chrome.runtime.lastError) {
+          console.error('[MD Viewer Background] Download failed:', chrome.runtime.lastError);
+        } else {
+          console.log('[MD Viewer Background] Download started with ID:', downloadId);
+        }
+      });
+    }
+
     sendResponse(response);
 
   } catch (error) {
@@ -643,7 +665,7 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     const newSettings = changes.markdownViewerSettings.newValue;
     if (newSettings && newSettings.maxCacheItems) {
       const newMaxItems = newSettings.maxCacheItems;
-      
+
       // Update global cache manager's maxItems
       if (globalCacheManager) {
         globalCacheManager.maxItems = newMaxItems;

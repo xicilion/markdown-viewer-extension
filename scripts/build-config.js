@@ -57,7 +57,8 @@ export const createBuildConfig = () => {
       'ui/print/print': 'src/ui/print/print.js',
       'ui/print/print-page': 'src/ui/print/print-page.css',
       'ui/styles': 'src/ui/styles.css',
-      'ui/paste/paste': 'src/ui/paste/paste.js'
+      'ui/paste/paste': 'src/ui/paste/paste.js',
+      'core/ai-integration': 'src/core/ai-integration.js'
     },
     bundle: true,
     outdir: 'dist',

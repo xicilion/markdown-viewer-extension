@@ -60,14 +60,14 @@ chrome.runtime.sendMessage({
 
 // Message handler for rendering requests
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  
+
   if (message.type === 'setThemeConfig') {
     // Update theme configuration
     currentThemeConfig = message.config;
     sendResponse({ success: true });
     return true;
   }
-  
+
   // Handle unified render messages
   if (message.action === 'RENDER_DIAGRAM') {
     // Check message source using Chrome's sender object
@@ -76,7 +76,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (sender.tab) {
       return; // Don't send response, let background handle it
     }
-    
+
     // Enqueue render task to prevent concurrent rendering
     renderQueue = renderQueue.then(async () => {
       try {
@@ -89,7 +89,36 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       console.error('Render queue error:', error);
       sendResponse({ error: error.message });
     });
-    
+
+    return true;
+  }
+
+  // Handle Markdown/HTML to Image render request
+  if (message.action === 'RENDER_MARKDOWN_TO_IMAGE') {
+    renderQueue = renderQueue.then(async () => {
+      try {
+        const { content, contentType, width, filename } = message;
+
+        // Use HtmlRenderer
+        const renderer = rendererMap.get('html');
+        if (!renderer) throw new Error('HTML renderer not found');
+
+        // Render with specified width or default
+        const renderWidth = width || 800;
+        const result = await renderer.render(content, currentThemeConfig || {}, { width: renderWidth });
+
+        // Return the data for background to handle download
+        sendResponse({
+          success: true,
+          dataUrl: `data:image/png;base64,${result.base64}`,
+          filename: filename || 'ai-response.png'
+        });
+
+      } catch (error) {
+        console.error('Render error:', error);
+        sendResponse({ error: error.message });
+      }
+    });
     return true;
   }
 });
@@ -101,19 +130,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
  */
 async function handleRender(message) {
   const { renderType, input, themeConfig, extraParams } = message;
-  
+
   // Update theme config if provided
   if (themeConfig && themeConfig !== currentThemeConfig) {
     currentThemeConfig = themeConfig;
   }
-  
+
   // Use new renderer architecture
   const renderer = rendererMap.get(renderType);
-  
+
   if (!renderer) {
     throw new Error(`No renderer found for type: ${renderType}`);
   }
-  
+
   return await renderer.render(input, themeConfig, extraParams);
 }
 
