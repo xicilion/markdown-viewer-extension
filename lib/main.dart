@@ -849,124 +849,90 @@ class _MarkdownViewerHomeState extends State<MarkdownViewerHome> {
 
   void _showMoreMenu(BuildContext context) {
     final RenderBox button = context.findRenderObject() as RenderBox;
-    final RenderBox overlay = Navigator.of(context).overlay!.context.findRenderObject() as RenderBox;
-    final buttonPosition = button.localToGlobal(Offset.zero, ancestor: overlay);
+    final buttonPosition = button.localToGlobal(Offset.zero);
     
-    showDialog(
+    showMenu<String>(
       context: context,
-      barrierColor: Colors.transparent,
-      builder: (context) => Stack(
-        children: [
-          Positioned(
-            right: overlay.size.width - buttonPosition.dx - button.size.width,
-            top: buttonPosition.dy + button.size.height + 8,
-            child: Material(
-              elevation: 8,
-              borderRadius: BorderRadius.circular(4),
-              child: IntrinsicWidth(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _buildMenuItem(
-                      context,
-                      icon: AntIcons.folder_open_outline,
-                      title: localization.t('open_file'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        _openFile();
-                      },
-                    ),
-                    if (_hasContent)
-                      _buildMenuItem(
-                        context,
-                        icon: AntIcons.save,
-                        title: localization.t('save_file'),
-                        onTap: () {
-                          Navigator.pop(context);
-                          _saveToLibrary();
-                        },
-                      ),
-                    _buildMenuItem(
-                      context,
-                      icon: AntIcons.bg_colors,
-                      title: localization.t('theme'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        _showThemePicker();
-                      },
-                    ),
-                    _buildMenuItem(
-                      context,
-                      icon: AntIcons.font_size,
-                      title: localization.t('zoom'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        _showFontSizeSlider();
-                      },
-                    ),
-                    _buildMenuItem(
-                      context,
-                      icon: AntIcons.global,
-                      title: localization.t('language'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        _showLanguagePicker();
-                      },
-                    ),
-                    const Divider(height: 1),
-                    _buildMenuItem(
-                      context,
-                      icon: AntIcons.delete_outline,
-                      title: localization.t('cache_clear'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        _clearCache();
-                      },
-                    ),
-                    _buildMenuItem(
-                      context,
-                      icon: AntIcons.info_circle_outline,
-                      title: localization.t('about'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        _showAbout();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
+      position: RelativeRect.fromLTRB(
+        buttonPosition.dx,
+        buttonPosition.dy + button.size.height,
+        buttonPosition.dx + button.size.width,
+        buttonPosition.dy + button.size.height,
       ),
-    );
+      items: [
+        PopupMenuItem<String>(
+          value: 'open',
+          child: _buildMenuItemContent(AntIcons.folder_open_outline, localization.t('open_file')),
+        ),
+        if (_hasContent)
+          PopupMenuItem<String>(
+            value: 'save',
+            child: _buildMenuItemContent(AntIcons.save, localization.t('save_file')),
+          ),
+        PopupMenuItem<String>(
+          value: 'theme',
+          child: _buildMenuItemContent(AntIcons.bg_colors, localization.t('theme')),
+        ),
+        PopupMenuItem<String>(
+          value: 'zoom',
+          child: _buildMenuItemContent(AntIcons.font_size, localization.t('zoom')),
+        ),
+        PopupMenuItem<String>(
+          value: 'language',
+          child: _buildMenuItemContent(AntIcons.global, localization.t('language')),
+        ),
+        const PopupMenuDivider(),
+        PopupMenuItem<String>(
+          value: 'clear_cache',
+          child: _buildMenuItemContent(AntIcons.delete_outline, localization.t('cache_clear')),
+        ),
+        PopupMenuItem<String>(
+          value: 'about',
+          child: _buildMenuItemContent(AntIcons.info_circle_outline, localization.t('about')),
+        ),
+      ],
+    ).then((value) {
+      if (value == null) return;
+      switch (value) {
+        case 'open':
+          _openFile();
+          break;
+        case 'save':
+          _saveToLibrary();
+          break;
+        case 'theme':
+          _showThemePicker();
+          break;
+        case 'zoom':
+          _showFontSizeSlider();
+          break;
+        case 'language':
+          _showLanguagePicker();
+          break;
+        case 'clear_cache':
+          _clearCache();
+          break;
+        case 'about':
+          _showAbout();
+          break;
+      }
+    });
   }
 
-  Widget _buildMenuItem(BuildContext context, {
-    required IconData icon,
-    required String title,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: 20),
-            const SizedBox(width: 16),
-            Text(title),
-            const SizedBox(width: 24),
-          ],
-        ),
-      ),
+  Widget _buildMenuItemContent(IconData icon, String title) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 20),
+        const SizedBox(width: 16),
+        Text(title),
+      ],
     );
   }
 
   Widget _buildContentView() {
     return SafeArea(
+      bottom: false, // Allow content to extend to bottom edge on iOS
       child: WebViewWidget(controller: _controller),
     );
   }
@@ -975,6 +941,7 @@ class _MarkdownViewerHomeState extends State<MarkdownViewerHome> {
     final recentFiles = recentFilesService.getAll();
     
     return SafeArea(
+      bottom: false, // Allow content to extend to bottom edge on iOS
       child: Stack(
         children: [
           // Hidden WebView (still needs to be in widget tree for initialization)
@@ -1213,44 +1180,15 @@ class _TocDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: SafeArea(
-        child: Column(
-          children: [
-            // Header
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Theme.of(context).dividerColor),
+        child: headings.isEmpty
+            ? Center(
+                child: Text(
+                  localization.t('no_headings'),
+                  style: const TextStyle(color: Colors.grey),
                 ),
-              ),
-              child: Row(
-                children: [
-                  const Icon(AntIcons.unordered_list),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      localization.t('toc'),
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(AntIcons.close),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
-            ),
-            // Heading list
-            Expanded(
-              child: headings.isEmpty
-                  ? Center(
-                      child: Text(
-                        localization.t('no_headings'),
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                    )
-                  : ListView.builder(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
+              )
+            : ListView.builder(
+                padding: const EdgeInsets.symmetric(vertical: 8),
                       itemCount: headings.length,
                       itemBuilder: (context, index) {
                         final heading = headings[index];
@@ -1258,26 +1196,27 @@ class _TocDrawer extends StatelessWidget {
                         final text = heading['text'] as String? ?? '';
                         final id = heading['id'] as String? ?? '';
 
-                        return ListTile(
-                          contentPadding: EdgeInsets.only(
-                            left: 16.0 + (level - 1) * 16.0,
-                            right: 16,
-                          ),
-                          title: Text(
-                            text,
-                            style: TextStyle(
-                              fontSize: level == 1 ? 16 : (level == 2 ? 15 : 14),
-                              fontWeight: level <= 2 ? FontWeight.w600 : FontWeight.normal,
-                              color: level > 3 ? Theme.of(context).hintColor : null,
+                        return InkWell(
+                          onTap: () => onHeadingTap(id),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: 16.0 + (level - 1) * 16.0,
+                              right: 16,
+                              top: 6,
+                              bottom: 6,
+                            ),
+                            child: Text(
+                              text,
+                              style: TextStyle(
+                                fontSize: level == 1 ? 16 : (level == 2 ? 15 : 14),
+                                fontWeight: level <= 2 ? FontWeight.w600 : FontWeight.normal,
+                                color: level > 3 ? Theme.of(context).hintColor : null,
+                              ),
                             ),
                           ),
-                          onTap: () => onHeadingTap(id),
                         );
                       },
                     ),
-            ),
-          ],
-        ),
       ),
     );
   }
