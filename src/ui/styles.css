@@ -300,7 +300,7 @@ body.toc-hidden #markdown-wrapper {
   height: auto;
 }
 
-#markdown-content .diagram-svg svg {
+#markdown-content .diagram-block svg {
   width: 100%;
   height: auto;
 }
