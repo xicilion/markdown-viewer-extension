@@ -157,6 +157,9 @@ class DocxExporter {
       convertInlineNodes: (nodes, style) => this.inlineConverter!.convertInlineNodes(nodes, style)
     });
 
+    // Set up the child node converter for blockquote (allows blockquotes to contain any content)
+    this.blockquoteConverter.setConvertChildNode((node) => this.convertNode(node));
+
     this.listConverter = createListConverter({
       themeStyles: this.themeStyles,
       convertInlineNodes: (nodes, style) => this.inlineConverter!.convertInlineNodes(nodes, style),

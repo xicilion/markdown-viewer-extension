@@ -1,98 +1,166 @@
 // Blockquote conversion for DOCX export
+// Uses a single-cell table to create a true container that supports nested content
 
 import {
   Paragraph,
-  TextRun,
+  Table,
+  TableRow,
+  TableCell,
   AlignmentType,
   BorderStyle,
+  WidthType,
+  TableLayoutType,
   convertInchesToTwip,
+  type IParagraphOptions,
+  type ParagraphChild,
+  type FileChild,
 } from 'docx';
-import type { DOCXThemeStyles, DOCXBlockquoteNode } from '../types/docx';
+import type { DOCXThemeStyles, DOCXBlockquoteNode, DOCXASTNode } from '../types/docx';
 import type { InlineResult, InlineNode } from './docx-inline-converter';
 
 type ConvertInlineNodesFunction = (children: InlineNode[], options?: { color?: string }) => Promise<InlineResult[]>;
+type ConvertChildNodeFunction = (node: DOCXASTNode) => Promise<FileChild | FileChild[] | null>;
 
 interface BlockquoteConverterOptions {
   themeStyles: DOCXThemeStyles;
   convertInlineNodes: ConvertInlineNodesFunction;
+  convertChildNode?: ConvertChildNodeFunction;
 }
 
 export interface BlockquoteConverter {
-  convertBlockquote(node: DOCXBlockquoteNode, nestLevel?: number): Promise<Paragraph[]>;
+  convertBlockquote(node: DOCXBlockquoteNode, nestLevel?: number): Promise<Table>;
+  setConvertChildNode(fn: ConvertChildNodeFunction): void;
 }
 
+// Blockquote style constants
+const BLOCKQUOTE_STYLES = {
+  leftBorderColor: 'DFE2E5',
+  leftBorderSize: 18,
+};
+
 /**
- * Create a blockquote converter
+ * Create a blockquote converter using table-based approach
+ * This allows true nesting and supports any content type inside blockquotes
  * @param options - Configuration options
  * @returns Blockquote converter
  */
-export function createBlockquoteConverter({ themeStyles, convertInlineNodes }: BlockquoteConverterOptions): BlockquoteConverter {
-  // Default spacing values
+export function createBlockquoteConverter({ themeStyles, convertInlineNodes, convertChildNode: initialConvertChildNode }: BlockquoteConverterOptions): BlockquoteConverter {
   const defaultSpacing = themeStyles.default?.paragraph?.spacing || { before: 0, line: 276 };
+  const defaultLineSpacing = defaultSpacing.line ?? 276;
   
+  // Calculate cell padding to compensate for line height bottom spacing
+  // Word's line height adds extra space BELOW text (not evenly distributed)
+  // So we need to add equivalent top padding to balance the visual appearance
+  const lineSpacingExtra = defaultLineSpacing - 240; // Extra spacing from line height (240 = single line)
+  const basePadding = 80;
+  const cellPadding = {
+    top: basePadding + lineSpacingExtra, // Compensate for full bottom spacing from line height
+    bottom: 0,
+    left: 200,
+    right: 100,
+  };
+
+  // Mutable reference to convertChildNode (set later to avoid circular dependency)
+  let convertChildNode: ConvertChildNodeFunction | undefined = initialConvertChildNode;
+
   /**
-   * Convert blockquote node to DOCX paragraphs
+   * Set the convertChildNode function (called after all converters are initialized)
+   */
+  function setConvertChildNode(fn: ConvertChildNodeFunction): void {
+    convertChildNode = fn;
+  }
+
+  /**
+   * Convert a paragraph node inside blockquote
+   */
+  async function convertBlockquoteParagraph(child: DOCXASTNode, isFirst: boolean): Promise<Paragraph> {
+    const children = await convertInlineNodes(child.children as InlineNode[]);
+    
+    const paragraphConfig: IParagraphOptions = {
+      children: children as ParagraphChild[],
+      spacing: { 
+        before: isFirst ? 0 : 120, 
+        after: 0, 
+        line: defaultLineSpacing 
+      },
+      alignment: AlignmentType.LEFT,
+    };
+    
+    return new Paragraph(paragraphConfig);
+  }
+
+  /**
+   * Convert blockquote node to a DOCX Table (single-cell table as container)
    * @param node - Blockquote AST node
    * @param nestLevel - Current nesting level (default: 0)
-   * @returns Array of DOCX Paragraphs
+   * @returns DOCX Table representing the blockquote
    */
-  async function convertBlockquote(node: DOCXBlockquoteNode, nestLevel = 0): Promise<Paragraph[]> {
-    const paragraphs: Paragraph[] = [];
-    const outerIndent = 0.3 + (nestLevel * 0.3);
-    const leftBorderAndPadding = 0.13;
-    const rightBorderAndPadding = 0.09;
+  async function convertBlockquote(node: DOCXBlockquoteNode, nestLevel = 0): Promise<Table> {
+    const cellChildren: FileChild[] = [];
 
-    const defaultLineSpacing = defaultSpacing.line ?? 276;
-    const compressedLineSpacing = Math.round(240 + (defaultLineSpacing - 240) / 4);
-    const lineSpacingExtra = compressedLineSpacing - 240;
-    const originalHalfSpacing = (defaultSpacing.before ?? 0) - (defaultLineSpacing - 240) / 2;
-    const blockquoteInterParagraphSpacing = originalHalfSpacing + lineSpacingExtra / 2;
-
-    const buildParagraphConfig = (children: InlineResult[], spacingBefore = 0, spacingAfter = 0) => ({
-      children: children as TextRun[],
-      spacing: { before: spacingBefore, after: spacingAfter, line: compressedLineSpacing },
-      alignment: AlignmentType.LEFT,
-      indent: {
-        left: convertInchesToTwip(outerIndent - leftBorderAndPadding),
-        right: convertInchesToTwip(rightBorderAndPadding),
-      },
-      border: {
-        left: { color: 'DFE2E5', space: 6, style: BorderStyle.SINGLE, size: 24 },
-        top: { color: 'F6F8FA', space: 4, style: BorderStyle.SINGLE, size: 1 },
-        bottom: { color: 'F6F8FA', space: 4, style: BorderStyle.SINGLE, size: 1 },
-        right: { color: 'F6F8FA', space: 6, style: BorderStyle.SINGLE, size: 1 },
-      },
-      shading: { fill: 'F6F8FA' },
-    });
-
-    const childCount = node.children.length;
-    let childIndex = 0;
-
+    let isFirst = true;
     for (const child of node.children) {
       if (child.type === 'paragraph') {
-        const children = await convertInlineNodes(child.children as InlineNode[], { color: '6A737D' });
-        const isFirst = (childIndex === 0);
-        const isLast = (childIndex === childCount - 1);
-
-        let spacingBefore = 0;
-        if (isFirst && nestLevel === 0) {
-          spacingBefore = 200;
-        } else if (!isFirst) {
-          spacingBefore = blockquoteInterParagraphSpacing;
-        }
-
-        const spacingAfter = (isLast && nestLevel === 0) ? 300 : 0;
-        paragraphs.push(new Paragraph(buildParagraphConfig(children, spacingBefore, spacingAfter)));
-        childIndex++;
+        cellChildren.push(await convertBlockquoteParagraph(child, isFirst));
+        isFirst = false;
       } else if (child.type === 'blockquote') {
-        const nested = await convertBlockquote(child as DOCXBlockquoteNode, nestLevel + 1);
-        paragraphs.push(...nested);
-        childIndex++;
+        // Nested blockquote: recursively create another table
+        const nestedTable = await convertBlockquote(child as DOCXBlockquoteNode, nestLevel + 1);
+        cellChildren.push(nestedTable);
+        isFirst = false;
+      } else if (convertChildNode) {
+        // Use generic converter for other node types (code, table, etc.)
+        const converted = await convertChildNode(child);
+        if (converted) {
+          if (Array.isArray(converted)) {
+            cellChildren.push(...converted);
+          } else {
+            cellChildren.push(converted);
+          }
+        }
+        isFirst = false;
       }
     }
 
-    return paragraphs;
+    // Ensure at least one paragraph in the cell (Word requirement)
+    if (cellChildren.length === 0) {
+      cellChildren.push(new Paragraph({ text: '' }));
+    }
+
+    // Create the table cell with blockquote styling
+    const cell = new TableCell({
+      children: cellChildren,
+      margins: cellPadding,
+      borders: {
+        top: { style: BorderStyle.SINGLE, size: 0, color: 'FFFFFF' },
+        bottom: { style: BorderStyle.SINGLE, size: 0, color: 'FFFFFF' },
+        right: { style: BorderStyle.SINGLE, size: 0, color: 'FFFFFF' },
+        left: { 
+          style: BorderStyle.SINGLE, 
+          size: BLOCKQUOTE_STYLES.leftBorderSize, 
+          color: BLOCKQUOTE_STYLES.leftBorderColor 
+        },
+      },
+    });
+
+    // Create single-row table
+    const row = new TableRow({
+      children: [cell],
+    });
+
+    // Create table with full width
+    const table = new Table({
+      rows: [row],
+      width: { size: 100, type: WidthType.PERCENTAGE },
+      layout: TableLayoutType.FIXED,
+      indent: {
+        size: convertInchesToTwip(0.1 * nestLevel),
+        type: WidthType.DXA,
+      },
+    });
+
+    return table;
   }
 
-  return { convertBlockquote };
+  return { convertBlockquote, setConvertChildNode };
 }
