@@ -72,6 +72,12 @@ class _MarkdownViewerHomeState extends State<MarkdownViewerHome> {
   String? _currentFilePath;
   List<Map<String, dynamic>> _headings = [];
   
+  // Export progress state
+  bool _isExporting = false;
+  int _exportProgress = 0;
+  int _exportTotal = 0;
+  String _exportPhase = 'processing';
+  
   // Platform channel for receiving files from Android/iOS
   static const _fileChannel = MethodChannel('com.example.markdown_viewer_mobile/file');
 
@@ -367,9 +373,80 @@ class _MarkdownViewerHomeState extends State<MarkdownViewerHome> {
             debugPrint('[WebView] ${payload['message']}');
           }
           break;
+
+        case 'STORAGE_GET':
+          if (payload is Map && isEnvelope) {
+            _handleStorageGet(Map<String, dynamic>.from(payload), envelopeId!);
+          }
+          break;
+
+        case 'STORAGE_SET':
+          if (payload is Map && isEnvelope) {
+            _handleStorageSet(Map<String, dynamic>.from(payload), envelopeId!);
+          }
+          break;
+
+        case 'EXPORT_PROGRESS':
+          if (payload is Map) {
+            final completed = payload['completed'] as int? ?? 0;
+            final total = payload['total'] as int? ?? 0;
+            final phase = payload['phase'] as String? ?? 'processing';
+            _updateExportProgress(completed, total, phase);
+          }
+          break;
+
+        case 'EXPORT_ERROR':
+          if (payload is Map) {
+            _hideExportProgress();
+            final error = payload['error'] as String? ?? localization.t('docx_export_failed_default');
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(error)),
+            );
+          }
+          break;
       }
     } catch (e) {
       debugPrint('[Mobile] Message handler error: $e');
+    }
+  }
+
+  Future<void> _handleStorageGet(Map<String, dynamic> payload, String requestId) async {
+    try {
+      final keys = payload['keys'] as List?;
+      if (keys == null) {
+        _respondToWebViewEnvelope(requestId, data: {});
+        return;
+      }
+      
+      final result = <String, dynamic>{};
+      for (final key in keys) {
+        if (key == 'selectedTheme') {
+          result['selectedTheme'] = settingsService.theme;
+        }
+        // Add more keys as needed
+      }
+      
+      _respondToWebViewEnvelope(requestId, data: result);
+    } catch (e) {
+      debugPrint('[Mobile] Storage get error: $e');
+      _respondToWebViewEnvelope(requestId, error: e.toString());
+    }
+  }
+
+  Future<void> _handleStorageSet(Map<String, dynamic> payload, String requestId) async {
+    try {
+      final items = payload['items'] as Map?;
+      if (items != null) {
+        if (items.containsKey('selectedTheme')) {
+          settingsService.theme = items['selectedTheme'] as String;
+        }
+        // Add more keys as needed
+      }
+      
+      _respondToWebViewEnvelope(requestId, data: {'success': true});
+    } catch (e) {
+      debugPrint('[Mobile] Storage set error: $e');
+      _respondToWebViewEnvelope(requestId, error: e.toString());
     }
   }
 
@@ -405,11 +482,15 @@ class _MarkdownViewerHomeState extends State<MarkdownViewerHome> {
     String requestId,
   ) async {
     try {
+      // Update progress to sharing phase
+      _updateExportProgress(_exportProgress, _exportTotal, 'sharing');
+      
       final data = payload['data'] as String?;
       final filename = payload['filename'] as String?;
       final mimeType = payload['mimeType'] as String?;
 
       if (data == null || filename == null) {
+        _hideExportProgress();
         _respondToWebViewEnvelope(requestId, error: 'Invalid download request');
         return;
       }
@@ -419,6 +500,8 @@ class _MarkdownViewerHomeState extends State<MarkdownViewerHome> {
       final file = File('${tempDir.path}/$filename');
       await file.writeAsBytes(bytes);
 
+      _hideExportProgress();
+      
       await Share.shareXFiles(
         [XFile(file.path, mimeType: mimeType)],
         sharePositionOrigin: const Rect.fromLTWH(0, 0, 100, 100),
@@ -426,6 +509,7 @@ class _MarkdownViewerHomeState extends State<MarkdownViewerHome> {
 
       _respondToWebViewEnvelope(requestId, data: {'success': true});
     } catch (e) {
+      _hideExportProgress();
       _respondToWebViewEnvelope(requestId, error: e.toString());
     }
   }
@@ -791,6 +875,50 @@ class _MarkdownViewerHomeState extends State<MarkdownViewerHome> {
     }
   }
 
+  /// Update export progress
+  void _updateExportProgress(int completed, int total, String phase) {
+    setState(() {
+      _isExporting = true;
+      _exportProgress = completed;
+      _exportTotal = total;
+      _exportPhase = phase;
+    });
+  }
+
+  /// Hide export progress
+  void _hideExportProgress() {
+    setState(() {
+      _isExporting = false;
+      _exportProgress = 0;
+      _exportTotal = 0;
+      _exportPhase = 'processing';
+    });
+  }
+
+  /// Export current file to DOCX
+  Future<void> _exportDocx() async {
+    if (!_hasContent) return;
+    
+    setState(() {
+      _isExporting = true;
+      _exportProgress = 0;
+      _exportTotal = 0;
+      _exportPhase = 'processing';
+    });
+    
+    try {
+      await _controller.runJavaScript('window.exportDocx()');
+    } catch (e) {
+      debugPrint('[Mobile] Export DOCX error: $e');
+      _hideExportProgress();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(localization.t('docx_export_failed_default'))),
+        );
+      }
+    }
+  }
+
   Future<void> _clearCache() async {
     try {
       await _controller.runJavaScript(
@@ -923,72 +1051,126 @@ class _MarkdownViewerHomeState extends State<MarkdownViewerHome> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: _headings.isNotEmpty ? _TocDrawer(
-        headings: _headings,
-        onHeadingTap: (id) {
-          // Close drawer first
-          _scaffoldKey.currentState?.closeDrawer();
-          // Escape id for JavaScript
-          final escapedId = id
-              .replaceAll('\\', '\\\\')
-              .replaceAll("'", "\\'");
-          // Scroll to heading with offset for better visibility
-          Future.delayed(const Duration(milliseconds: 100), () {
-            _controller.runJavaScript('''
-              (function() {
-                var el = document.getElementById('$escapedId');
-                if (el) {
-                  var y = el.getBoundingClientRect().top + window.scrollY - 20;
-                  window.scrollTo({top: y, behavior: 'smooth'});
-                }
-              })();
-            ''');
-          });
-        },
-      ) : null,
-      appBar: AppBar(
-        titleSpacing: 0,
-        leadingWidth: 0,
-        leading: const SizedBox.shrink(),
-        title: Row(
-          children: [
-            // Left side: TOC only
-            IconButton(
-              icon: const Icon(AntIcons.menu),
-              onPressed: _hasContent ? _showToc : null,
-              tooltip: localization.t('toc'),
+    return Stack(
+      children: [
+        Scaffold(
+          key: _scaffoldKey,
+          drawer: _headings.isNotEmpty ? _TocDrawer(
+            headings: _headings,
+            onHeadingTap: (id) {
+              // Close drawer first
+              _scaffoldKey.currentState?.closeDrawer();
+              // Escape id for JavaScript
+              final escapedId = id
+                  .replaceAll('\\', '\\\\')
+                  .replaceAll("'", "\\'");
+              // Scroll to heading with offset for better visibility
+              Future.delayed(const Duration(milliseconds: 100), () {
+                _controller.runJavaScript('''
+                  (function() {
+                    var el = document.getElementById('$escapedId');
+                    if (el) {
+                      var y = el.getBoundingClientRect().top + window.scrollY - 20;
+                      window.scrollTo({top: y, behavior: 'smooth'});
+                    }
+                  })();
+                ''');
+              });
+            },
+          ) : null,
+          appBar: AppBar(
+            titleSpacing: 0,
+            leadingWidth: 0,
+            leading: const SizedBox.shrink(),
+            title: Row(
+              children: [
+                // Left side: TOC only
+                IconButton(
+                  icon: const Icon(AntIcons.menu),
+                  onPressed: _hasContent ? _showToc : null,
+                  tooltip: localization.t('toc'),
+                ),
+                // Center title (flexible)
+                Expanded(
+                  child: Text(
+                    _hasContent ? (_currentFilename ?? '') : localization.t('extensionName'),
+                    style: const TextStyle(fontSize: 16),
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                // Right side: Share (More is in actions)
+                if (_hasContent)
+                  IconButton(
+                    icon: const Icon(AntIcons.share_alt),
+                    onPressed: _shareFile,
+                    tooltip: localization.t('share'),
+                  ),
+              ],
             ),
-            // Center title (flexible)
-            Expanded(
-              child: Text(
-                _hasContent ? (_currentFilename ?? '') : localization.t('extensionName'),
-                style: const TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
+            actions: [
+              Builder(
+                builder: (context) => IconButton(
+                  icon: const Icon(AntIcons.ellipsis),
+                  tooltip: localization.t('more'),
+                  onPressed: () => _showMoreMenu(context),
+                ),
               ),
-            ),
-            // Right side: Share (More is in actions)
-            if (_hasContent)
-              IconButton(
-                icon: const Icon(AntIcons.share_alt),
-                onPressed: _shareFile,
-                tooltip: localization.t('share'),
-              ),
-          ],
+            ],
+          ),
+          body: _hasContent ? _buildContentView() : _buildEmptyState(),
         ),
-        actions: [
-          Builder(
-            builder: (context) => IconButton(
-              icon: const Icon(AntIcons.ellipsis),
-              tooltip: localization.t('more'),
-              onPressed: () => _showMoreMenu(context),
+        // Export progress overlay
+        if (_isExporting)
+          _buildExportProgressOverlay(),
+      ],
+    );
+  }
+
+  Widget _buildExportProgressOverlay() {
+    String phaseText;
+    switch (_exportPhase) {
+      case 'generating':
+        phaseText = localization.t('exporting');
+        break;
+      case 'sharing':
+        phaseText = localization.t('preparing_share');
+        break;
+      default:
+        phaseText = localization.t('exporting');
+    }
+    
+    return Container(
+      color: Colors.black54,
+      child: Center(
+        child: Card(
+          margin: const EdgeInsets.all(32),
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CircularProgressIndicator(),
+                const SizedBox(height: 16),
+                Text(
+                  phaseText,
+                  style: const TextStyle(fontSize: 16),
+                ),
+                if (_exportTotal > 0) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    '$_exportProgress / $_exportTotal',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ],
             ),
           ),
-        ],
+        ),
       ),
-      body: _hasContent ? _buildContentView() : _buildEmptyState(),
     );
   }
 
@@ -1013,6 +1195,11 @@ class _MarkdownViewerHomeState extends State<MarkdownViewerHome> {
           PopupMenuItem<String>(
             value: 'save',
             child: _buildMenuItemContent(AntIcons.save, localization.t('save_file')),
+          ),
+        if (_hasContent)
+          PopupMenuItem<String>(
+            value: 'export_docx',
+            child: _buildMenuItemContent(AntIcons.file_word, localization.t('export_docx')),
           ),
         PopupMenuItem<String>(
           value: 'theme',
@@ -1044,6 +1231,9 @@ class _MarkdownViewerHomeState extends State<MarkdownViewerHome> {
           break;
         case 'save':
           _saveToLibrary();
+          break;
+        case 'export_docx':
+          _exportDocx();
           break;
         case 'theme':
           _showThemePicker();

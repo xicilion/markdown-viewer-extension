@@ -179,6 +179,18 @@
     "message": "Xuất thất bại",
     "description": "Fallback message when DOCX export fails"
   },
+  "export_docx": {
+    "message": "Chia sẻ dưới dạng Word",
+    "description": "Menu item for exporting to DOCX"
+  },
+  "export_docx_success": {
+    "message": "Xuất hoàn tất",
+    "description": "Toast when DOCX export succeeds"
+  },
+  "exporting": {
+    "message": "Đang chuẩn bị tài liệu Word...",
+    "description": "Toast shown during export"
+  },
   "extensionDescription": {
     "message": "Xem tệp Markdown với tô sáng cú pháp và công cụ xuất thông minh",
     "description": "Extension description shown in Chrome Web Store"
@@ -286,6 +298,10 @@
   "popup_version_label": {
     "message": "Phiên bản {0}",
     "description": "Shows the extension version in the header"
+  },
+  "preparing_share": {
+    "message": "Đang chuẩn bị chia sẻ...",
+    "description": "Progress text when preparing to share"
   },
   "recent_files": {
     "message": "Tệp gần đây",

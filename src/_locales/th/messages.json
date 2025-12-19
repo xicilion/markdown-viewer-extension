@@ -179,6 +179,18 @@
     "message": "การส่งออกล้มเหลว",
     "description": "Fallback message when DOCX export fails"
   },
+  "export_docx": {
+    "message": "แชร์เป็น Word",
+    "description": "Menu item for exporting to DOCX"
+  },
+  "export_docx_success": {
+    "message": "ส่งออกเสร็จสิ้น",
+    "description": "Toast when DOCX export succeeds"
+  },
+  "exporting": {
+    "message": "กำลังเตรียมเอกสาร Word...",
+    "description": "Toast shown during export"
+  },
   "extensionDescription": {
     "message": "ดูไฟล์ Markdown ด้วยการไฮไลท์ไวยากรณ์และเครื่องมือส่งออกที่ชาญฉลาด",
     "description": "Extension description shown in Chrome Web Store"
@@ -286,6 +298,10 @@
   "popup_version_label": {
     "message": "เวอร์ชัน {0}",
     "description": "Shows the extension version in the header"
+  },
+  "preparing_share": {
+    "message": "กำลังเตรียมแชร์...",
+    "description": "Progress text when preparing to share"
   },
   "recent_files": {
     "message": "ไฟล์ล่าสุด",

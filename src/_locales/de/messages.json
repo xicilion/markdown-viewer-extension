@@ -179,6 +179,18 @@
     "message": "Export fehlgeschlagen",
     "description": "Standardmeldung bei Exportfehler"
   },
+  "export_docx": {
+    "message": "Als Word teilen",
+    "description": "Menu item for exporting to DOCX"
+  },
+  "export_docx_success": {
+    "message": "Export abgeschlossen",
+    "description": "Toast when DOCX export succeeds"
+  },
+  "exporting": {
+    "message": "Word-Dokument wird vorbereitet...",
+    "description": "Toast shown during export"
+  },
   "extensionDescription": {
     "message": "Markdown-Dateien mit Syntaxhervorhebung und smarten Exportwerkzeugen anzeigen",
     "description": "Beschreibung der Erweiterung im Chrome Web Store"
@@ -286,6 +298,10 @@
   "popup_version_label": {
     "message": "Version {0}",
     "description": "Zeigt die Erweiterungsversion im Header"
+  },
+  "preparing_share": {
+    "message": "Freigabe wird vorbereitet...",
+    "description": "Progress text when preparing to share"
   },
   "recent_files": {
     "message": "Zuletzt geöffnet",

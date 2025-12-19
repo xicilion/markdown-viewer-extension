@@ -387,16 +387,38 @@ async function applyThemeData(jsonString: string): Promise<void> {
  */
 async function handleExportDocx(): Promise<void> {
   try {
+    // Convert filename from .md to .docx
+    let docxFilename = currentFilename || 'document.docx';
+    if (docxFilename.toLowerCase().endsWith('.md')) {
+      docxFilename = docxFilename.slice(0, -3) + '.docx';
+    } else if (docxFilename.toLowerCase().endsWith('.markdown')) {
+      docxFilename = docxFilename.slice(0, -9) + '.docx';
+    } else if (!docxFilename.toLowerCase().endsWith('.docx')) {
+      docxFilename = docxFilename + '.docx';
+    }
+
     const exporter = new DocxExporter(createPluginRenderer());
-    const result = await exporter.exportToDocx(currentMarkdown, currentFilename);
+    
+    // Report progress to Flutter
+    const onProgress = (completed: number, total: number) => {
+      bridge.postMessage('EXPORT_PROGRESS', { 
+        completed, 
+        total,
+        phase: 'processing' // processing, packaging, sharing
+      });
+    };
+    
+    const result = await exporter.exportToDocx(currentMarkdown, docxFilename, onProgress);
 
     if (!result.success) {
       throw new Error(result.error || 'Export failed');
     }
 
   } catch (error) {
-    console.error('[Mobile] DOCX export failed:', error);
-    bridge.postMessage('EXPORT_ERROR', { error: (error as Error).message });
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const errStack = error instanceof Error ? error.stack : '';
+    console.error('[Mobile] DOCX export failed:', errMsg, errStack);
+    bridge.postMessage('EXPORT_ERROR', { error: errMsg });
   }
 }
 

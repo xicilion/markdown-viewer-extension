@@ -179,6 +179,18 @@
     "message": "Exportation échouée",
     "description": "Message par défaut quand l'export échoue"
   },
+  "export_docx": {
+    "message": "Partager en Word",
+    "description": "Menu item for exporting to DOCX"
+  },
+  "export_docx_success": {
+    "message": "Export terminé",
+    "description": "Toast when DOCX export succeeds"
+  },
+  "exporting": {
+    "message": "Préparation du document Word...",
+    "description": "Toast shown during export"
+  },
   "extensionDescription": {
     "message": "Affichez les fichiers Markdown avec surlignage syntaxique et outils d'export avancés",
     "description": "Description de l'extension affichée dans le Chrome Web Store"
@@ -286,6 +298,10 @@
   "popup_version_label": {
     "message": "Version {0}",
     "description": "Affiche la version de l'extension dans l'en-tête"
+  },
+  "preparing_share": {
+    "message": "Préparation du partage...",
+    "description": "Progress text when preparing to share"
   },
   "recent_files": {
     "message": "Fichiers récents",

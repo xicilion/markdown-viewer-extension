@@ -179,6 +179,18 @@
     "message": "エクスポートに失敗しました",
     "description": "エクスポート失敗時のデフォルトメッセージ"
   },
+  "export_docx": {
+    "message": "Wordで共有",
+    "description": "Menu item for exporting to DOCX"
+  },
+  "export_docx_success": {
+    "message": "エクスポート完了",
+    "description": "Toast when DOCX export succeeds"
+  },
+  "exporting": {
+    "message": "Word文書を準備中...",
+    "description": "Toast shown during export"
+  },
   "extensionDescription": {
     "message": "Markdown ファイルをシンタックスハイライト付きで表示し、スマートな書き出しツールを提供します",
     "description": "Chrome ウェブストアに表示される説明"
@@ -286,6 +298,10 @@
   "popup_version_label": {
     "message": "バージョン {0}",
     "description": "ヘッダーに拡張機能のバージョンを表示"
+  },
+  "preparing_share": {
+    "message": "共有の準備中...",
+    "description": "Progress text when preparing to share"
   },
   "recent_files": {
     "message": "最近のファイル",

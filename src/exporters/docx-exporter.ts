@@ -251,8 +251,10 @@ class DocxExporter {
 
       return { success: true };
     } catch (error) {
-      console.error('DOCX export error:', error);
-      return { success: false, error: (error as Error).message };
+      const errMsg = error instanceof Error ? error.message : String(error);
+      const errStack = error instanceof Error ? error.stack : '';
+      console.error('DOCX export error:', errMsg, errStack);
+      return { success: false, error: errMsg };
     }
   }
 

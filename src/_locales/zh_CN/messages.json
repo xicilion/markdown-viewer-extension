@@ -179,6 +179,18 @@
     "message": "导出失败",
     "description": "DOCX 导出失败的默认提示"
   },
+  "export_docx": {
+    "message": "分享为 Word",
+    "description": "导出为 DOCX 菜单项"
+  },
+  "export_docx_success": {
+    "message": "导出完成",
+    "description": "DOCX 导出成功提示"
+  },
+  "exporting": {
+    "message": "正在准备 Word 文档...",
+    "description": "导出中提示"
+  },
   "extensionDescription": {
     "message": "查看 Markdown 文件并支持智能导出",
     "description": "扩展简介"
@@ -286,6 +298,10 @@
   "popup_version_label": {
     "message": "版本 {0}",
     "description": "弹窗中的版本文字"
+  },
+  "preparing_share": {
+    "message": "准备分享...",
+    "description": "Progress text when preparing to share"
   },
   "recent_files": {
     "message": "最近文件",

@@ -179,6 +179,18 @@
     "message": "내보내기에 실패했습니다",
     "description": "내보내기 실패 기본 메시지"
   },
+  "export_docx": {
+    "message": "Word로 공유",
+    "description": "Menu item for exporting to DOCX"
+  },
+  "export_docx_success": {
+    "message": "내보내기 완료",
+    "description": "Toast when DOCX export succeeds"
+  },
+  "exporting": {
+    "message": "Word 문서 준비 중...",
+    "description": "Toast shown during export"
+  },
   "extensionDescription": {
     "message": "Markdown 파일을 구문 강조와 스마트 내보내기 도구와 함께 보여 줍니다",
     "description": "Chrome 웹 스토어에 표시되는 설명"
@@ -286,6 +298,10 @@
   "popup_version_label": {
     "message": "버전 {0}",
     "description": "헤더에 확장 버전을 표시"
+  },
+  "preparing_share": {
+    "message": "공유 준비 중...",
+    "description": "Progress text when preparing to share"
   },
   "recent_files": {
     "message": "최근 파일",

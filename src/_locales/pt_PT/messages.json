@@ -179,6 +179,18 @@
     "message": "Falha na exportação",
     "description": "Fallback message when DOCX export fails"
   },
+  "export_docx": {
+    "message": "Partilhar como Word",
+    "description": "Menu item for exporting to DOCX"
+  },
+  "export_docx_success": {
+    "message": "Exportação concluída",
+    "description": "Toast when DOCX export succeeds"
+  },
+  "exporting": {
+    "message": "A preparar documento Word...",
+    "description": "Toast shown during export"
+  },
   "extensionDescription": {
     "message": "Visualizar ficheiros Markdown com realce de sintaxe e ferramentas de exportação inteligentes",
     "description": "Extension description shown in Chrome Web Store"
@@ -286,6 +298,10 @@
   "popup_version_label": {
     "message": "Versão {0}",
     "description": "Shows the extension version in the header"
+  },
+  "preparing_share": {
+    "message": "A preparar partilha...",
+    "description": "Progress text when preparing to share"
   },
   "recent_files": {
     "message": "Ficheiros recentes",

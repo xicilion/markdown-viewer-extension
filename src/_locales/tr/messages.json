@@ -179,6 +179,18 @@
     "message": "Dışa aktarma başarısız",
     "description": "Fallback message when DOCX export fails"
   },
+  "export_docx": {
+    "message": "Word olarak paylaş",
+    "description": "Menu item for exporting to DOCX"
+  },
+  "export_docx_success": {
+    "message": "Aktarım tamamlandı",
+    "description": "Toast when DOCX export succeeds"
+  },
+  "exporting": {
+    "message": "Word belgesi hazırlanıyor...",
+    "description": "Toast shown during export"
+  },
   "extensionDescription": {
     "message": "Sözdizimi vurgulama ve akıllı dışa aktarma araçlarıyla Markdown dosyalarını görüntüleyin",
     "description": "Extension description shown in Chrome Web Store"
@@ -286,6 +298,10 @@
   "popup_version_label": {
     "message": "Sürüm {0}",
     "description": "Shows the extension version in the header"
+  },
+  "preparing_share": {
+    "message": "Paylaşım hazırlanıyor...",
+    "description": "Progress text when preparing to share"
   },
   "recent_files": {
     "message": "Son dosyalar",

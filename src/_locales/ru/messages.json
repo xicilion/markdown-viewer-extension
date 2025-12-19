@@ -179,6 +179,18 @@
     "message": "Не удалось экспортировать",
     "description": "Резервное сообщение об ошибке экспорта"
   },
+  "export_docx": {
+    "message": "Поделиться как Word",
+    "description": "Menu item for exporting to DOCX"
+  },
+  "export_docx_success": {
+    "message": "Экспорт завершён",
+    "description": "Toast when DOCX export succeeds"
+  },
+  "exporting": {
+    "message": "Подготовка документа Word...",
+    "description": "Toast shown during export"
+  },
   "extensionDescription": {
     "message": "Просматривайте файлы Markdown с подсветкой синтаксиса и умными инструментами экспорта",
     "description": "Описание расширения в Chrome Web Store"
@@ -286,6 +298,10 @@
   "popup_version_label": {
     "message": "Версия {0}",
     "description": "Отображает версию расширения"
+  },
+  "preparing_share": {
+    "message": "Подготовка к отправке...",
+    "description": "Progress text when preparing to share"
   },
   "recent_files": {
     "message": "Недавние файлы",

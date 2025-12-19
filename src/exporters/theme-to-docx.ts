@@ -432,28 +432,53 @@ export async function loadThemeForDOCX(themeId: string): Promise<DOCXThemeStyles
     // Load theme
     const theme = (await themeManager.loadTheme(themeId)) as unknown as ThemeConfig;
 
+    // Get platform for resource loading
+    const platform = globalThis.platform as { 
+      platform?: string;
+      resource: { 
+        getURL: (path: string) => string;
+        fetch: (path: string) => Promise<string>;
+      } 
+    } | undefined;
+    
+    if (!platform?.resource) {
+      throw new Error('Platform resource service not available');
+    }
+
+    // Helper to fetch JSON resource (use platform.resource.fetch for mobile compatibility)
+    const fetchResource = async <T>(path: string): Promise<T> => {
+      // On mobile, use platform.resource.fetch which goes through Flutter bridge
+      // On Chrome, can use native fetch with chrome.runtime.getURL
+      if (platform.platform === 'mobile') {
+        const content = await platform.resource.fetch(path);
+        return JSON.parse(content) as T;
+      } else {
+        const url = platform.resource.getURL(path);
+        const response = await fetch(url);
+        return response.json() as Promise<T>;
+      }
+    };
+
     // Load table style
-    const tableStyleResponse = await fetch(
-      chrome.runtime.getURL(`themes/table-styles/${theme.tableStyle}.json`)
+    const tableStyle = await fetchResource<TableStyleConfig>(
+      `themes/table-styles/${theme.tableStyle}.json`
     );
-    const tableStyle = await tableStyleResponse.json() as TableStyleConfig;
 
     // Load code theme
-    const codeThemeResponse = await fetch(
-      chrome.runtime.getURL(`themes/code-themes/${theme.codeTheme}.json`)
+    const codeTheme = await fetchResource<CodeThemeConfig>(
+      `themes/code-themes/${theme.codeTheme}.json`
     );
-    const codeTheme = await codeThemeResponse.json() as CodeThemeConfig;
 
     // Load spacing scheme
-    const spacingResponse = await fetch(
-      chrome.runtime.getURL(`themes/spacing-schemes/${theme.spacing}.json`)
+    const spacingScheme = await fetchResource<SpacingScheme>(
+      `themes/spacing-schemes/${theme.spacing}.json`
     );
-    const spacingScheme = await spacingResponse.json() as SpacingScheme;
 
     // Generate DOCX styles
     return themeToDOCXStyles(theme, tableStyle, codeTheme, spacingScheme);
   } catch (error) {
-    console.error('Error loading theme for DOCX:', error);
+    const errMsg = error instanceof Error ? error.message : String(error);
+    console.error('Error loading theme for DOCX:', errMsg);
     throw error;
   }
 }

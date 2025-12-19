@@ -150,7 +150,8 @@ class MobileFileService {
       base64Data = data;
     }
     
-    bridge.postMessage('DOWNLOAD_FILE', {
+    // Use sendRequest to wait for Flutter to finish sharing
+    await bridge.sendRequest('DOWNLOAD_FILE', {
       filename,
       data: base64Data,
       mimeType

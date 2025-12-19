@@ -179,6 +179,18 @@
     "message": "एक्सपोर्ट विफल रहा",
     "description": "Fallback message when DOCX export fails"
   },
+  "export_docx": {
+    "message": "Word के रूप में साझा करें",
+    "description": "Menu item for exporting to DOCX"
+  },
+  "export_docx_success": {
+    "message": "निर्यात पूर्ण",
+    "description": "Toast when DOCX export succeeds"
+  },
+  "exporting": {
+    "message": "Word दस्तावेज़ तैयार हो रहा है...",
+    "description": "Toast shown during export"
+  },
   "extensionDescription": {
     "message": "सिंटैक्स हाइलाइटिंग और स्मार्ट एक्सपोर्ट टूल के साथ Markdown फाइलें देखें",
     "description": "Extension description shown in Chrome Web Store"
@@ -286,6 +298,10 @@
   "popup_version_label": {
     "message": "संस्करण {0}",
     "description": "Shows the extension version in the header"
+  },
+  "preparing_share": {
+    "message": "साझा करने की तैयारी...",
+    "description": "Progress text when preparing to share"
   },
   "recent_files": {
     "message": "हाल की फ़ाइलें",

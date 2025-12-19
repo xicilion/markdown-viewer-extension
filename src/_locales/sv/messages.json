@@ -179,6 +179,18 @@
     "message": "Export misslyckades",
     "description": "Fallback message when DOCX export fails"
   },
+  "export_docx": {
+    "message": "Dela som Word",
+    "description": "Menu item for exporting to DOCX"
+  },
+  "export_docx_success": {
+    "message": "Export klar",
+    "description": "Toast when DOCX export succeeds"
+  },
+  "exporting": {
+    "message": "Förbereder Word-dokument...",
+    "description": "Toast shown during export"
+  },
   "extensionDescription": {
     "message": "Visa Markdown-filer med syntaxmarkering och smarta exportverktyg",
     "description": "Extension description shown in Chrome Web Store"
@@ -286,6 +298,10 @@
   "popup_version_label": {
     "message": "Version {0}",
     "description": "Shows the extension version in the header"
+  },
+  "preparing_share": {
+    "message": "Förbereder delning...",
+    "description": "Progress text when preparing to share"
   },
   "recent_files": {
     "message": "Senaste filer",

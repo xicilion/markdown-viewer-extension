@@ -179,6 +179,18 @@
     "message": "Export failed",
     "description": "Fallback message when DOCX export fails"
   },
+  "export_docx": {
+    "message": "Share as Word",
+    "description": "Menu item for exporting to DOCX"
+  },
+  "export_docx_success": {
+    "message": "Export completed",
+    "description": "Toast when DOCX export succeeds"
+  },
+  "exporting": {
+    "message": "Preparing Word document...",
+    "description": "Fallback message when DOCX export fails"
+  },
   "extensionDescription": {
     "message": "View Markdown files with syntax highlighting and smart export tools",
     "description": "Extension description shown in Chrome Web Store"
@@ -286,6 +298,10 @@
   "popup_version_label": {
     "message": "v{0}",
     "description": "Shows the extension version in the header"
+  },
+  "preparing_share": {
+    "message": "Preparing to share...",
+    "description": "Progress text when preparing to share"
   },
   "recent_files": {
     "message": "Recent Files",

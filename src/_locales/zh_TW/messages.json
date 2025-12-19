@@ -179,6 +179,18 @@
     "message": "匯出失敗",
     "description": "DOCX 匯出失敗的預設提示"
   },
+  "export_docx": {
+    "message": "分享為 Word",
+    "description": "Menu item for exporting to DOCX"
+  },
+  "export_docx_success": {
+    "message": "匯出完成",
+    "description": "Toast when DOCX export succeeds"
+  },
+  "exporting": {
+    "message": "正在準備 Word 文件...",
+    "description": "Toast shown during export"
+  },
   "extensionDescription": {
     "message": "檢視 Markdown 檔案並支援智慧匯出",
     "description": "擴充功能簡介"
@@ -286,6 +298,10 @@
   "popup_version_label": {
     "message": "版本 {0}",
     "description": "彈出視窗中的版本文字"
+  },
+  "preparing_share": {
+    "message": "準備分享...",
+    "description": "Progress text when preparing to share"
   },
   "recent_files": {
     "message": "最近檔案",
