@@ -53,6 +53,7 @@
     "fibjs": ">=0.36.0"
   },
   "dependencies": {
+    "@viz-js/viz": "^3.24.0",
     "buffer": "^6.0.3",
     "d3-array": "^3.2.4",
     "docx": "^9.0.2",

@@ -25,6 +25,7 @@ Maar uiteindelijk heb je altijd een Word-document nodig.
 
 Klik om te downloaden en krijg een perfect Word-document:
 - ✅ Mermaid-diagrammen → Afbeeldingen met hoge resolutie
+- ✅ Graphviz DOT-grafen → Afbeeldingen met hoge resolutie
 - ✅ LaTeX-formules → Bewerkbare Word-vergelijkingen
 - ✅ Automatische syntaxismarkering (100+ talen)
 - ✅ 18+ professionele thema's met één klik
@@ -93,9 +94,10 @@ Laat data spreken, genereer professionele rapporten met één klik.
 
 ### 1. Automatische diagramconversie
 
-**Mermaid-diagrammen** · **Vega/Vega-Lite datagrafieken** · SVG-afbeeldingen · Complexe HTML-tabellen
+**Mermaid-diagrammen** · **Graphviz DOT** · **Vega/Vega-Lite datagrafieken** · SVG-afbeeldingen · Complexe HTML-tabellen
 
 **Mermaid:** Stroomdiagrammen, sequentiediagrammen, klassediagrammen, toestandsdiagrammen → Technische documentatie, architectuurontwerp  
+**Graphviz DOT:** Gerichte/ongerichte grafen, netwerktopologie, toestandsmachines → Systeemarchitectuur, afhankelijkheidsanalyse  
 **Vega/Vega-Lite:** Staafdiagrammen, lijngrafieken, spreidingsdiagrammen, heatmaps → Zakelijke rapporten, data-analyse
 
 **Tijdvergelijking:** Complex sequentiediagram (10 objecten)

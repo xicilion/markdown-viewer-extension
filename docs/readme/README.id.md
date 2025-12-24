@@ -25,6 +25,7 @@ Tapi pada akhirnya, Anda selalu memerlukan dokumen Word.
 
 Klik unduh dan dapatkan dokumen Word sempurna:
 - ✅ Diagram Mermaid → Gambar resolusi tinggi
+- ✅ Graphviz DOT → Gambar resolusi tinggi
 - ✅ Rumus LaTeX → Persamaan Word yang dapat diedit
 - ✅ Penyorotan sintaks otomatis (100+ bahasa)
 - ✅ 18+ tema profesional dengan satu klik
@@ -93,9 +94,10 @@ Biarkan data berbicara, hasilkan laporan profesional dengan satu klik.
 
 ### 1. Konversi Diagram Otomatis
 
-**Diagram Mermaid** · **Grafik Data Vega/Vega-Lite** · Gambar SVG · Tabel HTML kompleks
+**Diagram Mermaid** · **Graphviz DOT** · **Grafik Data Vega/Vega-Lite** · Gambar SVG · Tabel HTML kompleks
 
 **Mermaid:** Diagram alur, diagram urutan, diagram kelas, diagram status → Dokumen teknis, desain arsitektur  
+**Graphviz DOT:** Grafik berarah/tak berarah, topologi jaringan, mesin status → Arsitektur sistem, analisis ketergantungan  
 **Vega/Vega-Lite:** Grafik batang, grafik garis, plot sebar, peta panas → Laporan bisnis, analisis data
 
 **Perbandingan waktu:** Diagram urutan kompleks (10 objek)

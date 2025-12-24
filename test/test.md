@@ -14,9 +14,10 @@
 6. **数学公式** - KaTeX 行内和块级公式
 7. **Mermaid 图表** - 流程图、序列图、甘特图、类图
 8. **Vega-Lite 图表** - 柱状图、散点图、折线图、饼图
-9. **图片处理** - SVG 转换、Data URL、内联图片
-10. **HTML 混合** - 复杂布局和组件
-11. **边界测试** - 错误处理、极端情况
+9. **DOT 图表** - Graphviz 有向图、无向图、子图
+10. **图片处理** - SVG 转换、Data URL、内联图片
+11. **HTML 混合** - 复杂布局和组件
+12. **边界测试** - 错误处理、极端情况
 
 ---
 
@@ -1173,7 +1174,110 @@ flowchart TD
 
 ---
 
-## 9. 图片处理
+## 9. DOT 图表 (Graphviz)
+
+### 9.1 简单有向图
+
+```dot
+digraph G {
+    A -> B -> C;
+    B -> D;
+    A -> D;
+}
+```
+
+### 9.2 带样式的有向图
+
+```dot
+digraph G {
+    rankdir=LR;
+    node [shape=box, style=filled, fillcolor=lightblue];
+    
+    Start [shape=ellipse, fillcolor=lightgreen];
+    End [shape=ellipse, fillcolor=lightcoral];
+    
+    Start -> "Step 1" -> "Step 2" -> "Step 3" -> End;
+    "Step 1" -> "Step 3" [style=dashed, label="skip"];
+}
+```
+
+### 9.3 无向图
+
+```dot
+graph Network {
+    layout=neato;
+    node [shape=circle];
+    
+    A -- B -- C -- D -- A;
+    B -- D;
+    A -- C;
+}
+```
+
+### 9.4 子图和集群
+
+```dot
+digraph G {
+    compound=true;
+    
+    subgraph cluster_frontend {
+        label="Frontend";
+        style=filled;
+        color=lightgrey;
+        node [style=filled, color=white];
+        React -> Redux -> Router;
+    }
+    
+    subgraph cluster_backend {
+        label="Backend";
+        style=filled;
+        color=lightblue;
+        node [style=filled, color=white];
+        NodeJS -> Express -> MongoDB;
+    }
+    
+    Redux -> NodeJS;
+}
+```
+
+### 9.5 状态机图
+
+```dot
+digraph StateMachine {
+    rankdir=LR;
+    node [shape=circle];
+    
+    idle [label="Idle"];
+    loading [label="Loading"];
+    success [label="Success", shape=doublecircle];
+    error [label="Error", shape=doublecircle];
+    
+    idle -> loading [label="fetch()"];
+    loading -> success [label="200 OK"];
+    loading -> error [label="Error"];
+    error -> loading [label="retry()"];
+    success -> idle [label="reset()"];
+}
+```
+
+### 9.6 记录节点（表格样式）
+
+```dot
+digraph structs {
+    node [shape=record];
+    
+    struct1 [label="{<f0> id|<f1> name|<f2> email}"];
+    struct2 [label="{<f0> user_id|<f1> order_id|<f2> amount}"];
+    struct3 [label="{<f0> order_id|<f1> product|<f2> qty}"];
+    
+    struct1:f0 -> struct2:f0;
+    struct2:f1 -> struct3:f0;
+}
+```
+
+---
+
+## 10. 图片处理
 
 ### 9.1 SVG 文件测试
 
@@ -1209,7 +1313,7 @@ flowchart TD
 
 ---
 
-## 10. HTML 混合内容
+## 11. HTML 混合内容
 
 ### 10.1 简单 HTML 元素
 
@@ -1661,7 +1765,7 @@ flowchart TD
 
 ---
 
-## 11. 边界测试
+## 12. 边界测试
 
 ### 11.1 错误的 Mermaid 语法
 

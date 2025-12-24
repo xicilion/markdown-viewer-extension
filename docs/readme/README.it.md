@@ -25,6 +25,7 @@ Ma alla fine, hai sempre bisogno di un documento Word.
 
 Clicca per scaricare e ottieni un documento Word perfetto:
 - ✅ Diagrammi Mermaid → Immagini ad alta definizione
+- ✅ Grafi Graphviz DOT → Immagini ad alta definizione
 - ✅ Formule LaTeX → Formule modificabili in Word
 - ✅ Evidenziazione automatica del codice (100+ linguaggi)
 - ✅ 18+ temi professionali con un clic
@@ -93,9 +94,10 @@ Parla con i dati, genera rapporti professionali con un clic.
 
 ### 1. Conversione automatica dei grafici
 
-**Diagrammi di flusso Mermaid** · **Grafici dati Vega/Vega-Lite** · Immagini SVG · Tabelle HTML complesse
+**Diagrammi di flusso Mermaid** · **Graphviz DOT** · **Grafici dati Vega/Vega-Lite** · Immagini SVG · Tabelle HTML complesse
 
 **Mermaid:** Diagrammi di flusso, diagrammi di sequenza, diagrammi di classe, diagrammi di stato → Documentazione tecnica, progettazione architetturale  
+**Graphviz DOT:** Grafi orientati/non orientati, topologia di rete, macchine a stati → Architettura di sistema, analisi delle dipendenze  
 **Vega/Vega-Lite:** Grafici a barre, grafici a linee, grafici a dispersione, mappe di calore → Rapporti aziendali, analisi dati
 
 **Confronto tempi:** Diagramma di sequenza complesso (10 oggetti)

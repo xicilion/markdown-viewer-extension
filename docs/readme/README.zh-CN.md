@@ -25,6 +25,7 @@
 
 点击下载，获得完美 Word 文档：
 - ✅ Mermaid 图表 → 高清图片
+- ✅ Graphviz DOT 图 → 高清图片
 - ✅ LaTeX 公式 → Word 可编辑公式
 - ✅ 代码自动高亮（100+ 语言）
 - ✅ 18+ 专业主题一键切换
@@ -93,9 +94,10 @@ $$
 
 ### 1. 图表自动转换
 
-**Mermaid 流程图** · **Vega/Vega-Lite 数据图表** · SVG 图片 · 复杂 HTML 表格
+**Mermaid 流程图** · **Graphviz DOT 图** · **Vega/Vega-Lite 数据图表** · SVG 图片 · 复杂 HTML 表格
 
 **Mermaid：** 流程图、时序图、类图、状态图 → 技术文档、架构设计  
+**Graphviz DOT：** 有向图/无向图、网络拓扑、状态机 → 系统架构、依赖分析  
 **Vega/Vega-Lite：** 柱状图、折线图、散点图、热力图 → 商务报告、数据分析
 
 **时间对比：** 复杂时序图（10个对象）

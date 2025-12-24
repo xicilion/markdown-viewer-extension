@@ -43,6 +43,14 @@ export class BasePlugin {
    * @returns Extracted content or null if not applicable
    */
   extractContent(node: ASTNode): string | null {
+    // Debug logging
+    console.log(`[${this.type}] extractContent called:`, {
+      nodeType: node.type,
+      nodeLang: node.lang,
+      expectedLang: this.language,
+      nodeSelector: this.nodeSelector
+    });
+
     // Check node type matches selector
     if (!this.nodeSelector.includes(node.type)) {
       return null;

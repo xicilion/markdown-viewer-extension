@@ -25,6 +25,7 @@ Men til slutt trenger du alltid et Word-dokument.
 
 Klikk for å laste ned og få et perfekt Word-dokument:
 - ✅ Mermaid-diagrammer → HD-bilder
+- ✅ Graphviz DOT-grafer → HD-bilder
 - ✅ LaTeX-formler → Redigerbare Word-formler
 - ✅ Automatisk syntaksutheving (100+ språk)
 - ✅ 18+ profesjonelle temaer med ett klikk
@@ -93,9 +94,10 @@ La dataene snakke, generer profesjonelle rapporter med ett klikk.
 
 ### 1. Automatisk diagramkonvertering
 
-**Mermaid-diagrammer** · **Vega/Vega-Lite datadiagrammer** · SVG-bilder · Komplekse HTML-tabeller
+**Mermaid-diagrammer** · **Graphviz DOT-grafer** · **Vega/Vega-Lite datadiagrammer** · SVG-bilder · Komplekse HTML-tabeller
 
 **Mermaid:** Flytdiagrammer, sekvensdiagrammer, klassediagrammer, tilstandsdiagrammer → Tekniske dokumenter, arkitekturdesign  
+**Graphviz DOT:** Rettede og urettede grafer, tilstandsmaskiner, organisasjonskart → Systemarkitektur, datadataflyt  
 **Vega/Vega-Lite:** Stolpediagrammer, linjediagrammer, spredningsplott, varmekart → Forretningsrapporter, dataanalyse
 
 **Tidssammenligning:** Komplekst sekvensdiagram (10 objekter)

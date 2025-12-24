@@ -87,10 +87,13 @@ export function createRemarkPlugin(
   escapeHtml: EscapeHtmlFunction,
   visit: VisitFn
 ): () => (tree: unknown) => void {
+  console.log(`[createRemarkPlugin] Creating plugin for type: ${plugin.type}, language: ${plugin.language}`);
+  
   return function() {
     return (tree: unknown) => {
       // Visit all node types
       for (const nodeType of plugin.nodeSelector) {
+        console.log(`[${plugin.type}] Visiting nodeType: ${nodeType}`);
         visit(tree, nodeType, (node, index, parent) => {
           const content = plugin.extractContent(node);
           if (!content) return;

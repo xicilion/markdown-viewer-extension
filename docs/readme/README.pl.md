@@ -25,6 +25,7 @@ Ale ostatecznie zawsze potrzebujesz dokumentu Word.
 
 Kliknij, aby pobrać i uzyskać doskonały dokument Word:
 - ✅ Diagramy Mermaid → Obrazy w wysokiej rozdzielczości
+- ✅ Grafy Graphviz DOT → Obrazy w wysokiej rozdzielczości
 - ✅ Formuły LaTeX → Edytowalne formuły Word
 - ✅ Automatyczne podświetlanie kodu (100+ języków)
 - ✅ 18+ profesjonalnych motywów jednym kliknięciem
@@ -93,9 +94,10 @@ Mów danymi, generuj profesjonalne raporty jednym kliknięciem.
 
 ### 1. Automatyczna konwersja wykresów
 
-**Schematy blokowe Mermaid** · **Wykresy danych Vega/Vega-Lite** · Obrazy SVG · Złożone tabele HTML
+**Schematy blokowe Mermaid** · **Graphviz DOT** · **Wykresy danych Vega/Vega-Lite** · Obrazy SVG · Złożone tabele HTML
 
 **Mermaid:** Schematy blokowe, diagramy sekwencji, diagramy klas, diagramy stanów → Dokumentacja techniczna, projektowanie architektury  
+**Graphviz DOT:** Grafy skierowane/nieskierowane, topologia sieci, automaty stanowe → Architektura systemów, analiza zależności  
 **Vega/Vega-Lite:** Wykresy słupkowe, liniowe, punktowe, mapy cieplne → Raporty biznesowe, analiza danych
 
 **Porównanie czasu:** Złożony diagram sekwencji (10 obiektów)

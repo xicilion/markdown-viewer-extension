@@ -25,6 +25,7 @@ Nhưng cuối cùng, bạn luôn cần một tài liệu Word.
 
 Nhấp tải xuống và nhận tài liệu Word hoàn hảo:
 - ✅ Sơ đồ Mermaid → Hình ảnh độ phân giải cao
+- ✅ Graphviz DOT → Hình ảnh độ phân giải cao
 - ✅ Công thức LaTeX → Phương trình Word có thể chỉnh sửa
 - ✅ Tự động làm nổi bật cú pháp (100+ ngôn ngữ)
 - ✅ 18+ chủ đề chuyên nghiệp chỉ một cú nhấp chuột
@@ -93,9 +94,10 @@ Chọn chủ đề "Business", biểu đồ dữ liệu Vega-Lite tự động c
 
 ### 1. Chuyển đổi sơ đồ tự động
 
-**Sơ đồ Mermaid** · **Biểu đồ dữ liệu Vega/Vega-Lite** · Hình ảnh SVG · Bảng HTML phức tạp
+**Sơ đồ Mermaid** · **Graphviz DOT** · **Biểu đồ dữ liệu Vega/Vega-Lite** · Hình ảnh SVG · Bảng HTML phức tạp
 
 **Mermaid:** Sơ đồ luồng, sơ đồ tuần tự, sơ đồ lớp, sơ đồ trạng thái → Tài liệu kỹ thuật, thiết kế kiến trúc  
+**Graphviz DOT:** Đồ thị có hướng/vô hướng, cấu trúc liên kết mạng, máy trạng thái → Kiến trúc hệ thống, phân tích phụ thuộc  
 **Vega/Vega-Lite:** Biểu đồ cột, biểu đồ đường, biểu đồ phân tán, bản đồ nhiệt → Báo cáo kinh doanh, phân tích dữ liệu
 
 **So sánh thời gian:** Sơ đồ tuần tự phức tạp (10 đối tượng)

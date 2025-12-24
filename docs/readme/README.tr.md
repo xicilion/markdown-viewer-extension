@@ -25,6 +25,7 @@ Ama sonunda her zaman bir Word belgesine ihtiyacınız oluyor.
 
 İndirmek için tıklayın ve mükemmel bir Word belgesi alın:
 - ✅ Mermaid diyagramları → Yüksek çözünürlüklü görüntüler
+- ✅ Graphviz DOT grafikleri → Yüksek çözünürlüklü görüntüler
 - ✅ LaTeX formülleri → Düzenlenebilir Word denklemleri
 - ✅ Otomatik sözdizimi vurgulama (100+ dil)
 - ✅ Tek tıkla 18+ profesyonel tema
@@ -93,9 +94,10 @@ Verilerin konuşmasına izin verin, tek tıkla profesyonel raporlar oluşturun.
 
 ### 1. Otomatik Diyagram Dönüştürme
 
-**Mermaid Diyagramları** · **Vega/Vega-Lite Veri Grafikleri** · SVG görselleri · Karmaşık HTML tabloları
+**Mermaid Diyagramları** · **Graphviz DOT** · **Vega/Vega-Lite Veri Grafikleri** · SVG görselleri · Karmaşık HTML tabloları
 
 **Mermaid:** Akış şemaları, sıra diyagramları, sınıf diyagramları, durum diyagramları → Teknik belgeler, mimari tasarım  
+**Graphviz DOT:** Yönlendirilmiş/yönlendirilmemiş graflar, ağ topolojisi, durum makineleri → Sistem mimarisi, bağımlılık analizi  
 **Vega/Vega-Lite:** Çubuk grafikler, çizgi grafikler, dağılım grafikleri, ısı haritaları → İş raporları, veri analizi
 
 **Zaman karşılaştırması:** Karmaşık sıra diyagramı (10 nesne)

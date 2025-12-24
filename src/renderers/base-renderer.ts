@@ -135,8 +135,6 @@ export class BaseRenderer {
           ctx.font = `14px ${fontFamily}`;
         }
         
-        ctx.fillStyle = 'white'; // Default background
-        ctx.fillRect(0, 0, width, height); // Fill background
         ctx.drawImage(img, 0, 0, width, height);
         resolve(canvas);
       };

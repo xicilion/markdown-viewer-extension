@@ -25,6 +25,7 @@ Mutta lopulta tarvitset aina Word-dokumentin.
 
 Klikkaa lataa ja saat täydellisen Word-dokumentin:
 - ✅ Mermaid-kaaviot → Korkearesoluutioiset kuvat
+- ✅ Graphviz DOT -kaaviot → Korkearesoluutioiset kuvat
 - ✅ LaTeX-kaavat → Wordin muokattavat kaavat
 - ✅ Automaattinen syntaksikorostus (100+ kieltä)
 - ✅ 18+ ammattimaista teemaa yhdellä klikkauksella
@@ -93,9 +94,10 @@ Anna datan puhua, luo ammattimaiset raportit yhdellä klikkauksella.
 
 ### 1. Automaattinen kaaviomuunnos
 
-**Mermaid-kaaviot** · **Vega/Vega-Lite-datakaaviot** · SVG-kuvat · Monimutkaiset HTML-taulukot
+**Mermaid-kaaviot** · **Graphviz DOT-kaaviot** · **Vega/Vega-Lite-datakaaviot** · SVG-kuvat · Monimutkaiset HTML-taulukot
 
 **Mermaid:** Vuokaaviot, sekvenssikaaviot, luokkakaaviot, tilakaaviot → Tekniset dokumentit, arkkitehtuurisuunnittelu  
+**Graphviz DOT:** Ohjatut ja ohjaamattomat kaaviot, tilakonekartat, organisaatiokaaviot → Järjestelmäarkkitehtuuri, tietovuokaaviot  
 **Vega/Vega-Lite:** Pylväskaaviot, viivakaaviot, hajontakaaviot, lämpökartat → Liiketoimintaraportit, data-analyysi
 
 **Aikavertailu:** Monimutkainen sekvenssikaavio (10 objektia)
