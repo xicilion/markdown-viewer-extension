@@ -5,17 +5,14 @@
  */
 
 export {
-  BaseCacheService,
   BaseI18nService,
-  BaseRendererService,
   DEFAULT_SETTING_LOCALE,
   FALLBACK_LOCALE
 } from './base-services';
 
 export type {
   LocaleMessages,
-  LocaleMessageEntry,
-  QueueContext
+  LocaleMessageEntry
 } from './base-services';
 
 // Re-export types from unified type system
@@ -25,6 +22,9 @@ export type {
   CacheStats,
   SimpleCacheStats
 } from '../../types/index';
+
+// Re-export QueueContext from unified renderer service
+export type { QueueContext } from '../../services/renderer-service';
 
 // Note: Render worker related code locations:
 // - Chrome: src/platform/chrome/offscreen-render-worker.ts

@@ -5,11 +5,8 @@
  * These classes provide default implementations for cross-platform functionality.
  */
 
-import type { RendererThemeConfig, RenderResult } from '../../types/render';
-import type { CacheStats, SimpleCacheStats } from '../../types/cache';
-
 // ============================================================================
-// Type Definitions (local only, not exported)
+// Type Definitions
 // ============================================================================
 
 /**
@@ -26,88 +23,6 @@ export interface LocaleMessageEntry {
  */
 export interface LocaleMessages {
   [key: string]: LocaleMessageEntry;
-}
-
-// ============================================================================
-// Base Cache Service
-// ============================================================================
-
-/**
- * Base cache service with common hash/key generation logic.
- * Platform-specific implementations should extend this.
- */
-export class BaseCacheService {
-  /**
-   * Calculate SHA-256 hash of text
-   * @param text - Text to hash
-   * @returns Hex hash string
-   */
-  async calculateHash(text: string): Promise<string> {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(text);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  }
-
-  /**
-   * Generate cache key from content, type, and optional theme config
-   * @param content - Content to cache
-   * @param type - Cache type (e.g., 'MERMAID_PNG')
-   * @param themeConfig - Optional theme configuration
-   * @returns Cache key
-   */
-  async generateKey(content: string, type: string, themeConfig: RendererThemeConfig | null = null): Promise<string> {
-    let keyContent = content;
-    
-    // Include theme config in cache key if provided
-    if (themeConfig && themeConfig.fontFamily && themeConfig.fontSize) {
-      keyContent = `${content}_font:${themeConfig.fontFamily}_size:${themeConfig.fontSize}`;
-    }
-    
-    const hash = await this.calculateHash(keyContent);
-    return `${hash}_${type}`;
-  }
-
-  /**
-   * Estimate byte size of data
-   */
-  estimateSize(data: unknown): number {
-    return new Blob([typeof data === 'string' ? data : JSON.stringify(data)]).size;
-  }
-
-  // Abstract methods - must be implemented by subclasses
-  async init(): Promise<void> {
-    throw new Error('Not implemented');
-  }
-
-  async ensureDB(): Promise<unknown> {
-    throw new Error('Not implemented');
-  }
-
-  async get(key: string): Promise<unknown> {
-    throw new Error('Not implemented');
-  }
-
-  async set(key: string, value: unknown, type?: string): Promise<boolean> {
-    throw new Error('Not implemented');
-  }
-
-  async delete(key: string): Promise<boolean> {
-    throw new Error('Not implemented');
-  }
-
-  async clear(): Promise<boolean> {
-    throw new Error('Not implemented');
-  }
-
-  async cleanup(): Promise<void> {
-    // Optional: LRU cleanup implementation
-  }
-
-  async getStats(): Promise<CacheStats | SimpleCacheStats | null> {
-    return null;
-  }
 }
 
 // ============================================================================
@@ -233,77 +148,4 @@ export class BaseI18nService {
       return list[idx];
     });
   }
-}
-
-// ============================================================================
-// Base Renderer Service
-// ============================================================================
-
-/**
- * Render request context for cancellation
- */
-export interface QueueContext {
-  cancelled: boolean;
-  id: number;
-}
-
-/**
- * Base renderer service with common cache integration logic.
- * Platform-specific implementations must extend this and implement abstract methods.
- */
-export abstract class BaseRendererService {
-  protected themeConfig: RendererThemeConfig | null = null;
-
-  constructor() {
-    this.themeConfig = null;
-  }
-
-  /**
-   * Initialize the renderer (must be implemented by subclass)
-   */
-  abstract init(): Promise<void>;
-
-  /**
-   * Set theme configuration (must be implemented by subclass)
-   * Should sync theme config to render iframe/worker
-   * @param config - Theme configuration
-   */
-  abstract setThemeConfig(config: RendererThemeConfig): Promise<void>;
-
-  /**
-   * Get current theme configuration
-   * @returns Current theme config
-   */
-  getThemeConfig(): RendererThemeConfig | null {
-    return this.themeConfig;
-  }
-
-  /**
-   * Render content (must be implemented by subclass)
-   * @param type - Render type
-   * @param content - Content to render
-   * @param context - Optional queue context for cancellation
-   * @returns Render result
-   */
-  abstract render(type: string, content: string | object, context?: QueueContext | null): Promise<RenderResult>;
-
-  /**
-   * Cancel all pending requests (must be implemented by subclass)
-   */
-  abstract cancelPending(): void;
-
-  /**
-   * Get current queue context (must be implemented by subclass)
-   */
-  abstract getQueueContext(): QueueContext;
-
-  /**
-   * Ensure render iframe/worker is ready (must be implemented by subclass)
-   */
-  abstract ensureIframe(): Promise<void>;
-
-  /**
-   * Cleanup resources (must be implemented by subclass)
-   */
-  abstract cleanup(): Promise<void>;
 }
