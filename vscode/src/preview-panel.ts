@@ -511,6 +511,11 @@ export class MarkdownPreviewPanel {
     const nonce = getNonce();
     const config = this._getConfiguration();
 
+    // Get toolbar CSS URI
+    const toolbarStyleUri = webview.asWebviewUri(
+      vscode.Uri.joinPath(this._extensionUri, 'webview', 'toolbar.css')
+    );
+
     // CSP needs to allow iframe for diagram rendering
     return `<!DOCTYPE html>
 <html lang="en">
@@ -519,6 +524,7 @@ export class MarkdownPreviewPanel {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource} 'unsafe-inline'; script-src 'nonce-${nonce}' 'unsafe-eval'; img-src ${webview.cspSource} data: https: blob:; font-src ${webview.cspSource} data:; frame-src ${webview.cspSource} blob:; connect-src ${webview.cspSource};">
   <link rel="stylesheet" href="${styleUri}">
+  <link rel="stylesheet" href="${toolbarStyleUri}">
   <title>Markdown Preview</title>
   <style>
     /* Hide Chrome extension specific UI elements */
@@ -526,6 +532,25 @@ export class MarkdownPreviewPanel {
     #table-of-contents,
     #toc-overlay {
       display: none !important;
+    }
+    
+    /* VS Code webview layout */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    #vscode-root {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    #vscode-content {
+      flex: 1;
+      overflow: auto;
     }
     
     /* Reset wrapper for VS Code (no sidebar offset) */
@@ -541,9 +566,14 @@ export class MarkdownPreviewPanel {
   </style>
 </head>
 <body>
-  <div id="markdown-wrapper">
-    <div id="markdown-page">
-      <div id="markdown-content"></div>
+  <div id="vscode-root">
+    <div id="vscode-toolbar"></div>
+    <div id="vscode-content">
+      <div id="markdown-wrapper">
+        <div id="markdown-page">
+          <div id="markdown-content"></div>
+        </div>
+      </div>
     </div>
   </div>
   <script nonce="${nonce}">

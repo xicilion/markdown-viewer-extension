@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "locales": [
+    { "code": "en", "name": "English" },
+    { "code": "zh_CN", "name": "简体中文" },
+    { "code": "zh_TW", "name": "繁體中文" },
+    { "code": "ja", "name": "日本語" },
+    { "code": "ko", "name": "한국어" },
+    { "code": "es", "name": "Español" },
+    { "code": "fr", "name": "Français" },
+    { "code": "de", "name": "Deutsch" },
+    { "code": "ru", "name": "Русский" },
+    { "code": "pt_BR", "name": "Português (Brasil)" },
+    { "code": "pt_PT", "name": "Português (Portugal)" },
+    { "code": "it", "name": "Italiano" },
+    { "code": "nl", "name": "Nederlands" },
+    { "code": "pl", "name": "Polski" },
+    { "code": "tr", "name": "Türkçe" },
+    { "code": "hi", "name": "हिन्दी" },
+    { "code": "th", "name": "ไทย" },
+    { "code": "vi", "name": "Tiếng Việt" },
+    { "code": "id", "name": "Bahasa Indonesia" },
+    { "code": "sv", "name": "Svenska" },
+    { "code": "no", "name": "Norsk" },
+    { "code": "da", "name": "Dansk" },
+    { "code": "fi", "name": "Suomi" }
+  ]
+}

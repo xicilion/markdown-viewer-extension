@@ -26,6 +26,10 @@ import {
 import type { PluginRenderer, PlatformAPI } from '../../../src/types/index';
 import type { FontConfigFile } from '../../../src/utils/theme-manager';
 
+// VSCode-specific UI components
+import { createToolbar, type Toolbar } from './toolbar';
+import { createSettingsPanel, type SettingsPanel, type ThemeOption, type LocaleOption } from './settings-panel';
+
 // Declare global types
 declare global {
   var platform: PlatformAPI;
@@ -45,6 +49,10 @@ let currentFilename = '';
 let currentThemeId = 'default';
 let currentTaskManager: AsyncTaskManager | null = null;
 let currentZoomLevel = 1;
+
+// UI components
+let toolbar: Toolbar | null = null;
+let settingsPanel: SettingsPanel | null = null;
 
 /**
  * Theme data structure (same as Mobile)
@@ -95,6 +103,9 @@ async function initialize(): Promise<void> {
     // Initialize localization (shared with Chrome/Mobile)
     await Localization.init();
 
+    // Initialize toolbar and settings panel
+    initializeUI();
+
     // Render iframe is lazily created on first render request
     // No pre-initialization needed - ensureReady() is called in render()
 
@@ -111,6 +122,11 @@ async function initialize(): Promise<void> {
     } catch (error) {
       console.warn('[VSCode Webview] Failed to load theme, using defaults:', error);
     }
+
+    // Load themes and locales for settings panel
+    loadThemesForSettings();
+    loadLocalesForSettings();
+    loadCacheStats();
 
     // Listen for messages from extension host
     vscodeBridge.addListener((message) => {
@@ -195,6 +211,11 @@ async function handleUpdateContent(payload: UpdateContentPayload): Promise<void>
 
   currentMarkdown = content;
   currentFilename = filename || 'document.md';
+
+  // Update toolbar filename
+  if (toolbar) {
+    toolbar.setFilename(currentFilename);
+  }
 
   try {
     // If theme data is provided with content, apply it (same as Mobile)
@@ -447,6 +468,180 @@ window.setZoom = (zoom: number) => {
 window.exportDocx = () => {
   handleExportDocx();
 };
+
+// ============================================================================
+// UI Initialization
+// ============================================================================
+
+function initializeUI(): void {
+  console.log('[VSCode Webview] initializeUI called');
+  const toolbarContainer = document.getElementById('vscode-toolbar');
+  if (!toolbarContainer) {
+    console.warn('[VSCode Webview] Toolbar container not found');
+    return;
+  }
+  console.log('[VSCode Webview] Toolbar container found');
+
+  // Create settings panel first (needs to be in DOM for positioning)
+  settingsPanel = createSettingsPanel({
+    currentTheme: currentThemeId,
+    currentLocale: window.VSCODE_CONFIG?.locale as string || 'auto',
+    docxHrAsPageBreak: window.VSCODE_CONFIG?.docxHrAsPageBreak !== false,
+    onThemeChange: async (themeId) => {
+      await handleSetTheme({ themeId });
+      // Save to extension settings
+      vscodeBridge.postMessage('SAVE_SETTING', { key: 'theme', value: themeId });
+    },
+    onLocaleChange: async (locale) => {
+      await Localization.setPreferredLocale(locale);
+      vscodeBridge.postMessage('SAVE_SETTING', { key: 'locale', value: locale });
+      
+      // Update settings panel labels
+      settingsPanel?.updateLabels();
+      
+      // Reload themes with new locale names
+      await loadThemesForSettings();
+      
+      // Re-render to apply new locale
+      if (currentMarkdown) {
+        await handleUpdateContent({ content: currentMarkdown, filename: currentFilename });
+      }
+    },
+    onDocxSettingChange: (hrAsPageBreak) => {
+      vscodeBridge.postMessage('SAVE_SETTING', { key: 'docxHrAsPageBreak', value: hrAsPageBreak });
+    },
+    onClearCache: async () => {
+      await platform.cache.clear();
+      // Reload cache stats
+      await loadCacheStats();
+    },
+    onShow: () => {
+      // Refresh cache stats when panel is shown
+      loadCacheStats();
+    }
+  });
+  document.body.appendChild(settingsPanel.getElement());
+  console.log('[VSCode Webview] Settings panel appended to body');
+
+  // Create toolbar
+  toolbar = createToolbar({
+    filename: currentFilename,
+    onDownload: () => {
+      console.log('[VSCode Webview] Download clicked');
+      handleExportDocx();
+    },
+    onSettings: () => {
+      console.log('[VSCode Webview] Settings clicked');
+      const settingsBtn = toolbarContainer.querySelector('[data-action="settings"]') as HTMLElement;
+      console.log('[VSCode Webview] Settings button:', settingsBtn);
+      console.log('[VSCode Webview] Settings panel:', settingsPanel);
+      if (settingsPanel && settingsBtn) {
+        if (settingsPanel.isVisible()) {
+          console.log('[VSCode Webview] Hiding settings panel');
+          settingsPanel.hide();
+        } else {
+          console.log('[VSCode Webview] Showing settings panel');
+          settingsPanel.show(settingsBtn);
+        }
+      }
+    }
+  });
+  toolbarContainer.appendChild(toolbar.getElement());
+  console.log('[VSCode Webview] Toolbar appended');
+}
+
+/**
+ * Load available themes for settings panel
+ */
+async function loadThemesForSettings(): Promise<void> {
+  if (!settingsPanel) return;
+
+  try {
+    // Fetch theme registry
+    const registryUrl = platform.resource.getURL('themes/registry.json');
+    const response = await fetch(registryUrl);
+    const registry = await response.json() as {
+      categories: Record<string, { name: string; name_en: string; order?: number }>;
+      themes: Array<{ id: string; file: string; category: string; order?: number }>;
+    };
+
+    // Load theme metadata
+    const themePromises = registry.themes.map(async (info) => {
+      try {
+        const url = platform.resource.getURL(`themes/presets/${info.file}`);
+        const res = await fetch(url);
+        const data = await res.json() as { id: string; name: string; name_en: string };
+        const locale = Localization.getLocale();
+        const useEnglish = !locale.startsWith('zh');
+        const categoryInfo = registry.categories[info.category];
+        return {
+          id: data.id,
+          name: useEnglish ? data.name_en : data.name,
+          category: categoryInfo
+            ? (useEnglish ? categoryInfo.name_en : categoryInfo.name)
+            : info.category,
+          categoryOrder: categoryInfo?.order ?? 999,
+          themeOrder: info.order ?? 999
+        } as ThemeOption & { categoryOrder: number; themeOrder: number };
+      } catch {
+        return null;
+      }
+    });
+
+    const themes = (await Promise.all(themePromises))
+      .filter((t): t is ThemeOption & { categoryOrder: number; themeOrder: number } => t !== null)
+      // Sort by category order, then by theme order
+      .sort((a, b) => {
+        if (a.categoryOrder !== b.categoryOrder) {
+          return a.categoryOrder - b.categoryOrder;
+        }
+        return a.themeOrder - b.themeOrder;
+      });
+    
+    settingsPanel.setThemes(themes);
+  } catch (error) {
+    console.warn('[VSCode Webview] Failed to load themes:', error);
+  }
+}
+
+/**
+ * Load available locales for settings panel
+ */
+async function loadLocalesForSettings(): Promise<void> {
+  if (!settingsPanel) return;
+
+  try {
+    const url = platform.resource.getURL('_locales/registry.json');
+    const response = await fetch(url);
+    const registry = await response.json() as {
+      locales: Array<{ code: string; name: string }>;
+    };
+
+    settingsPanel.setLocales(registry.locales);
+  } catch (error) {
+    console.warn('[VSCode Webview] Failed to load locales:', error);
+  }
+}
+
+/**
+ * Load cache statistics for settings panel
+ */
+async function loadCacheStats(): Promise<void> {
+  if (!settingsPanel) return;
+
+  try {
+    const stats = await platform.cache.getStats();
+    if (stats) {
+      settingsPanel.setCacheStats({
+        itemCount: stats.itemCount,
+        totalSizeMB: stats.totalSizeMB,
+        maxItems: stats.maxItems
+      });
+    }
+  } catch (error) {
+    console.warn('[VSCode Webview] Failed to load cache stats:', error);
+  }
+}
 
 // ============================================================================
 // Entry Point

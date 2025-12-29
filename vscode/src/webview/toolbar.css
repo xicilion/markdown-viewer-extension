@@ -1,0 +1,263 @@
+/**
+ * VSCode Webview Toolbar Styles
+ * 
+ * Minimal, single-line toolbar following VS Code design language.
+ */
+
+/* ============================================================================
+ * Toolbar
+ * ============================================================================ */
+
+.vscode-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 22px;
+  padding: 0 8px;
+  background: var(--vscode-editor-background, #1e1e1e);
+  border-bottom: 1px solid var(--vscode-panel-border, #454545);
+  font-size: 12px;
+  font-family: var(--vscode-font-family, -apple-system, BlinkMacSystemFont, sans-serif);
+  color: var(--vscode-foreground, #cccccc);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.vscode-toolbar-left {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1;
+}
+
+.vscode-toolbar-filename {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0.8;
+}
+
+.vscode-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 8px;
+}
+
+.vscode-toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--vscode-foreground, #cccccc);
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.1s, background 0.1s;
+}
+
+.vscode-toolbar-btn:hover {
+  opacity: 1;
+  background: var(--vscode-toolbar-hoverBackground, rgba(90, 93, 94, 0.31));
+}
+
+.vscode-toolbar-btn:active {
+  background: var(--vscode-toolbar-activeBackground, rgba(99, 102, 103, 0.31));
+}
+
+.vscode-toolbar-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ============================================================================
+ * Settings Panel
+ * ============================================================================ */
+
+.vscode-settings-panel {
+  position: fixed;
+  z-index: 1000;
+  width: 280px;
+  background: var(--vscode-dropdown-background, #3c3c3c);
+  border: 1px solid var(--vscode-dropdown-border, #454545);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-size: 12px;
+  font-family: var(--vscode-font-family, -apple-system, BlinkMacSystemFont, sans-serif);
+  color: var(--vscode-foreground, #cccccc);
+}
+
+.vscode-settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--vscode-panel-border, #454545);
+}
+
+.vscode-settings-title {
+  font-weight: 500;
+}
+
+.vscode-settings-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--vscode-foreground, #cccccc);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.vscode-settings-close:hover {
+  opacity: 1;
+  background: var(--vscode-toolbar-hoverBackground, rgba(90, 93, 94, 0.31));
+}
+
+.vscode-settings-content {
+  padding: 12px;
+}
+
+.vscode-settings-group {
+  margin-bottom: 12px;
+}
+
+.vscode-settings-group:last-child {
+  margin-bottom: 0;
+}
+
+.vscode-settings-label {
+  display: block;
+  margin-bottom: 4px;
+  opacity: 0.9;
+}
+
+.vscode-settings-select {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid var(--vscode-dropdown-border, #454545);
+  border-radius: 2px;
+  background: var(--vscode-dropdown-background, #3c3c3c);
+  color: var(--vscode-dropdown-foreground, #cccccc);
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.vscode-settings-select:focus {
+  outline: 1px solid var(--vscode-focusBorder, #007acc);
+  outline-offset: -1px;
+}
+
+.vscode-settings-select option {
+  background: var(--vscode-dropdown-background, #3c3c3c);
+  color: var(--vscode-dropdown-foreground, #cccccc);
+}
+
+.vscode-settings-select optgroup {
+  font-weight: 600;
+  color: var(--vscode-foreground, #cccccc);
+}
+
+.vscode-settings-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.vscode-settings-checkbox input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  margin: 1px 0 0 0;
+  accent-color: var(--vscode-checkbox-background, #007acc);
+  cursor: pointer;
+}
+
+.vscode-settings-checkbox span {
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* ============================================================================
+ * Cache Management
+ * ============================================================================ */
+
+.vscode-settings-divider {
+  height: 1px;
+  background: var(--vscode-panel-border, #454545);
+  margin: 8px -12px;
+  opacity: 0.5;
+}
+
+.vscode-cache-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding: 8px;
+  background: var(--vscode-editor-background, #1e1e1e);
+  border-radius: 2px;
+  opacity: 0.9;
+}
+
+.vscode-cache-stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.vscode-cache-stat-label {
+  font-size: 11px;
+  opacity: 0.8;
+  flex: 1;
+}
+
+.vscode-cache-stat-value {
+  font-size: 11px;
+  font-weight: 500;
+  font-family: monospace;
+  opacity: 1;
+  text-align: right;
+}
+
+.vscode-cache-clear-btn {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid var(--vscode-button-border, transparent);
+  border-radius: 2px;
+  background: var(--vscode-button-background, #007acc);
+  color: var(--vscode-button-foreground, #ffffff);
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.vscode-cache-clear-btn:hover:not(:disabled) {
+  background: var(--vscode-button-hoverBackground, #005a9e);
+}
+
+.vscode-cache-clear-btn:active:not(:disabled) {
+  background: var(--vscode-button-hoverBackground, #005a9e);
+  opacity: 0.8;
+}
+
+.vscode-cache-clear-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
