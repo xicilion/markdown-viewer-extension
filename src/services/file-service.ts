@@ -15,12 +15,8 @@ import { ServiceChannel } from '../messaging/channels/service-channel';
 // Default chunk size for large file uploads (255KB, aligned for base64)
 const DEFAULT_CHUNK_SIZE = 255 * 1024;
 
-// Threshold for using chunked upload (1MB)
-const CHUNK_UPLOAD_THRESHOLD = 1 * 1024 * 1024;
-
 export interface DownloadOptions {
   mimeType?: string;
-  useChunkedUpload?: boolean; // Force chunked upload even for small files
   chunkSize?: number;
   onProgress?: (progress: { uploaded: number; total: number }) => void;
 }
@@ -33,13 +29,10 @@ interface UploadInitResponse {
 export class FileService {
   constructor(
     private channel: ServiceChannel,
-    private options: {
-      forceChunkedUpload?: boolean; // Platform-specific: Chrome needs chunked upload
-    } = {}
   ) {}
 
   /**
-   * Download/save a file
+   * Download/save a file using chunked upload for consistent progress reporting
    * @param data - Blob or base64 string
    * @param filename - File name to save as
    * @param options - Download options
@@ -55,39 +48,6 @@ export class FileService {
       base64Data = data;
     }
 
-    const totalSize = base64Data.length;
-    const useChunked = options.useChunkedUpload || 
-                       this.options.forceChunkedUpload || 
-                       totalSize > CHUNK_UPLOAD_THRESHOLD;
-
-    if (useChunked) {
-      await this.downloadWithChunks(base64Data, filename, mimeType, options);
-    } else {
-      await this.downloadDirect(base64Data, filename, mimeType);
-    }
-  }
-
-  /**
-   * Direct download - send entire file in one message
-   */
-  private async downloadDirect(base64Data: string, filename: string, mimeType: string): Promise<void> {
-    await this.channel.send('DOWNLOAD_FILE', {
-      filename,
-      data: base64Data,
-      mimeType
-    });
-  }
-
-  /**
-   * Chunked download - upload file in chunks, then finalize
-   * Required for Chrome due to message size limits between content script and service worker
-   */
-  private async downloadWithChunks(
-    base64Data: string,
-    filename: string,
-    mimeType: string,
-    options: DownloadOptions
-  ): Promise<void> {
     const totalSize = base64Data.length;
     let chunkSize = options.chunkSize || DEFAULT_CHUNK_SIZE;
 
@@ -148,8 +108,6 @@ export class FileService {
     });
 
     // 4. Trigger actual download
-    // Chrome: handled via DOCX_DOWNLOAD_FINALIZE in background script
-    // VSCode/Mobile: the finalize step above triggers the download
     await this.channel.send('DOCX_DOWNLOAD_FINALIZE', { token });
   }
 

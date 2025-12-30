@@ -58,7 +58,7 @@ const serviceChannel = new ServiceChannel(new ChromeRuntimeTransport(), {
 // Unified services (same as Mobile/VSCode)
 const cacheService = new CacheService(serviceChannel);
 const storageService = new StorageService(serviceChannel);
-const fileService = new FileService(serviceChannel, { forceChunkedUpload: true }); // Chrome needs chunked upload
+const fileService = new FileService(serviceChannel);
 
 // ============================================================================
 // Chrome Resource Service
