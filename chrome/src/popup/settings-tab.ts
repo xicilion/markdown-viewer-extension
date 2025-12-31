@@ -5,6 +5,49 @@
 
 import Localization, { DEFAULT_SETTING_LOCALE } from '../../../src/utils/localization';
 import { translate, applyI18nText, getUiLocale } from './i18n-helpers';
+import { storageGet, storageSet } from './storage-helper';
+
+// Helper: Send message compatible with both Chrome and Firefox
+function safeSendMessage(message: unknown): void {
+  try {
+    const result = chrome.runtime.sendMessage(message);
+    // Chrome returns Promise, Firefox MV2 returns undefined
+    if (result && typeof result.catch === 'function') {
+      result.catch(() => { /* ignore */ });
+    }
+  } catch {
+    // Ignore errors
+  }
+}
+
+// Helper: Send message to tab compatible with both Chrome and Firefox
+function safeSendTabMessage(tabId: number, message: unknown): void {
+  try {
+    const result = chrome.tabs.sendMessage(tabId, message);
+    if (result && typeof result.catch === 'function') {
+      result.catch(() => { /* ignore */ });
+    }
+  } catch {
+    // Ignore errors for non-markdown tabs
+  }
+}
+
+// Helper: Query tabs compatible with both Chrome and Firefox
+async function safeQueryTabs(query: chrome.tabs.QueryInfo): Promise<chrome.tabs.Tab[]> {
+  return new Promise((resolve) => {
+    try {
+      const result = chrome.tabs.query(query, (tabs) => {
+        resolve(tabs || []);
+      });
+      // Chrome MV3 returns Promise
+      if (result && typeof (result as Promise<chrome.tabs.Tab[]>).then === 'function') {
+        (result as Promise<chrome.tabs.Tab[]>).then(resolve).catch(() => resolve([]));
+      }
+    } catch {
+      resolve([]);
+    }
+  });
+}
 
 /**
  * Theme info from registry
@@ -136,13 +179,13 @@ export function createSettingsTabManager({
    */
   async function loadSettings(): Promise<void> {
     try {
-      const result = await chrome.storage.local.get(['markdownViewerSettings']);
+      const result = await storageGet(['markdownViewerSettings']);
       if (result.markdownViewerSettings) {
         settings = { ...settings, ...result.markdownViewerSettings };
       }
 
       // Load selected theme
-      const themeResult = await chrome.storage.local.get(['selectedTheme']);
+      const themeResult = await storageGet(['selectedTheme']);
       currentTheme = (themeResult.selectedTheme as string) || 'default';
     } catch (error) {
       console.error('Failed to load settings:', error);
@@ -184,20 +227,18 @@ export function createSettingsTabManager({
           const newLocale = target.value;
           try {
             settings.preferredLocale = newLocale;
-            await chrome.storage.local.set({
+            await storageSet({
               markdownViewerSettings: settings
             });
 
             await Localization.setPreferredLocale(newLocale);
-            chrome.runtime
-              .sendMessage({
-                id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-                type: 'LOCALE_CHANGED',
-                payload: { locale: newLocale },
-                timestamp: Date.now(),
-                source: 'popup-settings',
-              })
-              .catch(() => { });
+            safeSendMessage({
+              id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+              type: 'LOCALE_CHANGED',
+              payload: { locale: newLocale },
+              timestamp: Date.now(),
+              source: 'popup-settings',
+            });
             applyI18nText();
 
             // Reload themes to update names
@@ -332,7 +373,7 @@ export function createSettingsTabManager({
    */
   async function saveSettingsToStorage(): Promise<void> {
     try {
-      await chrome.storage.local.set({
+      await storageSet({
         markdownViewerSettings: settings
       });
       showMessage(translate('settings_save_success'), 'success');
@@ -457,25 +498,23 @@ export function createSettingsTabManager({
    */
   async function switchTheme(themeId: string): Promise<void> {
     try {
-      // Save theme selection (use local storage to match theme-manager)
-      await chrome.storage.local.set({ selectedTheme: themeId });
+      // Save theme selection
+      await storageSet({ selectedTheme: themeId });
       currentTheme = themeId;
 
       // Update description
       updateThemeDescription(themeId);
 
       // Notify all tabs to reload theme
-      const tabs = await chrome.tabs.query({});
+      const tabs = await safeQueryTabs({});
       tabs.forEach(tab => {
         if (tab.id) {
-          chrome.tabs.sendMessage(tab.id, {
+          safeSendTabMessage(tab.id, {
             id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
             type: 'THEME_CHANGED',
             payload: { themeId },
             timestamp: Date.now(),
             source: 'popup-settings',
-          }).catch(() => {
-            // Ignore errors for non-markdown tabs
           });
         }
       });
@@ -525,7 +564,7 @@ export function createSettingsTabManager({
         infographic: supportInfographicEl?.checked ?? true,
       };
 
-      await chrome.storage.local.set({
+      await storageSet({
         markdownViewerSettings: settings
       });
 
@@ -568,20 +607,18 @@ export function createSettingsTabManager({
         }
       };
 
-      await chrome.storage.local.set({
+      await storageSet({
         markdownViewerSettings: settings
       });
 
       await Localization.setPreferredLocale(DEFAULT_SETTING_LOCALE);
-      chrome.runtime
-        .sendMessage({
-          id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-          type: 'LOCALE_CHANGED',
-          payload: { locale: DEFAULT_SETTING_LOCALE },
-          timestamp: Date.now(),
-          source: 'popup-settings',
-        })
-        .catch(() => { });
+      safeSendMessage({
+        id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        type: 'LOCALE_CHANGED',
+        payload: { locale: DEFAULT_SETTING_LOCALE },
+        timestamp: Date.now(),
+        source: 'popup-settings',
+      });
       applyI18nText();
 
       if (onReloadCacheData) {

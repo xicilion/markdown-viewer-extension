@@ -3,6 +3,7 @@
  */
 
 import { translate, getUiLocale } from './i18n-helpers';
+import { storageGet, storageSet } from './storage-helper';
 
 /**
  * History item interface
@@ -68,7 +69,7 @@ export function createHistoryTabManager({ showMessage, showConfirm }: HistoryTab
     itemsEl.dataset.empty = 'false';
 
     try {
-      const result = await chrome.storage.local.get(['markdownHistory']);
+      const result = await storageGet(['markdownHistory']);
       const history = (result.markdownHistory || []) as HistoryItem[];
 
       renderHistoryItems(history);
@@ -151,7 +152,7 @@ export function createHistoryTabManager({ showMessage, showConfirm }: HistoryTab
     }
 
     try {
-      await chrome.storage.local.set({ markdownHistory: [] });
+      await storageSet({ markdownHistory: [] });
       await loadHistoryData();
       showMessage(translate('history_clear_success'), 'success');
     } catch (error) {

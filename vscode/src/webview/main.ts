@@ -29,9 +29,8 @@ import type { FontConfigFile } from '../../../src/utils/theme-manager';
 // VSCode-specific UI components
 import { createSettingsPanel, type SettingsPanel, type ThemeOption, type LocaleOption } from './settings-panel';
 
-// Declare global types
+// Declare global types for VSCode-specific variables
 declare global {
-  var platform: PlatformAPI;
   var VSCODE_WEBVIEW_BASE_URI: string;
   var VSCODE_CONFIG: Record<string, unknown>;
 }

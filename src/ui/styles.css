@@ -59,6 +59,7 @@ body {
 
 .toolbar-btn {
   background: transparent;
+  background-color: transparent;
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 6px 10px;
@@ -68,6 +69,9 @@ body {
   justify-content: center;
   transition: all 0.2s ease;
   color: #333;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .toolbar-btn:hover {

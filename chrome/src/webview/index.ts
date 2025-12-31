@@ -6,12 +6,6 @@
  */
 
 import { chromePlatform, ChromePlatformAPI } from './api-impl';
-import type { PlatformAPI } from '../../../src/types/index';
-
-// Extend globalThis type
-declare global {
-  var platform: PlatformAPI;
-}
 
 // Set global platform instance
 // This allows other modules to access platform services without importing

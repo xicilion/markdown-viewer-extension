@@ -11,7 +11,6 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "outDir": "./dist",
-    "rootDir": "./src",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -26,6 +25,19 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "build", "dist", "test"]
+  "include": [
+    "src/**/*",
+    "chrome/src/**/*",
+    "firefox/src/**/*",
+    "vscode/src/**/*",
+    "mobile/src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "test",
+    "chrome/src/webview/content-detector.ts",
+    "firefox/src/webview/content-detector.ts"
+  ]
 }

@@ -10,7 +10,7 @@ import type { CacheStats, SimpleCacheStats } from './cache';
 // Platform Identification
 // =============================================================================
 
-export type PlatformType = 'chrome' | 'mobile' | 'vscode';
+export type PlatformType = 'chrome' | 'firefox' | 'mobile' | 'vscode';
 
 // =============================================================================
 // Platform Service Interfaces

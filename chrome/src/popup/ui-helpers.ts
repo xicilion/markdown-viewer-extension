@@ -109,17 +109,31 @@ export function showError(text: string): void {
 
 /**
  * Check file access permission and show warning if disabled
+ * Note: Firefox doesn't need this - it allows file:// access by default
  */
 export async function checkFileAccess(): Promise<void> {
+  const warningSection = document.getElementById('file-access-warning');
+  if (!warningSection) {
+    return;
+  }
+
   try {
-    // Check if file:// access is allowed
-    const isAllowed = await chrome.extension.isAllowedFileSchemeAccess();
-
-    const warningSection = document.getElementById('file-access-warning');
-
-    if (!warningSection) {
+    // Detect Firefox - it allows file:// access by default with <all_urls> permission
+    // Firefox has 'browser' global and navigator.userAgent contains 'Firefox'
+    const isFirefox = typeof browser !== 'undefined' || navigator.userAgent.includes('Firefox');
+    if (isFirefox) {
+      warningSection.style.display = 'none';
       return;
     }
+
+    // Check if file:// access is allowed (Chrome only)
+    const extensionApi = chrome.extension;
+    if (!extensionApi || typeof extensionApi.isAllowedFileSchemeAccess !== 'function') {
+      warningSection.style.display = 'none';
+      return;
+    }
+
+    const isAllowed = await extensionApi.isAllowedFileSchemeAccess();
 
     // Only show warning when permission is disabled
     if (!isAllowed) {
@@ -152,6 +166,8 @@ export async function checkFileAccess(): Promise<void> {
       warningSection.style.display = 'none';
     }
   } catch (error) {
+    // Hide warning on error (Firefox may throw when API doesn't exist)
     console.error('Failed to check file access:', error);
+    warningSection.style.display = 'none';
   }
 }

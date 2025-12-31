@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown Viewer Background</title>
+  <style>
+    /* Hide everything - this is a background page */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+    }
+    #png-canvas {
+      position: absolute;
+      left: -99999px;
+      top: -99999px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 
+    Firefox Background Page
+    This page provides a DOM environment for rendering diagrams.
+    Similar to Chrome's Offscreen API, but using MV2's persistent background page.
+  -->
+  
+  <!-- Canvas for PNG rendering -->
+  <canvas id="png-canvas"></canvas>
+  
+  <script src="../core/background.js"></script>
+</body>
+</html>
