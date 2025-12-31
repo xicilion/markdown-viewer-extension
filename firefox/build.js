@@ -12,7 +12,10 @@ const execAsync = promisify(exec);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..');
 
-// Sync version from package.json to manifest.json
+/**
+ * Sync version from package.json to manifest.json
+ * @returns {string} Current version
+ */
 function syncVersion() {
   const packagePath = path.join(projectRoot, 'package.json');
   const manifestPath = path.join(__dirname, 'manifest.json');
@@ -23,36 +26,38 @@ function syncVersion() {
   if (manifest.version !== packageJson.version) {
     manifest.version = packageJson.version;
     fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n', 'utf8');
-    console.log(`📌 Updated manifest.json version: ${packageJson.version}`);
+    console.log(`  • Updated manifest.json version`);
   }
+  return packageJson.version;
 }
 
-// Check for missing translation keys
+/**
+ * Check for missing translation keys
+ */
 async function checkMissingKeys() {
-  console.log('🔍 Checking translation keys...\n');
+  console.log('📦 Checking translations...');
   try {
     const { stdout, stderr } = await execAsync('node scripts/check-missing-keys.js', { cwd: projectRoot });
-    console.log(stdout);
     if (stderr) {
       console.error(stderr);
     }
     
     if (stdout.includes('Missing Keys') || stdout.includes('Extra Keys')) {
-      console.warn('⚠️  Warning: Some translation keys are missing or extra.\n');
+      console.warn('⚠️  Warning: Some translation keys are missing or extra');
+    } else {
+      console.log('✅ Translations checked');
     }
   } catch (error) {
-    console.error('❌ Failed to check translation keys:', error.message);
+    console.error('⚠️  Warning: Failed to check translation keys');
   }
 }
 
-// Production build only
-console.log('🦊 Building Firefox extension...\n');
+// Production build
+const version = syncVersion();
+console.log(`🔨 Building Firefox Extension... v${version}\n`);
 
 try {
-  // Sync version first
-  syncVersion();
-  
-  // Check translations first
+  // Check translations
   await checkMissingKeys();
 
   // Clean dist/firefox to avoid stale artifacts
@@ -67,25 +72,27 @@ try {
   const config = createBuildConfig();
   const result = await build(config);
   
-  // Analyze bundle sizes if metafile is available
+  // Analyze bundle sizes
   if (result.metafile) {
     const outputs = result.metafile.outputs;
-    console.log('\n📊 Bundle Analysis:');
+    console.log('\n📊 Bundle sizes:');
     const bundles = Object.entries(outputs)
       .filter(([name]) => name.endsWith('.js'))
       .map(([name, info]) => ({
         name: name.replace('dist/firefox/', ''),
-        size: info.bytes,
-        inputs: Object.keys(info.inputs || {})
+        size: info.bytes
       }))
       .sort((a, b) => b.size - a.size);
     
     for (const bundle of bundles) {
-      console.log(`  ${bundle.name}: ${(bundle.size / 1024 / 1024).toFixed(2)} MB`);
+      const size = bundle.size >= 1024 * 1024 
+        ? `${(bundle.size / 1024 / 1024).toFixed(2)} MB`
+        : `${(bundle.size / 1024).toFixed(2)} KB`;
+      console.log(`   ${bundle.name}: ${size}`);
     }
   }
   
-  console.log('✅ Firefox build complete');
+  console.log(`\n✅ Build complete! Output: dist/firefox/`);
 } catch (error) {
   console.error('❌ Build failed:', error);
   process.exit(1);

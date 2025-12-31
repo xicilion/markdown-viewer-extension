@@ -18,6 +18,16 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..');
 
 /**
+ * Get version from root package.json
+ * @returns {string} Current version
+ */
+function getVersion() {
+  const packagePath = path.join(projectRoot, 'package.json');
+  const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
+  return packageJson.version;
+}
+
+/**
  * Copy directory recursively
  */
 function copyDirectory(sourceDir, targetDir) {
@@ -98,7 +108,7 @@ async function buildWebview() {
   });
 
   // Build iframe-render-worker bundle (heavy renderers: mermaid, vega, etc.)
-  console.log('📦 Building iframe-render-worker bundle...');
+  console.log('📦 Building iframe-render-worker...');
   await build({
     entryPoints: {
       'iframe-render-worker': 'mobile/src/webview/iframe-render-worker.ts'
@@ -146,7 +156,7 @@ async function buildWebview() {
  * Copy static assets
  */
 function copyAssets() {
-  console.log('📄 Copying assets...');
+  console.log('� Copying assets...');
 
   const outdir = 'dist/vscode';
 
@@ -177,15 +187,15 @@ function copyAssets() {
     path.join(outdir, 'package.json'),
     JSON.stringify(vscodePackage, null, 2)
   );
-  console.log('  ✓ package.json');
+  console.log('  • package.json');
 
   // Copy locales
   copyDirectory('src/_locales', path.join(outdir, 'webview', '_locales'));
-  console.log('  ✓ _locales');
+  console.log('  • _locales');
 
   // Copy themes
   copyDirectory('src/themes', path.join(outdir, 'webview', 'themes'));
-  console.log('  ✓ themes');
+  console.log('  • themes');
 
   // Create iframe-render.html with inlined JS (for diagram rendering)
   const iframeWorkerJs = fs.readFileSync(path.join(outdir, 'webview', 'iframe-render-worker.js'), 'utf8');
@@ -210,34 +220,34 @@ function copyAssets() {
   fs.writeFileSync(path.join(outdir, 'webview', 'iframe-render.html'), iframeHtml);
   // Remove standalone worker JS file since it's now inlined
   fs.unlinkSync(path.join(outdir, 'webview', 'iframe-render-worker.js'));
-  console.log('  ✓ iframe-render.html (with inlined JS)');
+  console.log('  • iframe-render.html');
 
   // Copy icons
   copyDirectory('icons', path.join(outdir, 'icons'));
-  console.log('  ✓ icons');
+  console.log('  • icons');
 
   // Copy settings panel styles
   if (fs.existsSync('vscode/src/webview/settings-panel.css')) {
     fs.copyFileSync('vscode/src/webview/settings-panel.css', path.join(outdir, 'webview', 'settings-panel.css'));
-    console.log('  ✓ settings-panel.css');
+    console.log('  • settings-panel.css');
   }
 
   // Copy fonts if they exist
   if (fs.existsSync('src/fonts')) {
     copyDirectory('src/fonts', path.join(outdir, 'webview', 'fonts'));
-    console.log('  ✓ fonts');
+    console.log('  • fonts');
   }
 
   // Copy README from vscode directory
   if (fs.existsSync('vscode/README.md')) {
     fs.copyFileSync('vscode/README.md', path.join(outdir, 'README.md'));
-    console.log('  ✓ README.md');
+    console.log('  • README.md');
   }
 
   // Copy LICENSE
   if (fs.existsSync('LICENSE')) {
     fs.copyFileSync('LICENSE', path.join(outdir, 'LICENSE'));
-    console.log('  ✓ LICENSE');
+    console.log('  • LICENSE');
   }
 
   // Create .vscodeignore
@@ -251,7 +261,7 @@ src/**
 tsconfig.json
 `;
   fs.writeFileSync(path.join(outdir, '.vscodeignore'), vscodeignore.trim());
-  console.log('  ✓ .vscodeignore');
+  console.log('  • .vscodeignore');
 
   console.log('✅ Assets copied');
 }
@@ -260,7 +270,8 @@ tsconfig.json
  * Main build function
  */
 async function main() {
-  console.log('🔨 Building VS Code extension...\n');
+  const version = getVersion();
+  console.log(`🔨 Building VS Code Extension... v${version}\n`);
 
   // Change to project root for esbuild to work correctly
   process.chdir(projectRoot);
@@ -279,14 +290,13 @@ async function main() {
     await buildWebview();
     copyAssets();
 
-    console.log('\n✅ VS Code extension build complete!');
-    console.log(`📁 Output: ${outdir}/`);
+    console.log(`\n✅ Build complete! Output: ${outdir}/`);
 
-    // Package the extension using locally installed vsce
+    // Package the extension
     console.log('\n📦 Packaging extension...');
     const vsceCmd = path.join(projectRoot, 'node_modules', '.bin', 'vsce');
     execSync(`"${vsceCmd}" package`, { cwd: outdir, stdio: 'inherit' });
-    console.log('✅ Extension packaged successfully!');
+    console.log('✅ Extension packaged!');
 
   } catch (error) {
     console.error('\n❌ Build failed:', error);

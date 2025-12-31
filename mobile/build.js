@@ -15,6 +15,7 @@ const SRC_DIR = 'src';
 
 /**
  * Sync version from package.json to pubspec.yaml
+ * @returns {string} Current version
  */
 function syncVersion() {
   const packagePath = path.join(projectRoot, 'package.json');
@@ -32,8 +33,9 @@ function syncVersion() {
     const newVersion = `${packageJson.version}${buildNumber}`;
     pubspec = pubspec.replace(/version:\s*[\d.]+(\+\d+)?/, `version: ${newVersion}`);
     fs.writeFileSync(pubspecPath, pubspec, 'utf8');
-    console.log(`📌 Updated pubspec.yaml version: ${newVersion}`);
+    console.log(`  • Updated pubspec.yaml version`);
   }
+  return packageJson.version;
 }
 
 /**
@@ -79,7 +81,7 @@ function copyFile(src, dest) {
  * Heavy renderers (mermaid, vega) are in iframe-render-worker bundle
  */
 async function buildMainBundle() {
-  console.log('📦 Building main bundle (lightweight)...');
+  console.log('📦 Building main bundle...');
 
   await build({
     entryPoints: {
@@ -107,7 +109,7 @@ async function buildMainBundle() {
     external: []
   });
 
-  console.log(`✅ Main bundle created: ${DIST_DIR}/bundle.js`);
+  console.log('✅ Main bundle built');
 }
 
 /**
@@ -115,7 +117,7 @@ async function buildMainBundle() {
  * Runs in isolated iframe to avoid blocking main thread
  */
 async function buildIframeRenderWorkerBundle() {
-  console.log('📦 Building iframe-render-worker bundle (renderers)...');
+  console.log('📦 Building iframe-render-worker...');
 
   await build({
     entryPoints: {
@@ -143,7 +145,7 @@ async function buildIframeRenderWorkerBundle() {
     external: []
   });
 
-  console.log(`✅ Iframe render worker bundle created: ${DIST_DIR}/iframe-render-worker.js`);
+  console.log('✅ Iframe-render-worker built');
 }
 
 /**
@@ -151,7 +153,7 @@ async function buildIframeRenderWorkerBundle() {
  * Includes: app styles, katex, highlight.js
  */
 async function buildStyles() {
-  console.log('🎨 Building styles (all-in-one)...');
+  console.log('📦 Building styles...');
 
   // Create a combined CSS entry point in project root (where paths resolve correctly)
   const combinedCssPath = path.join(projectRoot, '_combined_mobile.css');
@@ -180,29 +182,29 @@ async function buildStyles() {
   // Clean up temp file
   fs.unlinkSync(combinedCssPath);
 
-  console.log(`✅ Styles created: ${DIST_DIR}/styles.css`);
+  console.log('✅ Styles built');
 }
 
 /**
  * Copy static resources (only non-JS/CSS resources)
  */
 function copyResources() {
-  console.log('📂 Copying resources...');
+  console.log('� Copying resources...');
 
   // Copy HTML templates
   copyFile('mobile/src/webview/index.html', `${DIST_DIR}/index.html`);
-  console.log('  ✓ index.html');
+  console.log('  • index.html');
   
   copyFile('mobile/src/webview/iframe-render.html', `${DIST_DIR}/iframe-render.html`);
-  console.log('  ✓ iframe-render.html');
+  console.log('  • iframe-render.html');
 
   // Copy themes
   copyDirectory('src/themes', `${DIST_DIR}/themes`);
-  console.log('  ✓ themes/');
+  console.log('  • themes');
 
   // Copy locales
   copyDirectory('src/_locales', `${DIST_DIR}/_locales`);
-  console.log('  ✓ _locales/');
+  console.log('  • _locales');
 
   // Copy app icons for Flutter
   const iconsDir = `${DIST_DIR}/icons`;
@@ -210,7 +212,7 @@ function copyResources() {
     fs.mkdirSync(iconsDir, { recursive: true });
   }
   copyFile('icons/icon128.png', `${iconsDir}/icon128.png`);
-  console.log('  ✓ icons/');
+  console.log('  • icons');
 
   // Copy KaTeX fonts (only woff2 for modern browsers)
   const katexFontsDir = 'node_modules/katex/dist/fonts';
@@ -229,7 +231,7 @@ function copyResources() {
         );
       }
     }
-    console.log('  ✓ fonts/ (KaTeX woff2 only)');
+    console.log('  • fonts');
   }
 
   console.log('✅ Resources copied');
@@ -239,13 +241,12 @@ function copyResources() {
  * Main build function
  */
 async function main() {
-  console.log('🚀 Building mobile WebView resources...\n');
-
   // Change to project root for esbuild to work correctly
   process.chdir(projectRoot);
 
   // Sync version first
-  syncVersion();
+  const version = syncVersion();
+  console.log(`🔨 Building Mobile App... v${version}\n`);
 
   // Clean build/mobile
   if (fs.existsSync(DIST_DIR)) {
@@ -263,16 +264,17 @@ async function main() {
     const mainBundleSize = fs.statSync(`${DIST_DIR}/bundle.js`).size;
     const renderBundleSize = fs.statSync(`${DIST_DIR}/iframe-render-worker.js`).size;
     const stylesSize = fs.statSync(`${DIST_DIR}/styles.css`).size;
+    
+    const formatSize = (bytes) => bytes >= 1024 * 1024 
+      ? `${(bytes / 1024 / 1024).toFixed(2)} MB`
+      : `${(bytes / 1024).toFixed(2)} KB`;
+    
     console.log(`\n📊 Bundle sizes:`);
-    console.log(`   bundle.js:       ${(mainBundleSize / 1024 / 1024).toFixed(2)} MB (main view)`);
-    console.log(`   iframe-render-worker.js: ${(renderBundleSize / 1024 / 1024).toFixed(2)} MB (renderers)`);
-    console.log(`   styles.css:      ${(stylesSize / 1024).toFixed(2)} KB`);
+    console.log(`   bundle.js: ${formatSize(mainBundleSize)}`);
+    console.log(`   iframe-render-worker.js: ${formatSize(renderBundleSize)}`);
+    console.log(`   styles.css: ${formatSize(stylesSize)}`);
 
-    console.log('\n✨ Mobile build complete!');
-    console.log(`📁 Output: ${DIST_DIR}/`);
-    console.log('\nArchitecture:');
-    console.log('  - index.html (main view, loads bundle.js)');
-    console.log('  - iframe-render.html (iframe, loads iframe-render-worker.js for diagrams)');
+    console.log(`\n✅ Build complete! Output: ${DIST_DIR}/`);
   } catch (error) {
     console.error('❌ Build failed:', error);
     process.exit(1);
