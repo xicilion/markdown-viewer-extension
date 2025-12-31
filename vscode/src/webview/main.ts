@@ -264,6 +264,14 @@ async function handleUpdateContent(payload: UpdateContentPayload): Promise<void>
     // Only clear container when file changes (for incremental update support)
     if (fileChanged) {
       container.innerHTML = '';
+      // Immediately scroll to top after resetting container
+      // This ensures:
+      // 1. Subsequent SCROLL_TO_LINE starts from top, avoiding position conflicts
+      // 2. When line is 0, preview is already at top
+      const scrollContainer = document.getElementById('vscode-content');
+      if (scrollContainer) {
+        scrollContainer.scrollTo({ top: 0, behavior: 'auto' });
+      }
     }
 
     // Apply theme CSS if we have theme data
@@ -333,6 +341,13 @@ async function handleUpdateContent(payload: UpdateContentPayload): Promise<void>
       filename: currentFilename,
       title: renderResult.title || currentFilename
     });
+
+    // Note: Scrolling is handled by SCROLL_TO_LINE messages from the extension
+    // which are triggered by onDidChangeTextEditorVisibleRanges.
+    // We don't scroll here because:
+    // 1. The extension's TopmostLineMonitor tracks the scroll position per document
+    // 2. When switching files, scrollToLine() is called after setDocument()
+    // 3. Scrolling here with initialLine could conflict with the scroll sync
 
   } catch (error) {
     console.error('[VSCode Webview] Render failed:', error);
@@ -778,11 +793,21 @@ function handleScrollToLine(payload: ScrollToLinePayload): void {
   const { line } = payload;
   
   const container = document.getElementById('vscode-content');
-  if (!container) return;
+  if (!container) {
+    return;
+  }
+  
+  // For line 0 or negative, container is already at top after file switch
+  // Just skip scrolling to avoid unnecessary computation
+  if (line <= 0) {
+    return;
+  }
   
   const { previous, next } = getElementsForSourceLine(line);
   
-  if (!previous) return;
+  if (!previous) {
+    return;
+  }
   
   // Calculate position relative to container
   const containerRect = container.getBoundingClientRect();

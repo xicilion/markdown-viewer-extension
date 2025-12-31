@@ -20,9 +20,71 @@ const UPDATE_DEBOUNCE_MS = 300;
 // Supported language IDs for preview
 const SUPPORTED_LANGUAGES = ['markdown', 'mermaid', 'vega', 'graphviz', 'infographic'];
 
+/**
+ * Tracks the topmost visible line for each document
+ * Similar to VSCode's TopmostLineMonitor
+ */
+class TopmostLineMonitor {
+  private readonly _positions = new Map<string, number>();
+  private _previousActiveEditor: vscode.TextEditor | undefined;
+  
+  /**
+   * Save scroll position for a document
+   */
+  setPendingScrollPosition(uri: vscode.Uri, line: number): void {
+    this._positions.set(uri.toString(), line);
+  }
+  
+  /**
+   * Get saved scroll position for a document
+   */
+  getPendingScrollPosition(uri: vscode.Uri): number | undefined {
+    return this._positions.get(uri.toString());
+  }
+  
+  /**
+   * Save position of current editor before switching
+   */
+  saveCurrentEditorPosition(): void {
+    if (this._previousActiveEditor) {
+      const visibleRanges = this._previousActiveEditor.visibleRanges;
+      if (visibleRanges.length > 0) {
+        const line = visibleRanges[0].start.line;
+        this._positions.set(this._previousActiveEditor.document.uri.toString(), line);
+      }
+    }
+  }
+  
+  /**
+   * Update the tracked active editor
+   */
+  setActiveEditor(editor: vscode.TextEditor | undefined): void {
+    this._previousActiveEditor = editor;
+  }
+  
+  /**
+   * Get position for editor, either from saved positions or current visible range
+   */
+  getLineForEditor(editor: vscode.TextEditor): number {
+    const uri = editor.document.uri.toString();
+    const saved = this._positions.get(uri);
+    if (saved !== undefined) {
+      return saved;
+    }
+    // Fallback to current visible range
+    const visibleRanges = editor.visibleRanges;
+    return visibleRanges.length > 0 ? visibleRanges[0].start.line : 0;
+  }
+}
+
+const topmostLineMonitor = new TopmostLineMonitor();
+
 export function activate(context: vscode.ExtensionContext) {
   outputChannel = vscode.window.createOutputChannel('Markdown Viewer');
   outputChannel.appendLine('Markdown Viewer is now active');
+  
+  // Initialize the monitor with current active editor
+  topmostLineMonitor.setActiveEditor(vscode.window.activeTextEditor);
 
   // Helper to check if a document is supported for preview
   const isSupportedDocument = (document: vscode.TextDocument): boolean => {
@@ -159,12 +221,20 @@ export function activate(context: vscode.ExtensionContext) {
   // Auto-update preview on active editor change
   context.subscriptions.push(
     vscode.window.onDidChangeActiveTextEditor((editor) => {
+      // First save the position of the previous editor
+      topmostLineMonitor.saveCurrentEditorPosition();
+      
       if (editor && isSupportedDocument(editor.document)) {
         const panel = MarkdownPreviewPanel.currentPanel;
         if (panel) {
-          panel.setDocument(editor.document);
+          // Get initial line from saved position or current visible range
+          const initialLine = topmostLineMonitor.getLineForEditor(editor);
+          panel.setDocument(editor.document, initialLine);
         }
       }
+      
+      // Update tracked editor
+      topmostLineMonitor.setActiveEditor(editor);
     })
   );
 
@@ -172,12 +242,14 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.window.onDidChangeTextEditorVisibleRanges((event) => {
       if (isSupportedDocument(event.textEditor.document)) {
-        const panel = MarkdownPreviewPanel.currentPanel;
-        if (panel && panel.isDocumentMatch(event.textEditor.document)) {
-          // Get the topmost visible line
-          const visibleRanges = event.visibleRanges;
-          if (visibleRanges.length > 0) {
-            const topLine = visibleRanges[0].start.line;
+        // Always save the position for this document
+        const visibleRanges = event.visibleRanges;
+        if (visibleRanges.length > 0) {
+          const topLine = visibleRanges[0].start.line;
+          topmostLineMonitor.setPendingScrollPosition(event.textEditor.document.uri, topLine);
+          
+          const panel = MarkdownPreviewPanel.currentPanel;
+          if (panel && panel.isDocumentMatch(event.textEditor.document)) {
             panel.scrollToLine(topLine);
           }
         }
