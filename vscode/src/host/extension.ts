@@ -1,7 +1,7 @@
 /**
  * VS Code Extension Entry Point
  * 
- * Main entry point for the Markdown Viewer Advanced extension.
+ * Main entry point for the Markdown Viewer extension.
  */
 
 import * as vscode from 'vscode';
@@ -18,8 +18,8 @@ let updateDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 const UPDATE_DEBOUNCE_MS = 300;
 
 export function activate(context: vscode.ExtensionContext) {
-  outputChannel = vscode.window.createOutputChannel('Markdown Viewer Advanced');
-  outputChannel.appendLine('Markdown Viewer Advanced is now active');
+  outputChannel = vscode.window.createOutputChannel('Markdown Viewer');
+  outputChannel.appendLine('Markdown Viewer is now active');
 
   // Initialize cache service
   cacheService = new ExtensionCacheService(context);

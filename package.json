@@ -1,6 +1,6 @@
 {
   "name": "markdown-viewer-extension",
-  "displayName": "Markdown Viewer Advanced",
+  "displayName": "Markdown Viewer",
   "version": "1.3.0",
   "description": "Advanced Markdown viewer with Mermaid, KaTeX, Vega, GraphViz and more",
   "type": "module",
@@ -173,7 +173,7 @@
       ]
     },
     "configuration": {
-      "title": "Markdown Viewer Advanced",
+      "title": "Markdown Viewer",
       "properties": {
         "markdownViewer.theme": {
           "type": "string",
