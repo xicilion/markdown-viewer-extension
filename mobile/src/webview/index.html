@@ -27,8 +27,23 @@
     }
     
     body {
-      padding: var(--safe-area-top) var(--safe-area-right) var(--safe-area-bottom) var(--safe-area-left);
+      /* Remove default padding - Flutter SafeArea handles insets */
+      padding: 0;
+      margin: 0;
       -webkit-overflow-scrolling: touch;
+    }
+
+    /* Override desktop styles - mobile has no toolbar/TOC */
+    #markdown-wrapper {
+      margin-left: 0;
+      margin-top: 0;
+      min-height: 100vh;
+    }
+
+    #markdown-content {
+      box-shadow: none;
+      min-height: 100vh;
+      padding: 16px;  /* Smaller padding for mobile */
     }
 
     /* Offscreen render root (kept out of visible flow) */

@@ -157,7 +157,7 @@ class _MarkdownViewerHomeState extends State<MarkdownViewerHome> {
     if (_controller.platform is AndroidWebViewController) {
       final androidController = _controller.platform as AndroidWebViewController;
       // Enable debugging for development
-      AndroidWebViewController.enableDebugging(true);
+      // AndroidWebViewController.enableDebugging(true);
       // Allow file access from the WebView
       androidController.setAllowFileAccess(true);
       // Allow content access
