@@ -1,4 +1,4 @@
-import type { CacheStats, SimpleCacheStats } from '../../src/types/cache';
+import type { CacheStats, SimpleCacheStats } from '../types/cache';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === 'object';

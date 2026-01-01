@@ -4,8 +4,8 @@
  */
 
 import { translate } from './i18n-helpers';
-import { toSimpleCacheStats } from '../../../src/utils/cache-stats';
-import type { SimpleCacheStats } from '../../../src/types/cache';
+import { toSimpleCacheStats } from '../../utils/cache-stats';
+import type { SimpleCacheStats } from '../../types/cache';
 
 /**
  * Clear cache result

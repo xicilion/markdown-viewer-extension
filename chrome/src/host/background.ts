@@ -5,7 +5,7 @@
 /// <reference types="chrome"/>
 
 import ExtensionCacheManager from '../../../src/utils/cache-manager';
-import { toSimpleCacheStats } from '../cache-stats';
+import { toSimpleCacheStats } from '../../../src/utils/cache-stats';
 import type {
   FileState,
   AllFileStates,

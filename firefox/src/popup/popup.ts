@@ -1,10 +1,15 @@
 /**
  * Firefox Popup Entry Point
- * Initialize Firefox platform before loading popup
+ * Initialize Firefox platform before loading shared popup
  */
 
-// Initialize Firefox platform
+// Initialize Firefox platform FIRST
 import '../webview/index';
 
-// Re-export Chrome popup (it uses chrome.* API which Firefox supports)
-import '../../../chrome/src/popup/popup';
+// Import and initialize shared popup
+import { initializePopup } from '../../../src/ui/popup/popup-core';
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  initializePopup();
+});

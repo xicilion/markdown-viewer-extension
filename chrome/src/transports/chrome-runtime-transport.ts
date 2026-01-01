@@ -11,12 +11,31 @@ import type { MessageTransport, TransportMeta, Unsubscribe } from '../../../src/
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const runtime = typeof (globalThis as any).browser !== 'undefined' ? (globalThis as any).browser : chrome;
 
+export interface BrowserRuntimeTransportOptions {
+  /**
+   * If true, the onMessage listener will return true to indicate it will
+   * send an async response via sendResponse(). Required for background scripts
+   * that need to respond to requests.
+   * 
+   * If false (default), the listener returns false, meaning it only receives
+   * messages and won't send responses. This prevents Firefox's
+   * "Promised response went out of scope" errors in popup/content scripts.
+   */
+  willRespond?: boolean;
+}
+
 export class ChromeRuntimeTransport implements MessageTransport {
   private listener?: (
     message: unknown,
     sender: chrome.runtime.MessageSender,
     sendResponse: (response?: unknown) => void
   ) => void | boolean | Promise<unknown>;
+  
+  private willRespond: boolean;
+
+  constructor(options: BrowserRuntimeTransportOptions = {}) {
+    this.willRespond = options.willRespond ?? false;
+  }
 
   async send(message: unknown): Promise<unknown> {
     // Firefox browser.runtime.sendMessage returns a Promise
@@ -44,7 +63,10 @@ export class ChromeRuntimeTransport implements MessageTransport {
         respond: sendResponse,
       };
       handler(message, meta);
-      return true;
+      // Return willRespond to indicate whether we'll send an async response.
+      // Background scripts need true; popup/content scripts need false to
+      // prevent Firefox's "Promised response went out of scope" errors.
+      return this.willRespond;
     };
 
     runtime.runtime.onMessage.addListener(this.listener);

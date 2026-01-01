@@ -9,7 +9,7 @@
 declare const browser: typeof chrome;
 
 import ExtensionCacheManager from '../../../src/utils/cache-manager';
-import { toSimpleCacheStats } from '../../../chrome/src/cache-stats';
+import { toSimpleCacheStats } from '../../../src/utils/cache-stats';
 import { bootstrapRenderWorker } from '../../../src/renderers/worker/worker-bootstrap';
 import { RenderChannel } from '../../../src/messaging/channels/render-channel';
 import { BrowserRuntimeTransport } from '../../../chrome/src/transports/chrome-runtime-transport';
@@ -76,7 +76,8 @@ browser.webRequest.onHeadersReceived.addListener(
 // ============================================================================
 
 // Render RPC channel - accepts messages targeted to 'background-render'
-const renderChannel = new RenderChannel(new BrowserRuntimeTransport(), {
+// Uses willRespond: true because background needs to send async responses
+const renderChannel = new RenderChannel(new BrowserRuntimeTransport({ willRespond: true }), {
   source: 'firefox-background',
   timeoutMs: 300000,
   acceptRequest: (msg) => {
@@ -626,21 +627,24 @@ async function handleContentScriptInjection(tabId: number): Promise<void> {
 // ============================================================================
 
 // Helper to create response envelope
+// Must match ResponseEnvelope format expected by ServiceChannel
 function createResponseEnvelope(
   requestId: string,
   result: { ok: true; data?: unknown } | { ok: false; errorMessage: string }
-): { id: string; ok: boolean; data?: unknown; errorMessage?: string } {
+): { type: 'RESPONSE'; requestId: string; ok: boolean; data?: unknown; error?: { message: string } } {
   if (result.ok) {
     return {
-      id: requestId,
+      type: 'RESPONSE',
+      requestId,
       ok: true,
       data: result.data,
     };
   }
   return {
-    id: requestId,
+    type: 'RESPONSE',
+    requestId,
     ok: false,
-    errorMessage: result.errorMessage,
+    error: { message: result.errorMessage },
   };
 }
 
