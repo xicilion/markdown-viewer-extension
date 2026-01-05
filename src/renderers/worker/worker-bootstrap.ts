@@ -15,11 +15,22 @@ import {
   type PingResponse,
 } from './protocol';
 
+import {
+  initServices,
+  type RenderWorkerServices,
+} from './services';
+
 export type RenderWorkerChannel = {
   handle: (
     type: string,
     handler: (payload: unknown, meta?: unknown) => unknown
   ) => () => void;
+  
+  /**
+   * Optional: Send request to host (for proxy services)
+   * Only needed when using ProxyFetchService
+   */
+  send?: <T>(type: string, payload: unknown) => Promise<T>;
 };
 
 export type BootstrapOptions = {
@@ -35,6 +46,12 @@ export type BootstrapOptions = {
    * Defaults to an internal flag that becomes true after init().
    */
   getReady?: () => boolean;
+  
+  /**
+   * Services to inject into the render worker.
+   * If not provided, default services will be used based on environment.
+   */
+  services?: RenderWorkerServices;
 };
 
 export type BootstrapResult = {
@@ -47,6 +64,12 @@ export function bootstrapRenderWorker(channel: RenderWorkerChannel, options: Boo
   let internalReady = false;
 
   const getReady = options.getReady ?? (() => internalReady);
+
+  // Initialize services immediately if provided (before any render requests)
+  // This is critical - services must be available when render handlers are invoked
+  if (options.services) {
+    initServices(options.services);
+  }
 
   // Register handlers (pure logic; runtime init happens in init()).
   channel.handle(RenderWorkerMessageTypes.SET_THEME_CONFIG, (payload) => {

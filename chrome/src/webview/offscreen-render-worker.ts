@@ -4,6 +4,7 @@
 import type { RendererThemeConfig } from '../../../src/types/index';
 
 import { bootstrapRenderWorker } from '../../../src/renderers/worker/worker-bootstrap';
+import { DirectFetchService } from '../../../src/renderers/worker/services';
 
 import { RenderChannel } from '../../../src/messaging/channels/render-channel';
 import { ChromeRuntimeTransport } from '../transports/chrome-runtime-transport';
@@ -75,8 +76,15 @@ const renderChannel = new RenderChannel(new ChromeRuntimeTransport({ willRespond
   },
 });
 
+// Chrome offscreen can fetch directly (no CSP restrictions)
+const directFetchService = new DirectFetchService();
+
 const worker = bootstrapRenderWorker(renderChannel, {
   getCanvas: () => document.getElementById('png-canvas') as HTMLCanvasElement | null,
   // Offscreen document is always ready once loaded
   getReady: () => true,
+  // Inject services for renderers
+  services: {
+    fetch: directFetchService,
+  },
 });

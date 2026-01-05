@@ -1,5 +1,5 @@
-// Mobile Iframe Render Worker
-// Entry point for the render iframe in Flutter WebView
+// Mobile/VSCode Iframe Render Worker
+// Entry point for the render iframe in Flutter WebView or VSCode srcdoc
 
 // Send ready message immediately before any imports fail
 try {
@@ -14,11 +14,39 @@ import { RenderChannel } from '../../../src/messaging/channels/render-channel';
 import { WindowPostMessageTransport } from '../../../src/messaging/transports/window-postmessage-transport';
 
 import { bootstrapRenderWorker } from '../../../src/renderers/worker/worker-bootstrap';
+import { DirectFetchService, ProxyFetchService, type FetchService } from '../../../src/renderers/worker/services';
 import { MessageTypes } from '../../../src/renderers/render-worker-core';
 
 type ReadyAckMessage = {
   type?: string;
 };
+
+/**
+ * Detect if running in VSCode srcdoc iframe
+ * VSCode uses srcdoc which results in about:srcdoc URL
+ * Mobile uses iframe src URL which is different
+ */
+function isVSCodeSrcdoc(): boolean {
+  try {
+    // srcdoc iframes have location.href === 'about:srcdoc'
+    return window.location.href === 'about:srcdoc';
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Create appropriate fetch service based on environment
+ */
+function createFetchService(): FetchService {
+  if (isVSCodeSrcdoc()) {
+    // VSCode srcdoc cannot fetch directly due to CSP, use proxy
+    return new ProxyFetchService();
+  } else {
+    // Mobile/other can fetch directly
+    return new DirectFetchService();
+  }
+}
 
 function initialize(): void {
   let isReady = false;
@@ -31,14 +59,21 @@ function initialize(): void {
       acceptSource: window.parent,
     }),
     {
-      source: 'mobile-iframe-render',
+      source: 'iframe-render',
       timeoutMs: 60_000,
     }
   );
 
+  // Create appropriate fetch service based on environment
+  const fetchService = createFetchService();
+
   const worker = bootstrapRenderWorker(renderChannel, {
     getCanvas: () => document.getElementById('png-canvas') as HTMLCanvasElement | null,
     getReady: () => isReady,
+    // Inject services for renderers
+    services: {
+      fetch: fetchService,
+    },
   });
 
   window.addEventListener('message', (event: MessageEvent<ReadyAckMessage>) => {

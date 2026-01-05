@@ -3,6 +3,12 @@ import type { RenderHost } from './render-host';
 import { RenderChannel } from '../../messaging/channels/render-channel';
 import { WindowPostMessageTransport } from '../../messaging/transports/window-postmessage-transport';
 
+/**
+ * Service request handler for proxying service calls from render worker
+ * Used when render worker cannot directly access certain resources (e.g., VSCode CSP)
+ */
+export type ServiceRequestHandler = (type: string, payload: unknown) => Promise<unknown>;
+
 export type IframeRenderHostOptions = {
   /** URL to load in iframe (for normal browser environments) */
   iframeUrl?: string;
@@ -15,6 +21,12 @@ export type IframeRenderHostOptions = {
   source: string;
   timeoutMs?: number;
   readyTimeoutMs?: number;
+  /**
+   * Handler for service requests from render worker.
+   * When set, the host will listen for service requests and proxy them.
+   * Used in VSCode to proxy fetch requests through extension host.
+   */
+  serviceRequestHandler?: ServiceRequestHandler;
 };
 
 export class IframeRenderHost implements RenderHost {
@@ -23,6 +35,7 @@ export class IframeRenderHost implements RenderHost {
   private readyPromise: Promise<void> | null = null;
   private renderChannel: RenderChannel | null = null;
   private blobUrl: string | null = null;
+  private serviceMessageHandler: ((event: MessageEvent) => void) | null = null;
 
   private readonly iframeUrl?: string;
   private readonly htmlContent?: string;
@@ -31,6 +44,7 @@ export class IframeRenderHost implements RenderHost {
   private readonly source: string;
   private readonly timeoutMs: number;
   private readonly readyTimeoutMs: number;
+  private readonly serviceRequestHandler?: ServiceRequestHandler;
 
   constructor(options: IframeRenderHostOptions) {
     this.iframeUrl = options.iframeUrl;
@@ -40,6 +54,7 @@ export class IframeRenderHost implements RenderHost {
     this.source = options.source;
     this.timeoutMs = options.timeoutMs ?? 60_000;
     this.readyTimeoutMs = options.readyTimeoutMs ?? 15_000;
+    this.serviceRequestHandler = options.serviceRequestHandler;
   }
 
   private async ensureIframeCreated(): Promise<HTMLIFrameElement> {
@@ -171,7 +186,55 @@ export class IframeRenderHost implements RenderHost {
       }, this.readyTimeoutMs);
     });
 
+    // Set up service request handler if provided
+    // This allows render worker to proxy requests through host
+    if (this.serviceRequestHandler && !this.serviceMessageHandler) {
+      this.setupServiceMessageHandler(targetWindow);
+    }
+
     return this.readyPromise;
+  }
+
+  /**
+   * Set up message handler for service requests from render worker
+   */
+  private setupServiceMessageHandler(targetWindow: Window): void {
+    this.serviceMessageHandler = async (event: MessageEvent) => {
+      // Only handle messages from our iframe
+      if (event.source !== targetWindow) return;
+      
+      const data = event.data as { 
+        type?: string; 
+        id?: string; 
+        payload?: unknown;
+        __serviceRequest?: boolean;
+      } | null;
+      
+      // Only handle service requests
+      if (!data || !data.__serviceRequest || !data.type || !data.id) return;
+      
+      try {
+        const result = await this.serviceRequestHandler!(data.type, data.payload);
+        
+        // Send response back to iframe
+        targetWindow.postMessage({
+          __serviceResponse: true,
+          id: data.id,
+          ok: true,
+          data: result,
+        }, '*');
+      } catch (error) {
+        
+        targetWindow.postMessage({
+          __serviceResponse: true,
+          id: data.id,
+          ok: false,
+          error: error instanceof Error ? error.message : String(error),
+        }, '*');
+      }
+    };
+    
+    window.addEventListener('message', this.serviceMessageHandler);
   }
 
   async send<T = unknown>(type: string, payload: unknown, timeoutMs?: number): Promise<T> {
@@ -181,6 +244,12 @@ export class IframeRenderHost implements RenderHost {
   }
 
   async cleanup(): Promise<void> {
+    // Remove service message handler
+    if (this.serviceMessageHandler) {
+      window.removeEventListener('message', this.serviceMessageHandler);
+      this.serviceMessageHandler = null;
+    }
+    
     this.renderChannel?.close();
     this.renderChannel = null;
     this.readyPromise = null;

@@ -299,6 +299,27 @@ export class VSCodePlatformAPI {
         },
         nonce,
         source: 'vscode-parent',
+        // Service request handler for proxying render worker requests
+        // VSCode srcdoc iframe cannot fetch external resources directly due to CSP
+        serviceRequestHandler: async (type, payload) => {
+          if (type === 'FETCH_REMOTE_URL') {
+            const { url } = payload as { url: string };
+            try {
+              // Proxy through extension host which can fetch external resources
+              const response = await serviceChannel.send('FETCH_REMOTE_IMAGE', { url });
+              const { content, contentType } = response as { content: string; contentType: string };
+              
+              // Convert base64 to data URL
+              const dataUrl = `data:${contentType};base64,${content}`;
+              return { dataUrl };
+            } catch (error) {
+              console.warn(`[VSCodePlatformAPI] Failed to fetch remote URL: ${url}`, error);
+              return { dataUrl: null };
+            }
+          }
+          
+          throw new Error(`Unknown service request type: ${type}`);
+        },
       }),
       cache: this.cache,
     });

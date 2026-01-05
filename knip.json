@@ -5,7 +5,6 @@
     "chrome/src/webview/main.ts",
     "chrome/src/webview/viewer-main.ts",
     "chrome/src/webview/offscreen-render-worker.ts",
-    "chrome/src/webview/render-worker.ts",
     "chrome/src/host/background.ts",
     "chrome/src/popup/popup.ts",
     "firefox/src/webview/main.ts",

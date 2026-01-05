@@ -3,9 +3,18 @@
  * 
  * Renders HTML code blocks to PNG images using SVG foreignObject
  * Simple and reliable: large canvas + trim whitespace
+ * 
+ * Key feature: Remote images are converted to base64 data URLs before rendering
+ * because SVG foreignObject cannot load external resources due to browser security.
+ * 
+ * Uses FetchService from worker services layer to handle cross-platform fetch:
+ * - Chrome offscreen: Direct fetch (no CSP restrictions)
+ * - VSCode srcdoc: Proxy fetch via host (CSP blocks direct fetch)
+ * - Mobile iframe: Direct fetch (no CSP restrictions)
  */
 import { BaseRenderer } from './base-renderer';
 import { sanitizeHtml, hasHtmlContent } from '../utils/html-sanitizer';
+import { getFetchService } from './worker/services';
 import type { RendererThemeConfig, RenderResult } from '../types/index';
 
 export class HtmlRenderer extends BaseRenderer {
@@ -25,11 +34,44 @@ export class HtmlRenderer extends BaseRenderer {
   }
 
   /**
+   * Convert all remote images in HTML element to base64 data URLs
+   * Uses the injected FetchService to handle cross-platform differences.
+   * @param element - HTML element containing images
+   */
+  private async convertRemoteImagesToBase64(element: HTMLElement): Promise<void> {
+    const fetchService = getFetchService();
+    const images = element.querySelectorAll('img[src]');
+    
+    const fetchPromises = Array.from(images).map(async (img) => {
+      const src = img.getAttribute('src');
+      if (!src) return;
+      
+      // Skip if already a data URL or blob URL
+      if (src.startsWith('data:') || src.startsWith('blob:')) {
+        return;
+      }
+      
+      // Only process http/https URLs
+      if (!src.startsWith('http://') && !src.startsWith('https://')) {
+        return;
+      }
+      
+      const base64 = await fetchService.fetchAsDataUrl(src);
+      if (base64) {
+        img.setAttribute('src', base64);
+      }
+    });
+    
+    await Promise.all(fetchPromises);
+  }
+
+  /**
    * Render HTML to PNG using SVG foreignObject
    * Strategy: 
-   * 1. Render at high resolution (scale x) from the start
-   * 2. Use red outline marker to detect content bounds
-   * 3. Remove outline and crop to content bounds
+   * 1. Convert remote images to base64 data URLs
+   * 2. Render at high resolution (scale x) from the start
+   * 3. Use red outline marker to detect content bounds
+   * 4. Remove outline and crop to content bounds
    * @param htmlContent - HTML content to render
    * @param themeConfig - Theme configuration
    * @returns Render result with base64, width, height
@@ -69,6 +111,10 @@ export class HtmlRenderer extends BaseRenderer {
     const container = document.createElement('div');
     container.style.cssText = `display: inline-block; font-family: ${fontFamily};`;
     container.innerHTML = sanitizedHtml;
+    
+    // Convert remote images to base64 before rendering
+    // This is critical because SVG foreignObject cannot load external resources
+    await this.convertRemoteImagesToBase64(container);
     
     wrapper.appendChild(container);
     fo.appendChild(wrapper);
