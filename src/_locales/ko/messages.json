@@ -367,6 +367,10 @@
     "message": "DOCX 내보내기용 이모지 글꼴 스타일 선택",
     "description": "Note explaining the emoji style setting"
   },
+  "settings_docx_emoji_style_system": {
+    "message": "시스템 스타일",
+    "description": "Option to use system emoji (no font processing)"
+  },
   "settings_docx_emoji_style_windows": {
     "message": "Windows 스타일",
     "description": "Option for Windows emoji style"

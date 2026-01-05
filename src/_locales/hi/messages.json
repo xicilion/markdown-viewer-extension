@@ -367,6 +367,10 @@
     "message": "DOCX निर्यात के लिए इमोजी फ़ॉन्ट शैली चुनें",
     "description": "Note explaining the emoji style setting"
   },
+  "settings_docx_emoji_style_system": {
+    "message": "सिस्टम शैली",
+    "description": "Option to use system emoji (no font processing)"
+  },
   "settings_docx_emoji_style_windows": {
     "message": "Windows शैली",
     "description": "Option for Windows emoji style"

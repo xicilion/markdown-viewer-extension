@@ -299,8 +299,10 @@ class _SettingsPageState extends State<SettingsPage> {
         return localization.t('settings_docx_emoji_style_apple');
       case 'windows':
         return localization.t('settings_docx_emoji_style_windows');
+      case 'system':
+        return localization.t('settings_docx_emoji_style_system');
       default:
-        return localization.t('settings_docx_emoji_style_windows');
+        return localization.t('settings_docx_emoji_style_system');
     }
   }
 
@@ -316,6 +318,7 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              _buildEmojiStyleOption('system'),
               _buildEmojiStyleOption('windows'),
               _buildEmojiStyleOption('apple'),
             ],
@@ -334,6 +337,9 @@ class _SettingsPageState extends State<SettingsPage> {
         break;
       case 'windows':
         displayName = localization.t('settings_docx_emoji_style_windows');
+        break;
+      case 'system':
+        displayName = localization.t('settings_docx_emoji_style_system');
         break;
       default:
         displayName = style;

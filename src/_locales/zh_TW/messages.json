@@ -367,6 +367,10 @@
     "message": "選擇 DOCX 匯出的表情符號字型樣式",
     "description": "Note explaining the emoji style setting"
   },
+  "settings_docx_emoji_style_system": {
+    "message": "系統樣式",
+    "description": "Option to use system emoji (no font processing)"
+  },
   "settings_docx_emoji_style_windows": {
     "message": "Windows 樣式",
     "description": "Option for Windows emoji style"

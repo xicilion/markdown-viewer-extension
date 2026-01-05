@@ -367,6 +367,10 @@
     "message": "Pasirinkite emoji šrifto stilių DOCX eksportui",
     "description": "Note explaining the emoji style setting"
   },
+  "settings_docx_emoji_style_system": {
+    "message": "Sistemos stilius",
+    "description": "Option to use system emoji (no font processing)"
+  },
   "settings_docx_emoji_style_windows": {
     "message": "Windows stilius",
     "description": "Option for Windows emoji style"

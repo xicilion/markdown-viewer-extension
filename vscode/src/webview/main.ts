@@ -12,6 +12,7 @@ import { renderMarkdownDocument, getDocument } from '../../../src/core/viewer/vi
 import { AsyncTaskManager } from '../../../src/core/markdown-processor';
 import { wrapFileContent } from '../../../src/utils/file-wrapper';
 import { createScrollSyncController, type ScrollSyncController } from '../../../src/core/line-based-scroll';
+import type { EmojiStyle } from '../../../src/types/docx.js';
 // Shared modules (same as Chrome/Mobile)
 import Localization from '../../../src/utils/localization';
 import themeManager from '../../../src/utils/theme-manager';
@@ -549,7 +550,7 @@ function initializeUI(): void {
     currentTheme: currentThemeId,
     currentLocale: window.VSCODE_CONFIG?.locale as string || 'auto',
     docxHrAsPageBreak: window.VSCODE_CONFIG?.docxHrAsPageBreak !== false,
-    docxEmojiStyle: (window.VSCODE_CONFIG?.docxEmojiStyle as 'apple' | 'windows') || 'windows',
+    docxEmojiStyle: (window.VSCODE_CONFIG?.docxEmojiStyle as EmojiStyle) || 'system',
     onThemeChange: async (themeId) => {
       // handleSetTheme saves via themeManager.saveSelectedTheme (same as Chrome)
       await handleSetTheme({ themeId });

@@ -367,6 +367,10 @@
     "message": "DOCX dışa aktarma için emoji yazı tipi stilini seçin",
     "description": "Note explaining the emoji style setting"
   },
+  "settings_docx_emoji_style_system": {
+    "message": "Sistem stili",
+    "description": "Option to use system emoji (no font processing)"
+  },
   "settings_docx_emoji_style_windows": {
     "message": "Windows stili",
     "description": "Option for Windows emoji style"

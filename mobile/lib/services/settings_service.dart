@@ -35,8 +35,8 @@ class SettingsService {
   bool get hrPageBreak => _prefs?.getBool(_keyHrPageBreak) ?? true;
   set hrPageBreak(bool value) => _prefs?.setBool(_keyHrPageBreak, value);
 
-  // Emoji style in DOCX export: 'apple' or 'windows'
-  String get emojiStyle => _prefs?.getString(_keyEmojiStyle) ?? 'windows';
+  // Emoji style in DOCX export: 'apple', 'windows', or 'system'
+  String get emojiStyle => _prefs?.getString(_keyEmojiStyle) ?? 'system';
   set emojiStyle(String value) => _prefs?.setString(_keyEmojiStyle, value);
 
   // Locale

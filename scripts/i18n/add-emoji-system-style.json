@@ -1,0 +1,91 @@
+{
+  "keys": {
+    "settings_docx_emoji_style_system": {
+      "message": "System style",
+      "description": "Option to use system emoji (no font processing)"
+    }
+  },
+  "translations": {
+    "be": { 
+      "settings_docx_emoji_style_system": { "message": "Сістэмны стыль" }
+    },
+    "da": { 
+      "settings_docx_emoji_style_system": { "message": "Systemstil" }
+    },
+    "de": { 
+      "settings_docx_emoji_style_system": { "message": "Systemstil" }
+    },
+    "es": { 
+      "settings_docx_emoji_style_system": { "message": "Estilo del sistema" }
+    },
+    "et": { 
+      "settings_docx_emoji_style_system": { "message": "Süsteemi stiil" }
+    },
+    "fi": { 
+      "settings_docx_emoji_style_system": { "message": "Järjestelmätyyli" }
+    },
+    "fr": { 
+      "settings_docx_emoji_style_system": { "message": "Style système" }
+    },
+    "hi": { 
+      "settings_docx_emoji_style_system": { "message": "सिस्टम शैली" }
+    },
+    "id": { 
+      "settings_docx_emoji_style_system": { "message": "Gaya sistem" }
+    },
+    "it": { 
+      "settings_docx_emoji_style_system": { "message": "Stile di sistema" }
+    },
+    "ja": { 
+      "settings_docx_emoji_style_system": { "message": "システムスタイル" }
+    },
+    "ko": { 
+      "settings_docx_emoji_style_system": { "message": "시스템 스타일" }
+    },
+    "lt": { 
+      "settings_docx_emoji_style_system": { "message": "Sistemos stilius" }
+    },
+    "ms": { 
+      "settings_docx_emoji_style_system": { "message": "Gaya sistem" }
+    },
+    "nl": { 
+      "settings_docx_emoji_style_system": { "message": "Systeemstijl" }
+    },
+    "no": { 
+      "settings_docx_emoji_style_system": { "message": "Systemstil" }
+    },
+    "pl": { 
+      "settings_docx_emoji_style_system": { "message": "Styl systemowy" }
+    },
+    "pt_BR": { 
+      "settings_docx_emoji_style_system": { "message": "Estilo do sistema" }
+    },
+    "pt_PT": { 
+      "settings_docx_emoji_style_system": { "message": "Estilo do sistema" }
+    },
+    "ru": { 
+      "settings_docx_emoji_style_system": { "message": "Системный стиль" }
+    },
+    "sv": { 
+      "settings_docx_emoji_style_system": { "message": "Systemstil" }
+    },
+    "th": { 
+      "settings_docx_emoji_style_system": { "message": "สไตล์ระบบ" }
+    },
+    "tr": { 
+      "settings_docx_emoji_style_system": { "message": "Sistem stili" }
+    },
+    "uk": { 
+      "settings_docx_emoji_style_system": { "message": "Системний стиль" }
+    },
+    "vi": { 
+      "settings_docx_emoji_style_system": { "message": "Kiểu hệ thống" }
+    },
+    "zh_CN": { 
+      "settings_docx_emoji_style_system": { "message": "系统样式" }
+    },
+    "zh_TW": { 
+      "settings_docx_emoji_style_system": { "message": "系統樣式" }
+    }
+  }
+}

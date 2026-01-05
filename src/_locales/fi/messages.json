@@ -367,6 +367,10 @@
     "message": "Valitse emoji-fonttityyli DOCX-vientiin",
     "description": "Note explaining the emoji style setting"
   },
+  "settings_docx_emoji_style_system": {
+    "message": "Järjestelmätyyli",
+    "description": "Option to use system emoji (no font processing)"
+  },
   "settings_docx_emoji_style_windows": {
     "message": "Windows-tyyli",
     "description": "Option for Windows emoji style"

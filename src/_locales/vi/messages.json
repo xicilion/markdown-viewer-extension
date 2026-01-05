@@ -367,6 +367,10 @@
     "message": "Chọn kiểu phông chữ emoji cho xuất DOCX",
     "description": "Note explaining the emoji style setting"
   },
+  "settings_docx_emoji_style_system": {
+    "message": "Kiểu hệ thống",
+    "description": "Option to use system emoji (no font processing)"
+  },
   "settings_docx_emoji_style_windows": {
     "message": "Kiểu Windows",
     "description": "Option for Windows emoji style"

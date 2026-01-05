@@ -980,7 +980,11 @@ async function handleDocxDownloadFinalizeAsync(
     }).then(() => {
       URL.revokeObjectURL(blobUrl);
     }).catch((error) => {
-      console.error('[Firefox Background] Download failed:', error);
+      // Don't log error if user canceled the download
+      const errorMsg = String(error?.message || error);
+      if (!errorMsg.includes('canceled') && !errorMsg.includes('cancelled')) {
+        console.error('[Firefox Background] Download failed:', error);
+      }
       URL.revokeObjectURL(blobUrl);
     });
 

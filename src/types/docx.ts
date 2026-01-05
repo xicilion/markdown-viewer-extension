@@ -34,8 +34,9 @@ export type BorderStyleValue = (typeof BorderStyle)[keyof typeof BorderStyle];
  * Emoji font style options for DOCX export
  * - 'apple': Use Apple Color Emoji (iOS/macOS style, 3D glossy)
  * - 'windows': Use Segoe UI Emoji (Windows/WPS style, flat design)
+ * - 'system': Use system emoji (no font processing, preserve original)
  */
-export type EmojiStyle = 'apple' | 'windows';
+export type EmojiStyle = 'apple' | 'windows' | 'system';
 
 // =============================================================================
 // Internal Theme Styles - Used by theme-to-docx conversion

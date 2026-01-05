@@ -7,6 +7,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import type { ExtensionCacheService } from './cache-service';
+import type { EmojiStyle } from '../../../src/types/docx.js';
 
 export class MarkdownPreviewPanel {
   public static currentPanel: MarkdownPreviewPanel | undefined;
@@ -897,7 +898,7 @@ export class MarkdownPreviewPanel {
     const locale = (typeof settings.preferredLocale === 'string' && settings.preferredLocale) ? settings.preferredLocale : 'auto';
     const docxHrAsPageBreak = (typeof settings.docxHrAsPageBreak === 'boolean') ? settings.docxHrAsPageBreak : true;
     const storedEmojiStyle = settings.docxEmojiStyle;
-    const docxEmojiStyle: 'apple' | 'windows' = (storedEmojiStyle === 'apple' || storedEmojiStyle === 'windows') ? storedEmojiStyle : 'windows';
+    const docxEmojiStyle: EmojiStyle = (storedEmojiStyle === 'apple' || storedEmojiStyle === 'windows' || storedEmojiStyle === 'system') ? storedEmojiStyle : 'system';
     
     return {
       theme,

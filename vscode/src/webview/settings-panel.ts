@@ -8,6 +8,7 @@
  */
 
 import Localization from '../../../src/utils/localization';
+import type { EmojiStyle } from '../../../src/types/docx.js';
 
 export interface SettingsPanelOptions {
   /** Current theme ID */
@@ -17,7 +18,7 @@ export interface SettingsPanelOptions {
   /** DOCX HR as page break setting */
   docxHrAsPageBreak?: boolean;
   /** DOCX emoji style setting */
-  docxEmojiStyle?: 'apple' | 'windows';
+  docxEmojiStyle?: EmojiStyle;
   /** Theme changed callback */
   onThemeChange?: (themeId: string) => void;
   /** Locale changed callback */
@@ -25,7 +26,7 @@ export interface SettingsPanelOptions {
   /** DOCX setting changed callback */
   onDocxSettingChange?: (hrAsPageBreak: boolean) => void;
   /** DOCX emoji style changed callback */
-  onDocxEmojiStyleChange?: (style: 'apple' | 'windows') => void;
+  onDocxEmojiStyleChange?: (style: EmojiStyle) => void;
   /** Cache clear callback */
   onClearCache?: () => Promise<void>;
   /** Called when panel is shown, use to refresh dynamic data */
@@ -124,6 +125,7 @@ export function createSettingsPanel(options: SettingsPanelOptions): SettingsPane
       <div class="vscode-settings-group">
         <label class="vscode-settings-label" data-i18n="settings_docx_emoji_style">${Localization.translate('settings_docx_emoji_style')}</label>
         <select class="vscode-settings-select" data-setting="emojiStyle">
+          <option value="system" ${docxEmojiStyle === 'system' ? 'selected' : ''} data-i18n="settings_docx_emoji_style_system">${Localization.translate('settings_docx_emoji_style_system')}</option>
           <option value="windows" ${docxEmojiStyle === 'windows' ? 'selected' : ''} data-i18n="settings_docx_emoji_style_windows">${Localization.translate('settings_docx_emoji_style_windows')}</option>
           <option value="apple" ${docxEmojiStyle === 'apple' ? 'selected' : ''} data-i18n="settings_docx_emoji_style_apple">${Localization.translate('settings_docx_emoji_style_apple')}</option>
         </select>
@@ -180,7 +182,7 @@ export function createSettingsPanel(options: SettingsPanelOptions): SettingsPane
   });
 
   emojiStyleSelect?.addEventListener('change', () => {
-    options.onDocxEmojiStyleChange?.(emojiStyleSelect.value as 'apple' | 'windows');
+    options.onDocxEmojiStyleChange?.(emojiStyleSelect.value as EmojiStyle);
   });
 
   // Handle clear cache button - no confirm dialog in sandboxed webview

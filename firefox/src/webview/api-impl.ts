@@ -327,6 +327,12 @@ class FirefoxPlatformAPI {
       // Clean up blob URL after a delay
       setTimeout(() => URL.revokeObjectURL(url), 60000);
     } catch (error) {
+      // Don't log or throw error if user canceled the download
+      const errorMsg = String((error as Error)?.message || error);
+      if (errorMsg.includes('canceled') || errorMsg.includes('cancelled')) {
+        // User canceled, just clean up silently
+        return;
+      }
       console.error('Download failed:', error);
       throw error;
     }

@@ -260,10 +260,10 @@ export function createInlineConverter({
   reportResourceProgress,
   linkDefinitions,
   renderer,
-  emojiStyle = 'windows'
+  emojiStyle = 'system'
 }: InlineConverterOptions): InlineConverter {
-  // Get emoji font based on user preference
-  const emojiFont = getEmojiFont(emojiStyle);
+  // Get emoji font based on user preference (null for system style)
+  const emojiFont = emojiStyle === 'system' ? null : getEmojiFont(emojiStyle);
   
   /**
    * Remove Variation Selector (U+FE0F) from emoji for better WPS compatibility
@@ -282,6 +282,11 @@ export function createInlineConverter({
    * @returns Single TextRun or array of TextRuns
    */
   function convertTextWithEmoji(text: string, parentStyle: ParentStyle): TextRun | TextRun[] {
+    // If system style, don't process emoji, return as-is
+    if (emojiFont === null) {
+      return new TextRun({ text: text, ...parentStyle });
+    }
+
     const segments = splitTextByEmoji(text);
     
     // If no emoji found, return simple TextRun

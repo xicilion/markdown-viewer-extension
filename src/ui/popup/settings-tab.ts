@@ -6,6 +6,7 @@
 import Localization, { DEFAULT_SETTING_LOCALE } from '../../utils/localization';
 import { translate, applyI18nText, getUiLocale } from './i18n-helpers';
 import { storageGet, storageSet } from './storage-helper';
+import type { EmojiStyle } from '../../types/docx.js';
 
 // Helper: Send message compatible with both Chrome and Firefox
 function safeSendMessage(message: unknown): void {
@@ -124,7 +125,7 @@ interface Settings {
   maxCacheItems: number;
   preferredLocale: string;
   docxHrAsPageBreak: boolean;
-  docxEmojiStyle?: 'apple' | 'windows';
+  docxEmojiStyle?: EmojiStyle;
   supportedExtensions?: SupportedExtensions;
 }
 
@@ -163,7 +164,7 @@ export function createSettingsTabManager({
     maxCacheItems: 1000,
     preferredLocale: DEFAULT_SETTING_LOCALE,
     docxHrAsPageBreak: true,
-    docxEmojiStyle: 'windows',
+    docxEmojiStyle: 'system',
     supportedExtensions: {
       mermaid: true,
       vega: true,
@@ -277,13 +278,11 @@ export function createSettingsTabManager({
     // DOCX: Emoji style
     const docxEmojiStyleEl = document.getElementById('docx-emoji-style') as HTMLSelectElement | null;
     if (docxEmojiStyleEl) {
-      docxEmojiStyleEl.value = settings.docxEmojiStyle || 'windows';
-      
-      // Add change listener for immediate save
+        docxEmojiStyleEl.value = settings.docxEmojiStyle || 'system';
       if (!docxEmojiStyleEl.dataset.listenerAdded) {
         docxEmojiStyleEl.dataset.listenerAdded = 'true';
         docxEmojiStyleEl.addEventListener('change', async () => {
-          settings.docxEmojiStyle = docxEmojiStyleEl.value as 'apple' | 'windows';
+          settings.docxEmojiStyle = docxEmojiStyleEl.value as EmojiStyle;
           await saveSettingsToStorage();
         });
       }
@@ -569,7 +568,7 @@ export function createSettingsTabManager({
 
       const docxEmojiStyleEl = document.getElementById('docx-emoji-style') as HTMLSelectElement | null;
       if (docxEmojiStyleEl) {
-        settings.docxEmojiStyle = docxEmojiStyleEl.value as 'apple' | 'windows';
+        settings.docxEmojiStyle = docxEmojiStyleEl.value as EmojiStyle;
       }
 
       // Load supported file extensions from checkboxes
@@ -621,7 +620,7 @@ export function createSettingsTabManager({
         maxCacheItems: 1000,
         preferredLocale: DEFAULT_SETTING_LOCALE,
         docxHrAsPageBreak: true,
-        docxEmojiStyle: 'windows',
+        docxEmojiStyle: 'system',
         supportedExtensions: {
           mermaid: true,
           vega: true,

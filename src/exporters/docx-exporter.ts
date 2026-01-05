@@ -210,7 +210,7 @@ class DocxExporter {
           const value = userSettings?.docxHrAsPageBreak;
           this.docxHrAsPageBreak = typeof value === 'boolean' ? value : true;
           const emojiValue = userSettings?.docxEmojiStyle;
-          this.docxEmojiStyle = (emojiValue === 'apple' || emojiValue === 'windows') ? emojiValue : 'windows';
+          this.docxEmojiStyle = (emojiValue === 'apple' || emojiValue === 'windows' || emojiValue === 'system') ? emojiValue : 'system';
         } else {
           this.docxHrAsPageBreak = true;
         }
