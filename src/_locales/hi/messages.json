@@ -167,9 +167,9 @@
     "message": "बंद करें",
     "description": "Close button text/tooltip"
   },
-  "contextMenu_previewAsMarkdown": {
-    "message": "Markdown के रूप में पूर्वावलोकन करें",
-    "description": "Context menu item to preview any file as markdown"
+  "contextMenu_viewAsMarkdown": {
+    "message": "Markdown के रूप में देखें",
+    "description": "Context menu item to view any file as markdown"
   },
   "delete": {
     "message": "Delete",

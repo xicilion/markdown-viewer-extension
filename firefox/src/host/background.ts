@@ -1006,7 +1006,7 @@ async function getMenuTitle(): Promise<string> {
         const localeUrl = browser.runtime.getURL(`_locales/${preferredLocale}/messages.json`);
         const response = await fetch(localeUrl);
         const messages = await response.json();
-        const message = messages['contextMenu_previewAsMarkdown']?.message;
+        const message = messages['contextMenu_viewAsMarkdown']?.message;
         if (message) {
           return message;
         }
@@ -1020,15 +1020,22 @@ async function getMenuTitle(): Promise<string> {
   }
   
   // Default to browser locale
-  return browser.i18n.getMessage('contextMenu_previewAsMarkdown') || 'Preview as Markdown';
+  return browser.i18n.getMessage('contextMenu_viewAsMarkdown') || 'View as Markdown';
 }
 
-// Initialize context menu for previewing any file as markdown
+// Initialize context menu for viewing any file as markdown
 async function initializeContextMenu(): Promise<void> {
   try {
+    // Remove old menu item if exists (migration from preview to view)
+    try {
+      await browser.menus.remove('preview-as-markdown');
+    } catch {
+      // Ignore if old menu doesn't exist
+    }
+    
     const title = await getMenuTitle();
     browser.menus.create({
-      id: 'preview-as-markdown',
+      id: 'view-as-markdown',
       title,
       contexts: ['link', 'page'],
       documentUrlPatterns: ['file:///*', 'http://*/*', 'https://*/*']
@@ -1042,7 +1049,7 @@ async function initializeContextMenu(): Promise<void> {
 async function updateContextMenu(): Promise<void> {
   try {
     const title = await getMenuTitle();
-    await browser.menus.update('preview-as-markdown', { title });
+    await browser.menus.update('view-as-markdown', { title });
   } catch (error) {
     // Menu might not exist yet, ignore
     if (!error?.toString().includes('Could not find any menu items')) {
@@ -1053,7 +1060,7 @@ async function updateContextMenu(): Promise<void> {
 
 // Handle context menu clicks
 browser.menus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId === 'preview-as-markdown' && tab?.id) {
+  if (info.menuItemId === 'view-as-markdown' && tab?.id) {
     let targetUrl = '';
     
     // Get the URL to preview

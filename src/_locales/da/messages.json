@@ -167,9 +167,9 @@
     "message": "Luk",
     "description": "Close button text/tooltip"
   },
-  "contextMenu_previewAsMarkdown": {
-    "message": "Forhåndsvis som Markdown",
-    "description": "Context menu item to preview any file as markdown"
+  "contextMenu_viewAsMarkdown": {
+    "message": "Vis som Markdown",
+    "description": "Context menu item to view any file as markdown"
   },
   "delete": {
     "message": "Delete",

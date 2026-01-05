@@ -167,9 +167,9 @@
     "message": "닫기",
     "description": "Close button text/tooltip"
   },
-  "contextMenu_previewAsMarkdown": {
-    "message": "Markdown으로 미리보기",
-    "description": "Context menu item to preview any file as markdown"
+  "contextMenu_viewAsMarkdown": {
+    "message": "Markdown으로 보기",
+    "description": "Context menu item to view any file as markdown"
   },
   "delete": {
     "message": "삭제",
