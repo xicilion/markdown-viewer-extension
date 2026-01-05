@@ -39,6 +39,18 @@ function syncVersion() {
 }
 
 /**
+ * Check for missing translation keys
+ */
+async function checkMissingKeys() {
+  console.log('📦 Checking translations...');
+  try {
+    await import('../scripts/check-missing-keys.js');
+  } catch (error) {
+    console.error('⚠️  Warning: Failed to check translation keys:', error.message);
+  }
+}
+
+/**
  * Copy directory recursively
  */
 function copyDirectory(sourceDir, targetDir) {
@@ -255,6 +267,9 @@ async function main() {
   // Sync version first
   const version = syncVersion();
   console.log(`🔨 Building Mobile App... v${version}\n`);
+
+  // Check translations
+  await checkMissingKeys();
 
   // Clean build/mobile
   if (fs.existsSync(DIST_DIR)) {

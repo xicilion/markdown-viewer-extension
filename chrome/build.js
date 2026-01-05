@@ -2,13 +2,10 @@
 
 import { build } from 'esbuild';
 import { createBuildConfig } from './build-config.js';
-import { exec } from 'child_process';
-import { promisify } from 'util';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const execAsync = promisify(exec);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..');
 
@@ -37,18 +34,9 @@ function syncVersion() {
 async function checkMissingKeys() {
   console.log('📦 Checking translations...');
   try {
-    const { stdout, stderr } = await execAsync('node scripts/check-missing-keys.js', { cwd: projectRoot });
-    if (stderr) {
-      console.error(stderr);
-    }
-    
-    if (stdout.includes('Missing Keys') || stdout.includes('Extra Keys')) {
-      console.warn('⚠️  Warning: Some translation keys are missing or extra');
-    } else {
-      console.log('✅ Translations checked');
-    }
+    await import('../scripts/check-missing-keys.js');
   } catch (error) {
-    console.error('⚠️  Warning: Failed to check translation keys');
+    console.error('⚠️  Warning: Failed to check translation keys:', error.message);
   }
 }
 

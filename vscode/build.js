@@ -28,6 +28,18 @@ function getVersion() {
 }
 
 /**
+ * Check for missing translation keys
+ */
+async function checkMissingKeys() {
+  console.log('📦 Checking translations...');
+  try {
+    await import('../scripts/check-missing-keys.js');
+  } catch (error) {
+    console.error('⚠️  Warning: Failed to check translation keys:', error.message);
+  }
+}
+
+/**
  * Copy directory recursively
  */
 function copyDirectory(sourceDir, targetDir) {
@@ -287,6 +299,9 @@ tsconfig.json
 async function main() {
   const version = getVersion();
   console.log(`🔨 Building VS Code Extension... v${version}\n`);
+
+  // Check translations
+  await checkMissingKeys();
 
   // Change to project root for esbuild to work correctly
   process.chdir(projectRoot);
