@@ -254,7 +254,14 @@ export function createScrollSyncController(options: ScrollSyncControllerOptions)
   const handleScroll = (): void => {
     if (disposed) return;
 
-    // Skip scroll events within lock duration after programmatic scroll
+    // Always update targetLine to track current position (even during lock)
+    // This ensures async rendering repositions to the correct location
+    const currentLine = getLineForScrollPosition(getLineMapper(), scrollOptions);
+    if (currentLine !== null && !isNaN(currentLine)) {
+      targetLine = currentLine;
+    }
+
+    // Skip reporting user scroll if within lock duration after programmatic scroll
     if (Date.now() - lastProgrammaticScrollTime < SCROLL_LOCK_DURATION) {
       return;
     }
@@ -262,10 +269,7 @@ export function createScrollSyncController(options: ScrollSyncControllerOptions)
     // User-initiated scroll - report position for reverse sync
     if (!onUserScroll) return;
 
-    const currentLine = getLineForScrollPosition(getLineMapper(), scrollOptions);
     if (currentLine !== null && !isNaN(currentLine)) {
-      targetLine = currentLine;
-      
       if (userScrollDebounceTimer) clearTimeout(userScrollDebounceTimer);
       userScrollDebounceTimer = setTimeout(() => {
         if (!disposed) {
