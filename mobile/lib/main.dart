@@ -260,39 +260,8 @@ class _MarkdownViewerHomeState extends State<MarkdownViewerHome> {
         
         if (content != null) {
           debugPrint('[Mobile] Got initial file: $filename');
-          // Save filename for display immediately
-          setState(() {
-            _currentFilename = filename;
-          });
-          _pendingContent = content;
-          _pendingFilename = filename;
-          
-          // Save to Documents/Imported directory for permanent storage
-          try {
-            final appDir = await getApplicationDocumentsDirectory();
-            final importedDir = Directory('${appDir.path}/Imported');
-            if (!await importedDir.exists()) {
-              await importedDir.create(recursive: true);
-            }
-            
-            final actualFilename = filename ?? 'document.md';
-            var targetFile = File('${importedDir.path}/$actualFilename');
-            if (await targetFile.exists()) {
-              final nameWithoutExt = actualFilename.replaceAll(RegExp(r'\.[^.]+$'), '');
-              final ext = actualFilename.contains('.') ? actualFilename.substring(actualFilename.lastIndexOf('.')) : '.md';
-              final timestamp = DateTime.now().millisecondsSinceEpoch;
-              targetFile = File('${importedDir.path}/${nameWithoutExt}_$timestamp$ext');
-            }
-            
-            await targetFile.writeAsString(content);
-            _currentFilePath = targetFile.path;
-            _currentFileDir = importedDir.path;
-            
-            // Add to recent files
-            await recentFilesService.add(targetFile.path, actualFilename, content: content);
-          } catch (e) {
-            debugPrint('[Mobile] Failed to save initial file: $e');
-          }
+          // Reuse _handleReceivedFile to avoid duplication
+          await _handleReceivedFile(content, filename ?? 'document.md');
         }
       }
     } on PlatformException catch (e) {
