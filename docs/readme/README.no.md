@@ -4,7 +4,7 @@
 
 **Markdown til perfekt Word med ett klikk — Mermaid, Graphviz, Vega, infografikk, LaTeX (redigerbar), kodeuthevning, lokal behandling**
 
-*Helt gratis · 18+ profesjonelle temaer · 28 språk*
+*Helt gratis · 29+ profesjonelle temaer · 28 språk*
 
 🚀 **Installer nå:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@ Klikk for å laste ned og få et perfekt Word-dokument:
 - ✅ Graphviz DOT-grafer → HD-bilder
 - ✅ LaTeX-formler → Redigerbare Word-formler
 - ✅ Automatisk syntaksutheving (100+ språk)
-- ✅ 18+ profesjonelle temaer med ett klikk
+- ✅ 29+ profesjonelle temaer med ett klikk
 - ✅ Helt gratis, lokal behandling
 
 **Bruk tiden din på å skrive, ikke på formatering.**
@@ -125,14 +125,14 @@ Etter eksport kan du:
 - ❌ Word formelredigerer: Klikk...klikk...klikk...velg symboler...juster posisjoner
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` Ferdig
 
-### 3. 18+ profesjonelle temaer
+### 3. 29+ profesjonelle temaer
 
 Forskjellige scenarioer, forskjellige stiler, bytt med ett klikk:
 
 - 📊 Business / Technical → Forretningsrapporter, tekniske dokumenter
 - 📚 Academic / Palatino → Akademiske artikler, boktypesetting  
-- 🇨🇳 Songti / Heiti / Mixed → Kinesiske dokumenter
-- 🎨 Typewriter / Sakura → Kreativt innhold
+- 🇨🇳 Heiti / Mixed → Kinesiske dokumenter
+- 🎨 Typewriter / Handwritten → Kreativt innhold
 
 **WYSIWYG:** Forhåndsvisning ser nøyaktig ut som eksportert Word. Ingen gjetning, ingen prøving.
 
@@ -203,14 +203,15 @@ Dokument med 50 Mermaid-diagrammer:
 
 Overskrifter · Avsnitt · Fet · Kursiv · Gjennomstreking · Lister · Oppgavelister · Sitater · Kodeblokker (100+ språk uthevet) · Tabeller · Lenker · Bilder · Mermaid-diagrammer · Vega / Vega-Lite-diagrammer · Infographic-diagrammer · LaTeX-formler · HTML · GFM-utvidelser
 
-### 18 temaer
+### 29 temaer
 
-**Forretning:** Default · Business · Technical  
-**Akademisk:** Academic  
-**Serif:** Palatino · Garamond · Cambria · Elegant  
-**Sans-serif:** Verdana · Trebuchet · Century  
-**Kinesisk:** Songti · Heiti · Mixed  
-**Kreativ:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28 grensesnittspråk
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | Manuelt skjermbilde | Plugin nødvendig | ✅ Støttet | ✅ Støttet | ✅ Innfødt støtte |
 | **Matematiske formler** | Bilder | Bilder | Bilder | Bilder | ✅ Redigerbar |
 | **Personvern** | ✅ Lokal | ✅ Lokal | ❌ Skyopplasting | ✅ Lokal | ✅ Lokal |
-| **Temaer** | - | - | 3-5 | 5-10 | ✅ 18+ |
+| **Temaer** | - | - | 3-5 | 5-10 | ✅ 29+ |
 | **Frakoblet** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **GitHub direkte visning** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **Pris** | Gratis | Gratis | Betalte planer | Betalte planer | ✅ Gratis |
@@ -256,7 +257,7 @@ A: Aldri. All behandling skjer lokalt.
 A: Klikk verktøylinjeikon → Velg tema → Bruk umiddelbart.
 
 **S: Kan jeg tilpasse temaer?**  
-A: For øyeblikket 18 forhåndsinnstilte temaer, tilpasning kommer snart.
+A: For øyeblikket 29 forhåndsinnstilte temaer, tilpasning kommer snart.
 
 **S: Vil store dokumenter bli trege?**  
 A: Nei. Progressiv lasting + smart hurtigbuffer, tekst vises umiddelbart, diagrammer rendres i bakgrunnen (første gang 5s, andre gang 1s).
@@ -274,7 +275,7 @@ A: Word 2016+ fullt støttet, Word 2013 fungerer også. Fullt kompatibel med WPS
 A: For øyeblikket kun Word, PDF planlagt. Du kan først eksportere til Word, deretter lagre som PDF.
 
 **S: Hvilket tema passer for meg?**  
-A: Forretningsrapporter → Business · Akademiske artikler → Academic · Tekniske dokumenter → Technical · Kinesiske dokumenter → Songti/Mixed
+A: Forretningsrapporter → Business · Akademiske artikler → Academic · Tekniske dokumenter → Technical · Kinesiske dokumenter → Heiti/Mixed
 
 **S: Hva er forskjellen mellom Vega og Mermaid?**  
 A: **Mermaid** er for flytdiagrammer, arkitekturdiagrammer og andre skjematiske diagrammer; **Vega/Vega-Lite** er for datavisualisering som salgsdiagrammer, økonomiske rapporter og andre datadrevne forretningsdiagrammer. De utfyller hverandre for forskjellige scenarioer.
@@ -311,7 +312,7 @@ A: Bruk ````vega-lite` kodeblokk i Markdown med JSON-format diagramspesifikasjon
 4. Dra `.md`-filer til nettleser
 5. ✅ Start bruk
 
-**Du får:** Markdown → Word ett-klikks-konvertering · Mermaid automatisk konvertering · LaTeX redigerbare formler · 100+ språk syntaksutheving · 18+ temaer · Smart hurtigbuffer · Fullstendig gratis
+**Du får:** Markdown → Word ett-klikks-konvertering · Mermaid automatisk konvertering · LaTeX redigerbare formler · 100+ språk syntaksutheving · 29+ temaer · Smart hurtigbuffer · Fullstendig gratis
 
 **Perfekt for:** Tekniske forfattere · Studenter/forskere · Produktledere · Utviklere · Alle som bruker Markdown
 

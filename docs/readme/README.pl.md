@@ -4,7 +4,7 @@
 
 **Markdown do perfekcyjnego Worda jednym kliknięciem — Mermaid, Graphviz, Vega, infografika, LaTeX (edytowalny), podświetlanie kodu, lokalne przetwarzanie**
 
-*Całkowicie za darmo · 18+ profesjonalnych motywów · Obsługa 28 języków*
+*Całkowicie za darmo · 29+ profesjonalnych motywów · Obsługa 28 języków*
 
 🚀 **Zainstaluj teraz:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@ Kliknij, aby pobrać i uzyskać doskonały dokument Word:
 - ✅ Grafy Graphviz DOT → Obrazy w wysokiej rozdzielczości
 - ✅ Formuły LaTeX → Edytowalne formuły Word
 - ✅ Automatyczne podświetlanie kodu (100+ języków)
-- ✅ 18+ profesjonalnych motywów jednym kliknięciem
+- ✅ 29+ profesjonalnych motywów jednym kliknięciem
 - ✅ Całkowicie za darmo, przetwarzanie lokalne
 
 **Poświęć czas na pisanie, a nie na formatowanie.**
@@ -125,14 +125,14 @@ Po eksporcie możesz:
 - ❌ Edytor formuł Word: klik klik klik klik klik...wybierz symbol...dostosuj pozycję
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` gotowe
 
-### 3. 18+ profesjonalnych motywów
+### 3. 29+ profesjonalnych motywów
 
 Różne scenariusze, różne style, zmiana jednym kliknięciem:
 
 - 📊 Business / Technical → Raporty biznesowe, dokumentacja techniczna
 - 📚 Academic / Palatino → Artykuły naukowe, składanie książek  
 - 🇨🇳 宋体 / 黑体 / 混排 → Dokumenty chińskie
-- 🎨 Typewriter / Sakura → Treści kreatywne
+- 🎨 Typewriter / Handwritten → Treści kreatywne
 
 **WYSIWYG:** Jak wygląda w podglądzie, tak będzie w Word. Bez zgadywania, bez prób.
 
@@ -203,14 +203,15 @@ Dokument zawierający 50 diagramów Mermaid:
 
 Nagłówki · Akapity · Pogrubienie · Kursywa · Przekreślenie · Listy · Listy zadań · Cytaty · Bloki kodu (podświetlanie 100+ języków) · Tabele · Linki · Obrazy · Diagramy Mermaid · Wykresy Vega / Vega-Lite · Wykresy Infographic · Formuły LaTeX · HTML · Rozszerzenia GFM
 
-### 18 motywów
+### 29 motywów
 
-**Biznes:** Default · Business · Technical  
-**Akademicki:** Academic  
-**Szeryfowe:** Palatino · Garamond · Cambria · Elegant  
-**Bezszeryfowe:** Verdana · Trebuchet · Century  
-**Chiński:** 宋体 · 黑体 · 混排  
-**Kreatywny:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28 języków interfejsu
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | Ręczny zrzut ekranu | Wymaga wtyczki | ✅ Wsparcie | ✅ Wsparcie | ✅ Natywne wsparcie |
 | **Formuły matematyczne** | Obraz | Obraz | Obraz | Obraz | ✅ Edytowalne |
 | **Prywatność i bezpieczeństwo** | ✅ Lokalnie | ✅ Lokalnie | ❌ Przesyłanie do chmury | ✅ Lokalnie | ✅ Lokalnie |
-| **Liczba motywów** | - | - | 3-5 | 5-10 | ✅ 18+ |
+| **Liczba motywów** | - | - | 3-5 | 5-10 | ✅ 29+ |
 | **Użycie offline** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **Bezpośrednie przeglądanie GitHub** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **Cena** | Za darmo | Za darmo | Częściowo płatne | Częściowo płatne | ✅ Za darmo |
@@ -256,7 +257,7 @@ O: Nigdy nie przesyłane. Całe przetwarzanie odbywa się lokalnie.
 O: Kliknij ikonę paska narzędzi → Wybierz motyw → Natychmiastowe zastosowanie.
 
 **P: Czy mogę dostosować motywy?**  
-O: Obecnie 18 predefiniowanych motywów, funkcja dostosowywania w planach.
+O: Obecnie 29 predefiniowanych motywów, funkcja dostosowywania w planach.
 
 **P: Czy duże dokumenty powodują spowolnienie?**  
 O: Nie. Progresywne ładowanie + inteligentna pamięć podręczna, tekst wyświetlany natychmiast, diagramy renderowane w tle (pierwszy raz 5 sek, drugi raz 1 sek).
@@ -311,7 +312,7 @@ O: Użyj bloków kodu ````vega-lite` w Markdown, z zawartością w formacie JSON
 4. Przeciągnij plik `.md` do przeglądarki
 5. ✅ Zacznij używać
 
-**Otrzymasz:** Konwersję Markdown → Word jednym kliknięciem · Automatyczną konwersję Mermaid na obrazy · Edytowalne formuły LaTeX · Podświetlanie kodu 100+ języków · 18+ motywów · Inteligentną pamięć podręczną · Całkowicie za darmo
+**Otrzymasz:** Konwersję Markdown → Word jednym kliknięciem · Automatyczną konwersję Mermaid na obrazy · Edytowalne formuły LaTeX · Podświetlanie kodu 100+ języków · 29+ motywów · Inteligentną pamięć podręczną · Całkowicie za darmo
 
 **Odpowiedni dla:** Pisarzy technicznych · Studentów/Badaczy · Product Managerów · Deweloperów · Każdego korzystającego z Markdown
 

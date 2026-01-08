@@ -16,7 +16,7 @@ This page provides a comprehensive comparison of features available across all M
 | **Infographics** | ✅ | ✅ | ✅ | ✅ |
 | **Word Export (DOCX)** | ✅ | ✅ | ✅ | ✅ |
 | **Table of Contents** | ✅ | ✅ | ✅ | ✅ |
-| **18+ Themes** | ✅ | ✅ | ✅ | ✅ |
+| **29 Themes** | ✅ | ✅ | ✅ | ✅ |
 | **28 Languages** | ✅ | ✅ | ✅ | ✅ |
 | **Render Caching** | ✅ | ✅ | ✅ | ✅ |
 | **History/Recent Files** | ✅ | ✅ | ❌ | ✅ |
@@ -94,16 +94,17 @@ Support for opening dedicated diagram files:
 
 ### Themes
 
-All 18 themes are available on all platforms:
+All 29 themes are available on all platforms:
 
 | Theme Category | Themes |
 |----------------|--------|
-| Professional | Default, Business, Technical |
-| Academic | Academic |
-| Serif | Elegant, Palatino, Garamond, Cambria, Century |
-| Chinese | Songti, Heiti, Mixed |
-| Creative | Typewriter, Sakura, Water |
-| Other | Minimal, Trebuchet, Verdana |
+| Classic | Default, Academic, Business, Manuscript, Newspaper |
+| Reading | Palatino, Garamond, Typewriter, Elegant |
+| Modern | Technical, Swiss, Minimal |
+| Creative | Magazine, Century, Handwritten, Verdana |
+| Chinese | Heiti, Mixed, Water |
+| Playful | Rainbow, Starry, Candy, Dinosaur, Space, Garden |
+| Nature | Forest, Ocean, Coral, Sunset |
 
 ### User Interface Features
 

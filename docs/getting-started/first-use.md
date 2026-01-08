@@ -95,7 +95,7 @@ This is the core feature of Markdown Viewer!
 ## Switching Themes
 
 1. Click the **Theme** button in the toolbar
-2. Browse the 18+ available themes
+2. Browse the 29 available themes
 3. Click a theme to preview it
 4. The document updates instantly
 
@@ -106,8 +106,8 @@ This is the core feature of Markdown Viewer!
 | Business reports | Business |
 | Academic papers | Academic |
 | Technical docs | Technical |
-| Chinese documents | Songti, Heiti, or Mixed |
-| Creative content | Typewriter, Sakura |
+| Chinese documents | Heiti or Mixed |
+| Creative content | Typewriter, Handwritten |
 | General use | Default |
 
 ---

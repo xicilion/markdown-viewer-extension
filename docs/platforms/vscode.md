@@ -10,7 +10,7 @@ Markdown Viewer is available as a VS Code extension, allowing you to preview and
 | Word export | ✅ |
 | All diagram types | ✅ |
 | LaTeX formulas | ✅ |
-| 18+ themes | ✅ |
+| 29 themes | ✅ |
 | Live preview | ✅ |
 
 ---

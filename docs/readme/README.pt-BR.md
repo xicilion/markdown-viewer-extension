@@ -4,7 +4,7 @@
 
 **Markdown para Word perfeito com um clique — Mermaid, Graphviz, Vega, infográfico, LaTeX (editável), destaque de código, processamento local**
 
-*Totalmente gratuito · 18+ temas profissionais · Suporte a 28 idiomas*
+*Totalmente gratuito · 29+ temas profissionais · Suporte a 28 idiomas*
 
 🚀 **Instale agora:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@ Clique para baixar e obtenha um documento Word perfeito:
 - ✅ Grafos Graphviz DOT → Imagens em alta definição
 - ✅ Fórmulas LaTeX → Fórmulas editáveis no Word
 - ✅ Destaque automático de código (100+ linguagens)
-- ✅ 18+ temas profissionais com um clique
+- ✅ 29+ temas profissionais com um clique
 - ✅ Totalmente gratuito, processamento local
 
 **Dedique seu tempo à escrita, não à formatação.**
@@ -125,14 +125,14 @@ Após a exportação você pode:
 - ❌ Editor de fórmulas do Word: clique clique clique clique clique...selecionar símbolo...ajustar posição
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` pronto
 
-### 3. 18+ temas profissionais
+### 3. 29+ temas profissionais
 
 Cenários diferentes, estilos diferentes, mudança com um clique:
 
 - 📊 Business / Technical → Relatórios empresariais, documentação técnica
 - 📚 Academic / Palatino → Artigos acadêmicos, diagramação de livros  
 - 🇨🇳 宋体 / 黑体 / 混排 → Documentos chineses
-- 🎨 Typewriter / Sakura → Conteúdos criativos
+- 🎨 Typewriter / Handwritten → Conteúdos criativos
 
 **WYSIWYG:** Como aparece na pré-visualização, assim será no Word. Sem adivinhações, sem tentativas.
 
@@ -203,14 +203,15 @@ Documento contendo 50 diagramas Mermaid:
 
 Títulos · Parágrafos · Negrito · Itálico · Tachado · Listas · Listas de tarefas · Citações · Blocos de código (destaque de 100+ linguagens) · Tabelas · Links · Imagens · Diagramas Mermaid · Gráficos Vega / Vega-Lite · Gráficos Infographic · Fórmulas LaTeX · HTML · Extensões GFM
 
-### 18 temas
+### 29 temas
 
-**Negócios:** Default · Business · Technical  
-**Acadêmico:** Academic  
-**Serifadas:** Palatino · Garamond · Cambria · Elegant  
-**Sem serifa:** Verdana · Trebuchet · Century  
-**Chinês:** 宋体 · 黑体 · 混排  
-**Criativo:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28 idiomas de interface
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | Captura manual | Requer plugin | ✅ Suporte | ✅ Suporte | ✅ Suporte nativo |
 | **Fórmulas matemáticas** | Imagem | Imagem | Imagem | Imagem | ✅ Editáveis |
 | **Privacidade e segurança** | ✅ Local | ✅ Local | ❌ Upload na nuvem | ✅ Local | ✅ Local |
-| **Número de temas** | - | - | 3-5 | 5-10 | ✅ 18+ |
+| **Número de temas** | - | - | 3-5 | 5-10 | ✅ 29+ |
 | **Uso offline** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **Visualizar diretamente no GitHub** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **Preço** | Gratuito | Gratuito | Parcialmente pago | Parcialmente pago | ✅ Gratuito |
@@ -256,7 +257,7 @@ R: Nunca enviados. Todo o processamento é concluído localmente.
 R: Clique no ícone da barra de ferramentas → Selecione tema → Aplicação imediata.
 
 **P: Posso personalizar temas?**  
-R: Atualmente 18 temas predefinidos, funcionalidade de personalização nos planos.
+R: Atualmente 29 temas predefinidos, funcionalidade de personalização nos planos.
 
 **P: Documentos grandes causam lentidão?**  
 R: Não. Carregamento progressivo + cache inteligente, texto exibido imediatamente, diagramas renderizados em segundo plano (primeira vez 5 seg, segunda vez 1 seg).
@@ -311,7 +312,7 @@ R: Use blocos de código ````vega-lite` no Markdown, com conteúdo em formato JS
 4. Arraste arquivo `.md` para o navegador
 5. ✅ Comece a usar
 
-**Você obterá:** Conversão Markdown → Word com um clique · Conversão automática de Mermaid em imagens · Fórmulas LaTeX editáveis · Destaque de código 100+ linguagens · 18+ temas · Cache inteligente · Totalmente gratuito
+**Você obterá:** Conversão Markdown → Word com um clique · Conversão automática de Mermaid em imagens · Fórmulas LaTeX editáveis · Destaque de código 100+ linguagens · 29+ temas · Cache inteligente · Totalmente gratuito
 
 **Adequado para:** Escritores técnicos · Estudantes/Pesquisadores · Gerentes de produto · Desenvolvedores · Qualquer um que use Markdown
 

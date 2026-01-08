@@ -25,16 +25,17 @@ $$
 
 ### 🎨 Professional Themes
 
-[18+ built-in themes](themes.md) for every scenario:
+[29 built-in themes](themes.md) across 7 categories for every scenario:
 
 | Category | Themes |
 |----------|--------|
-| Professional | Default, Business, Technical |
-| Academic | Academic |
-| Serif | Palatino, Garamond, Cambria, Elegant |
-| Sans-serif | Verdana, Trebuchet, Century |
-| Chinese | Songti, Heiti, Mixed |
-| Creative | Typewriter, Sakura, Water, Minimal |
+| Classic | Default, Academic, Business, Manuscript, Newspaper |
+| Reading | Palatino, Garamond, Typewriter, Elegant |
+| Modern | Technical, Swiss, Minimal |
+| Creative | Magazine, Century, Handwritten, Verdana |
+| Chinese | Heiti, Mixed, Water |
+| Playful | Rainbow, Starry, Candy, Dinosaur, Space, Garden |
+| Nature | Forest, Ocean, Coral, Sunset |
 
 ### 💻 Code Highlighting
 

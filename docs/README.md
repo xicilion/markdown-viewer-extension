@@ -2,7 +2,7 @@
 
 **Markdown to perfect Word in one click — Mermaid, Graphviz, Vega, Infographic, LaTeX (editable), code highlighting, local processing**
 
-*Completely Free · 18+ Professional Themes · 28 Languages Support*
+*Completely Free · 29 Professional Themes · 28 Languages Support*
 
 ### 🚀 Install Now
 
@@ -35,7 +35,7 @@ Click to download and get a perfect Word document:
 - ✅ **Vega/Vega-Lite charts** → High-resolution images
 - ✅ **LaTeX formulas** → Word editable equations (not images!)
 - ✅ **Auto syntax highlighting** for 100+ programming languages
-- ✅ **18+ professional themes** with one click
+- ✅ **29 professional themes** with one click
 - ✅ **Completely free**, local processing
 
 **Spend time on writing, not on formatting.**
@@ -57,18 +57,19 @@ Convert diagrams written in code to high-resolution images:
 
 LaTeX formulas are converted to **native Word equations** — not images! You can continue editing them in Word.
 
-### 🎭 18+ Professional Themes
+### 🎭 29 Professional Themes
 
 Different scenarios, different styles, one-click switch:
 
 | Category | Themes |
 |----------|--------|
-| Professional | Default, Business, Technical |
-| Academic | Academic |
-| Serif | Palatino, Garamond, Cambria, Elegant |
-| Sans-serif | Verdana, Trebuchet, Century |
-| Chinese | Songti, Heiti, Mixed |
-| Creative | Typewriter, Sakura, Water, Minimal |
+| Classic | Default, Academic, Business, Manuscript, Newspaper |
+| Reading | Palatino, Garamond, Typewriter, Elegant |
+| Modern | Technical, Swiss, Minimal |
+| Creative | Magazine, Century, Handwritten, Verdana |
+| Chinese | Heiti, Mixed, Water |
+| Playful | Rainbow, Starry, Candy, Dinosaur, Space, Garden |
+| Nature | Forest, Ocean, Coral, Sunset |
 
 ### ⚡ Lightning Fast
 

@@ -4,7 +4,7 @@
 
 **Markdown naar perfect Word met één klik — Mermaid, Graphviz, Vega, infographic, LaTeX (bewerkbaar), code-accentuering, lokale verwerking**
 
-*Volledig gratis · 18+ professionele thema's · 28 talen*
+*Volledig gratis · 29+ professionele thema's · 28 talen*
 
 🚀 **Installeer nu:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@ Klik om te downloaden en krijg een perfect Word-document:
 - ✅ Graphviz DOT-grafen → Afbeeldingen met hoge resolutie
 - ✅ LaTeX-formules → Bewerkbare Word-vergelijkingen
 - ✅ Automatische syntaxismarkering (100+ talen)
-- ✅ 18+ professionele thema's met één klik
+- ✅ 29+ professionele thema's met één klik
 - ✅ Volledig gratis, lokale verwerking
 
 **Besteed tijd aan schrijven, niet aan formatteren.**
@@ -125,14 +125,14 @@ Na export kunt u:
 - ❌ Word vergelijkingseditor: Klik...klik...klik...symbolen selecteren...posities aanpassen
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` Klaar
 
-### 3. 18+ professionele thema's
+### 3. 29+ professionele thema's
 
 Verschillende scenario's, verschillende stijlen, één klik wisselen:
 
 - 📊 Business / Technical → Zakelijke rapporten, technische documentatie
 - 📚 Academic / Palatino → Academische artikelen, boektypografie  
-- 🇨🇳 Songti / Heiti / Mixed → Chinese documenten
-- 🎨 Typewriter / Sakura → Creatieve inhoud
+- 🇨🇳 Heiti / Mixed → Chinese documenten
+- 🎨 Typewriter / Handwritten → Creatieve inhoud
 
 **WYSIWYG:** Voorbeeldweergave ziet er precies zo uit als geëxporteerd Word. Geen gissen, geen testen.
 
@@ -203,14 +203,15 @@ Document met 50 Mermaid-diagrammen:
 
 Koppen · Alinea's · Vet · Cursief · Doorhalen · Lijsten · Takenlijsten · Citaten · Codeblokken (100+ talen gemarkeerd) · Tabellen · Links · Afbeeldingen · Mermaid-diagrammen · Vega / Vega-Lite grafieken · Infographic grafieken · LaTeX-formules · HTML · GFM-extensies
 
-### 18 thema's
+### 29 thema's
 
-**Zakelijk:** Default · Business · Technical  
-**Academisch:** Academic  
-**Serif:** Palatino · Garamond · Cambria · Elegant  
-**Sans-serif:** Verdana · Trebuchet · Century  
-**Chinees:** Songti · Heiti · Mixed  
-**Creatief:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28 interfacetalen
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | Handmatige screenshot | Plugin nodig | ✅ Ondersteund | ✅ Ondersteund | ✅ Native ondersteuning |
 | **Wiskundige formules** | Afbeeldingen | Afbeeldingen | Afbeeldingen | Afbeeldingen | ✅ Bewerkbaar |
 | **Privacy** | ✅ Lokaal | ✅ Lokaal | ❌ Cloud-upload | ✅ Lokaal | ✅ Lokaal |
-| **Thema's** | - | - | 3-5 | 5-10 | ✅ 18+ |
+| **Thema's** | - | - | 3-5 | 5-10 | ✅ 29+ |
 | **Offline** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **GitHub directe weergave** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **Prijs** | Gratis | Gratis | Betaalde plannen | Betaalde plannen | ✅ Gratis |
@@ -256,7 +257,7 @@ A: Nooit. Alle verwerking gebeurt lokaal.
 A: Klik werkbalkpictogram → Selecteer thema → Direct toepassen.
 
 **V: Kan ik thema's aanpassen?**  
-A: Momenteel 18 vooraf ingestelde thema's, aanpassing komt binnenkort.
+A: Momenteel 29 vooraf ingestelde thema's, aanpassing komt binnenkort.
 
 **V: Vertragen grote documenten?**  
 A: Nee. Progressief laden + slimme cache, tekst wordt direct weergegeven, diagrammen worden op de achtergrond weergegeven (eerste 5s, tweede 1s).
@@ -274,7 +275,7 @@ A: Word 2016+ volledig ondersteund, Word 2013 werkt ook. Volledig compatibel met
 A: Momenteel alleen Word, PDF is gepland. U kunt exporteren naar Word en vervolgens opslaan als PDF.
 
 **V: Welk thema past bij mij?**  
-A: Zakelijke rapporten → Business · Academische artikelen → Academic · Technische documentatie → Technical · Chinese documenten → Songti/Mixed
+A: Zakelijke rapporten → Business · Academische artikelen → Academic · Technische documentatie → Technical · Chinese documenten → Heiti/Mixed
 
 **V: Wat is het verschil tussen Vega en Mermaid?**  
 A: **Mermaid** is voor stroomdiagrammen, architectuurdiagrammen en andere schematische diagrammen; **Vega/Vega-Lite** is voor datavisualisatie zoals verkoopgrafieken, financiële rapporten en andere datagedreven zakelijke grafieken. Ze vullen elkaar aan voor verschillende scenario's.
@@ -311,7 +312,7 @@ A: Gebruik ````vega-lite` codeblok in Markdown met JSON-formaat grafiekspecifica
 4. Sleep `.md`-bestanden naar browser
 5. ✅ Begin met gebruiken
 
-**U krijgt:** Markdown → Word één klik conversie · Mermaid automatische conversie · LaTeX bewerkbare formules · 100+ talen syntaxisaccentuering · 18+ thema's · Slimme cache · Volledig gratis
+**U krijgt:** Markdown → Word één klik conversie · Mermaid automatische conversie · LaTeX bewerkbare formules · 100+ talen syntaxisaccentuering · 29+ thema's · Slimme cache · Volledig gratis
 
 **Perfect voor:** Technische schrijvers · Studenten/onderzoekers · Productmanagers · Ontwikkelaars · Iedereen die Markdown gebruikt
 

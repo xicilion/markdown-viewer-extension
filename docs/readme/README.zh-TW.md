@@ -4,7 +4,7 @@
 
 **Markdown 一鍵匯出完美 Word — Mermaid 流程圖、Graphviz、Vega 圖表、資訊圖、LaTeX 公式自動轉為可編輯格式，程式碼高亮，本地處理**
 
-*完全免費 · 18+ 專業主題 · 支援 28 種語言*
+*完全免費 · 29+ 專業主題 · 支援 28 種語言*
 
 🚀 **立即安裝:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@
 - ✅ Graphviz DOT 圖 → 高清圖片
 - ✅ LaTeX 公式 → Word 可編輯公式
 - ✅ 程式碼自動高亮（100+ 語言）
-- ✅ 18+ 專業主題一鍵切換
+- ✅ 29+ 專業主題一鍵切換
 - ✅ 完全免費，本地處理
 
 **把時間花在寫作上，而不是調格式上。**
@@ -125,14 +125,14 @@ LaTeX → Word 可編輯公式（不是圖片！）
 - ❌ Word 公式編輯器：點點點點點...選符號...調位置
 - ✅ LaTeX：`\int_0^\infty e^{-x^2}dx` 完事
 
-### 3. 18+ 專業主題
+### 3. 29+ 專業主題
 
 不同場景，不同風格，一鍵切換：
 
 - 📊 Business / Technical → 商務報告、技術文檔
 - 📚 Academic / Palatino → 學術論文、書籍排版  
 - 🇨🇳 宋體 / 黑體 / 混排 → 中文文檔
-- 🎨 Typewriter / Sakura → 創意內容
+- 🎨 Typewriter / Handwritten → 創意內容
 
 **所見即所得：** 預覽什麼樣，Word 就什麼樣。不用猜，不用試。
 
@@ -203,14 +203,15 @@ LaTeX → Word 可編輯公式（不是圖片！）
 
 標題 · 段落 · 粗體 · 斜體 · 刪除線 · 列表 · 任務列表 · 引用 · 程式碼區塊（100+ 語言高亮）· 表格 · 連結 · 圖片 · Mermaid 圖表 · Vega / Vega-Lite 圖表 · Infographic 圖表 · LaTeX 公式 · HTML · GFM 擴充
 
-### 18 個主題
+### 29 個主題
 
-**商務：** Default · Business · Technical  
-**學術：** Academic  
-**襯線：** Palatino · Garamond · Cambria · Elegant  
-**無襯線：** Verdana · Trebuchet · Century  
-**中文：** 宋體 · 黑體 · 混排  
-**創意：** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28 種介面語言
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | 手動截圖 | 需外掛 | ✅ 支援 | ✅ 支援 | ✅ 原生支援 |
 | **數學公式** | 圖片 | 圖片 | 圖片 | 圖片 | ✅ 可編輯 |
 | **隱私安全** | ✅ 本機 | ✅ 本機 | ❌ 上傳雲端 | ✅ 本機 | ✅ 本機 |
-| **主題數量** | - | - | 3-5 個 | 5-10 個 | ✅ 18+ 個 |
+| **主題數量** | - | - | 3-5 個 | 5-10 個 | ✅ 29+ 個 |
 | **離線使用** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **GitHub 直接檢視** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **價格** | 免費 | 免費 | 部分付費 | 部分付費 | ✅ 免費 |
@@ -256,7 +257,7 @@ A: 絕不上傳。所有處理在本機完成。
 A: 點擊工具列圖示 → 選擇主題 → 立即套用。
 
 **Q: 可以自訂主題嗎？**  
-A: 目前 18 個預設主題，自訂功能規劃中。
+A: 目前 29 個預設主題，自訂功能規劃中。
 
 **Q: 大文檔會卡嗎？**  
 A: 不會。漸進式載入 + 智慧快取，文字立即顯示，圖表後台渲染（首次 5 秒，二次 1 秒）。
@@ -311,7 +312,7 @@ A: A: 在 Markdown 中使用 ````vega-lite` 程式碼區塊，內容為 JSON 格
 4. 拖曳 `.md` 檔案到瀏覽器
 5. ✅ 開始使用
 
-**您將獲得：** Markdown → Word 一鍵轉換 · Mermaid 自動轉圖 · LaTeX 可編輯公式 · 100+ 語言程式碼高亮 · 18+ 主題 · 智慧快取 · 完全免費
+**您將獲得：** Markdown → Word 一鍵轉換 · Mermaid 自動轉圖 · LaTeX 可編輯公式 · 100+ 語言程式碼高亮 · 29+ 主題 · 智慧快取 · 完全免費
 
 **適合：** 技術寫作者 · 學生/研究員 · 產品經理 · 開發者 · 任何用 Markdown 的人
 

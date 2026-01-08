@@ -4,7 +4,7 @@
 
 **Markdown į tobulą Word vienu spustelėjimu — Mermaid, Graphviz, Vega, infografika, LaTeX (redaguojamas), kodo paryškinimas, vietinis apdorojimas**
 
-*Visiškai nemokama · 18+ profesionalių temų · 28 kalbų palaikymas*
+*Visiškai nemokama · 29+ profesionalių temų · 28 kalbų palaikymas*
 
 🚀 **Install Now:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@ Paspauskite atsisiuntimą ir gaukite tvarkingą Word dokumentą:
 - ✅ Graphviz DOT grafai → aukštos raiškos vaizdai
 - ✅ LaTeX formulės → redaguojamos Word lygtys
 - ✅ Automatinis sintaksės paryškinimas (100+ kalbų)
-- ✅ 18+ profesionalių temų vienu paspaudimu
+- ✅ 29+ profesionalių temų vienu paspaudimu
 - ✅ Visiškai nemokama, vietinis apdorojimas
 
 **Skirkite laiką turiniui, o ne formatavimui.**
@@ -125,14 +125,14 @@ Po eksportavimo galite:
 - ❌ Word lygčių redaktorius: Spausti...spausti...spausti...pasirinkti simbolius...koreguoti pozicijas
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` Atlikta
 
-### 3. 18+ profesionalių temų
+### 3. 29+ profesionalių temų
 
 Skirtingi scenarijai, skirtingi stiliai, perjungimas vienu paspaudimu:
 
 - 📊 Business / Technical → Verslo ataskaitos, techninė dokumentacija
 - 📚 Academic / Palatino → Moksliniai straipsniai, knygų maketavimas  
-- 🇨🇳 Songti / Heiti / Mixed → Kiniški dokumentai
-- 🎨 Typewriter / Sakura → Kūrybinis turinys
+- 🇨🇳 Heiti / Mixed → Kiniški dokumentai
+- 🎨 Typewriter / Handwritten → Kūrybinis turinys
 
 **WYSIWYG:** Peržiūra atrodo tiksliai kaip eksportuotas Word. Jokių spėlionių, jokių bandymų.
 
@@ -203,14 +203,15 @@ Dokumentas su 50 Mermaid diagramų:
 
 Antraštės · Pastraipos · Pusjuodis · Kursyvas · Perbrauktas · Sąrašai · Užduočių sąrašai · Citatos · Kodo blokai (100+ kalbų paryškinimas) · Lentelės · Nuorodos · Vaizdai · Mermaid diagramos · Vega / Vega-Lite diagramos · Infografikos diagramos · LaTeX formulės · HTML · GFM plėtiniai
 
-### 18 temų
+### 29 temų
 
-**Verslas:** Default · Business · Technical  
-**Akademinis:** Academic  
-**Serifai:** Palatino · Garamond · Cambria · Elegant  
-**Be serifų:** Verdana · Trebuchet · Century  
-**Kiniški:** Songti · Heiti · Mixed  
-**Kūrybiniai:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28 sąsajos kalbos
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | Rankinė ekrano nuotrauka | Reikia papildinio | ✅ Palaikoma | ✅ Palaikoma | ✅ Natyvus palaikymas |
 | **Formulės** | Vaizdai | Vaizdai | Vaizdai | Vaizdai | ✅ Redaguojamos |
 | **Privatumas** | ✅ Vietinis | ✅ Vietinis | ❌ Įkėlimas į debesis | ✅ Vietinis | ✅ Vietinis |
-| **Temos** | - | - | 3-5 | 5-10 | ✅ 18+ |
+| **Temos** | - | - | 3-5 | 5-10 | ✅ 29+ |
 | **Neprisijungus** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **GitHub peržiūra** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **Kaina** | Nemokama | Nemokama | Mokami planai | Mokami planai | ✅ Nemokama |
@@ -256,7 +257,7 @@ A: Niekada. Visas apdorojimas vyksta vietoje.
 A: Paspauskite įrankių juostos piktogramą → Pasirinkite temą → Pritaikoma akimirksniu.
 
 **Q: Ar galiu pritaikyti temas?**  
-A: Šiuo metu 18 iš anksto nustatytų temų, pritaikymas netrukus.
+A: Šiuo metu 29 iš anksto nustatytų temų, pritaikymas netrukus.
 
 **Q: Ar dideli dokumentai veiks lėtai?**  
 A: Ne. Progresyvus įkėlimas + išmani talpykla, tekstas rodomas akimirksniu, diagramos renderinamos fone (pirmą kartą 5s, antrą kartą 1s).
@@ -274,7 +275,7 @@ A: Word 2016+ pilnai palaikomas, Word 2013 taip pat veikia. Pilnai suderinama su
 A: Šiuo metu tik Word, PDF planuojamas. Galite eksportuoti į Word, tada išsaugoti kaip PDF.
 
 **Q: Kuri tema man tinka?**  
-A: Verslo ataskaitos → Business · Moksliniai straipsniai → Academic · Techninė dokumentacija → Technical · Kiniški dokumentai → Songti/Mixed
+A: Verslo ataskaitos → Business · Moksliniai straipsniai → Academic · Techninė dokumentacija → Technical · Kiniški dokumentai → Heiti/Mixed
 
 **Q: Koks skirtumas tarp Vega ir Mermaid?**  
 A: **Mermaid** skirtas srautų schemoms, architektūros diagramoms ir kitoms schematinėms diagramoms; **Vega/Vega-Lite** skirtas duomenų vizualizacijai, tokiai kaip pardavimų diagramos, finansinės ataskaitos ir kitos duomenimis paremtos verslo diagramos. Jos papildo viena kitą skirtinguose scenarijuose.
@@ -311,7 +312,7 @@ A: Naudokite ````vega-lite` kodo bloką Markdown su JSON formato diagramos speci
 4. Vilkite `.md` failus į naršyklę
 5. ✅ Pradėkite naudoti
 
-**Jūs gausite:** Markdown → Word konvertavimas vienu paspaudimu · Automatinis Mermaid konvertavimas · Redaguojamos LaTeX formulės · 100+ kalbų sintaksės paryškinimas · 18+ temų · Išmani talpykla · Visiškai nemokama
+**Jūs gausite:** Markdown → Word konvertavimas vienu paspaudimu · Automatinis Mermaid konvertavimas · Redaguojamos LaTeX formulės · 100+ kalbų sintaksės paryškinimas · 29+ temų · Išmani talpykla · Visiškai nemokama
 
 **Puikiai tinka:** Techniniams rašytojams · Studentams/tyrėjams · Produktų vadybininkams · Programuotojams · Visiems, naudojantiems Markdown
 

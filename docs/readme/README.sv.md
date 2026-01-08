@@ -4,7 +4,7 @@
 
 **Markdown till perfekt Word med ett klick — Mermaid, Graphviz, Vega, infografik, LaTeX (redigerbar), kodmarkering, lokal bearbetning**
 
-*Helt gratis · 18+ professionella teman · 28 språk*
+*Helt gratis · 29+ professionella teman · 28 språk*
 
 🚀 **Installera nu:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@ Klicka för att ladda ner och få ett perfekt Word-dokument:
 - ✅ Graphviz DOT-grafer → Högupplösta bilder
 - ✅ LaTeX-formler → Redigerbara Word-formler
 - ✅ Automatisk syntaxmarkering (100+ språk)
-- ✅ 18+ professionella teman med ett klick
+- ✅ 29+ professionella teman med ett klick
 - ✅ Helt gratis, lokal bearbetning
 
 **Ägna tiden åt att skriva, inte åt formatering.**
@@ -125,14 +125,14 @@ Efter export kan du:
 - ❌ Word formelredigerare: Klicka...klicka...klicka...välj symboler...justera positioner
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` Klart
 
-### 3. 18+ professionella teman
+### 3. 29+ professionella teman
 
 Olika scenarier, olika stilar, byt med ett klick:
 
 - 📊 Business / Technical → Affärsrapporter, tekniska dokument
 - 📚 Academic / Palatino → Akademiska artiklar, bokformatering  
-- 🇨🇳 Songti / Heiti / Mixed → Kinesiska dokument
-- 🎨 Typewriter / Sakura → Kreativt innehåll
+- 🇨🇳 Heiti / Mixed → Kinesiska dokument
+- 🎨 Typewriter / Handwritten → Kreativt innehåll
 
 **WYSIWYG:** Förhandsgranskning ser exakt ut som exporterad Word. Ingen gissning, ingen provning.
 
@@ -203,14 +203,15 @@ Dokument med 50 Mermaid-diagram:
 
 Rubriker · Stycken · Fetstil · Kursiv · Genomstruken · Listor · Uppgiftslistor · Citat · Kodblock (100+ språk markerade) · Tabeller · Länkar · Bilder · Mermaid-diagram · Vega / Vega-Lite-diagram · Infographic-diagram · LaTeX-formler · HTML · GFM-tillägg
 
-### 18 teman
+### 29 teman
 
-**Affärs:** Default · Business · Technical  
-**Akademisk:** Academic  
-**Serif:** Palatino · Garamond · Cambria · Elegant  
-**Sans-serif:** Verdana · Trebuchet · Century  
-**Kinesiska:** Songti · Heiti · Mixed  
-**Kreativ:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28 gränssnittsspråk
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | Manuell skärmbild | Plugin krävs | ✅ Stöds | ✅ Stöds | ✅ Inbyggt stöd |
 | **Matematiska formler** | Bilder | Bilder | Bilder | Bilder | ✅ Redigerbar |
 | **Integritet** | ✅ Lokal | ✅ Lokal | ❌ Molnuppladdning | ✅ Lokal | ✅ Lokal |
-| **Teman** | - | - | 3-5 | 5-10 | ✅ 18+ |
+| **Teman** | - | - | 3-5 | 5-10 | ✅ 29+ |
 | **Offline** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **GitHub direkt visning** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **Pris** | Gratis | Gratis | Betalda planer | Betalda planer | ✅ Gratis |
@@ -256,7 +257,7 @@ S: Aldrig. All bearbetning sker lokalt.
 S: Klicka verktygsfältsikon → Välj tema → Tillämpa omedelbart.
 
 **F: Kan jag anpassa teman?**  
-S: För närvarande 18 förinställda teman, anpassning kommer snart.
+S: För närvarande 29 förinställda teman, anpassning kommer snart.
 
 **F: Kommer stora dokument att bli långsamma?**  
 S: Nej. Progressiv laddning + smart cache, text visas omedelbart, diagram renderas i bakgrunden (första 5s, andra 1s).
@@ -274,7 +275,7 @@ S: Word 2016+ fullt stöd, Word 2013 fungerar också. Helt kompatibel med WPS Of
 S: För närvarande endast Word, PDF planerat. Du kan först exportera till Word och sedan spara som PDF.
 
 **F: Vilket tema passar mig?**  
-S: Affärsrapporter → Business · Akademiska artiklar → Academic · Tekniska dokument → Technical · Kinesiska dokument → Songti/Mixed
+S: Affärsrapporter → Business · Akademiska artiklar → Academic · Tekniska dokument → Technical · Kinesiska dokument → Heiti/Mixed
 
 **F: Vad är skillnaden mellan Vega och Mermaid?**  
 S: **Mermaid** är för flödesscheman, arkitekturdiagram och andra schematiska diagram; **Vega/Vega-Lite** är för datavisualisering som försäljningsdiagram, finansiella rapporter och andra datadrivna affärsdiagram. De kompletterar varandra för olika scenarier.
@@ -311,7 +312,7 @@ S: Använd ````vega-lite` kodblock i Markdown med JSON-format diagramspecifikati
 4. Dra `.md`-filer till webbläsare
 5. ✅ Börja använda
 
-**Du får:** Markdown → Word ett-klicks-konvertering · Mermaid automatisk konvertering · LaTeX redigerbara formler · 100+ språk syntaxmarkering · 18+ teman · Smart cache · Helt gratis
+**Du får:** Markdown → Word ett-klicks-konvertering · Mermaid automatisk konvertering · LaTeX redigerbara formler · 100+ språk syntaxmarkering · 29+ teman · Smart cache · Helt gratis
 
 **Perfekt för:** Tekniska författare · Studenter/forskare · Produktchefer · Utvecklare · Alla som använder Markdown
 

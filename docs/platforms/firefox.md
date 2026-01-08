@@ -10,7 +10,7 @@ Markdown Viewer is available for Firefox with full feature support.
 | Word export | ✅ |
 | All diagram types | ✅ |
 | LaTeX formulas | ✅ |
-| 18+ themes | ✅ |
+| 29 themes | ✅ |
 | Smart caching | ✅ |
 | Offline mode | ✅ |
 

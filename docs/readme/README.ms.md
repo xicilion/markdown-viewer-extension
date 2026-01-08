@@ -4,7 +4,7 @@
 
 **Markdown ke Word sempurna dengan satu klik — Mermaid, Graphviz, Vega, infografik, LaTeX (boleh diedit), penyerlahan kod, pemprosesan tempatan**
 
-*Sepenuhnya percuma · 18+ tema profesional · Sokongan 28 bahasa*
+*Sepenuhnya percuma · 29+ tema profesional · Sokongan 28 bahasa*
 
 🚀 **Install Now:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@ Klik untuk muat turun dan dapatkan dokumen Word yang sempurna:
 - ✅ Graf Graphviz DOT → Imej resolusi tinggi
 - ✅ Formula LaTeX → Persamaan Word boleh diedit
 - ✅ Penyorotan sintaks automatik (100+ bahasa)
-- ✅ 18+ tema profesional dengan satu klik
+- ✅ 29+ tema profesional dengan satu klik
 - ✅ Percuma sepenuhnya, pemprosesan tempatan
 
 **Luangkan masa untuk menulis, bukan memformat.**
@@ -125,14 +125,14 @@ Selepas eksport, anda boleh:
 - ❌ Editor persamaan Word: Klik...klik...klik...pilih simbol...laraskan kedudukan
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` Selesai
 
-### 3. 18+ Tema Profesional
+### 3. 29+ Tema Profesional
 
 Senario berbeza, gaya berbeza, tukar dengan satu klik:
 
 - 📊 Business / Technical → Laporan perniagaan, dokumen teknikal
 - 📚 Academic / Palatino → Kertas akademik, tipografi buku  
-- 🇨🇳 Songti / Heiti / Mixed → Dokumen Cina
-- 🎨 Typewriter / Sakura → Kandungan kreatif
+- 🇨🇳 Heiti / Mixed → Dokumen Cina
+- 🎨 Typewriter / Handwritten → Kandungan kreatif
 
 **WYSIWYG:** Pratonton kelihatan tepat seperti Word yang dieksport. Tiada tekaan, tiada percubaan.
 
@@ -203,14 +203,15 @@ Dokumen dengan 50 gambar rajah Mermaid:
 
 Tajuk · Perenggan · Tebal · Italik · Garis lorek · Senarai · Senarai tugas · Petikan blok · Blok kod (100+ bahasa ditonjolkan) · Jadual · Pautan · Imej · Gambar rajah Mermaid · Carta Vega / Vega-Lite · Carta Infographic · Formula LaTeX · HTML · Sambungan GFM
 
-### 18 Tema
+### 29 Tema
 
-**Perniagaan:** Default · Business · Technical  
-**Akademik:** Academic  
-**Serif:** Palatino · Garamond · Cambria · Elegant  
-**Sans-serif:** Verdana · Trebuchet · Century  
-**Cina:** Songti · Heiti · Mixed  
-**Kreatif:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28 bahasa antara muka
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | Tangkapan skrin manual | Perlu plugin | ✅ Disokong | ✅ Disokong | ✅ Sokongan asli |
 | **Formula Matematik** | Imej | Imej | Imej | Imej | ✅ Boleh diedit |
 | **Privasi** | ✅ Tempatan | ✅ Tempatan | ❌ Muat naik awan | ✅ Tempatan | ✅ Tempatan |
-| **Tema** | - | - | 3-5 | 5-10 | ✅ 18+ |
+| **Tema** | - | - | 3-5 | 5-10 | ✅ 29+ |
 | **Luar Talian** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **Paparan Terus GitHub** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **Harga** | Percuma | Percuma | Pelan berbayar | Pelan berbayar | ✅ Percuma |
@@ -256,7 +257,7 @@ J: Tidak sama sekali. Semua pemprosesan berlaku secara tempatan.
 J: Klik ikon bar alat → Pilih tema → Guna serta-merta.
 
 **S: Bolehkah saya menyesuaikan tema?**  
-J: Pada masa ini 18 tema praset, penyesuaian akan datang tidak lama lagi.
+J: Pada masa ini 29 tema praset, penyesuaian akan datang tidak lama lagi.
 
 **S: Adakah dokumen besar akan lag?**  
 J: Tidak. Pemuatan progresif + cache pintar, teks dipaparkan serta-merta, gambar rajah dirender di latar belakang (pertama 5s, kedua 1s).
@@ -274,7 +275,7 @@ J: Word 2016+ disokong sepenuhnya, Word 2013 juga berfungsi. Serasi sepenuhnya d
 J: Pada masa ini Word sahaja, PDF dirancang. Anda boleh eksport ke Word kemudian simpan sebagai PDF.
 
 **S: Tema mana yang sesuai untuk saya?**  
-J: Laporan perniagaan → Business · Kertas akademik → Academic · Dokumen teknikal → Technical · Dokumen Cina → Songti/Mixed
+J: Laporan perniagaan → Business · Kertas akademik → Academic · Dokumen teknikal → Technical · Dokumen Cina → Heiti/Mixed
 
 **S: Apakah perbezaan antara Vega dan Mermaid?**  
 J: **Mermaid** adalah untuk carta alir, gambar rajah seni bina, dan gambar rajah skematik lain; **Vega/Vega-Lite** adalah untuk visualisasi data seperti carta jualan, laporan kewangan, dan carta perniagaan berasaskan data lain. Mereka saling melengkapi untuk senario yang berbeza.
@@ -311,7 +312,7 @@ J: Gunakan blok kod ````vega-lite` dalam Markdown dengan spesifikasi carta forma
 4. Seret fail `.md` ke pelayar
 5. ✅ Mula guna
 
-**Anda akan dapat:** Markdown → Word penukaran satu klik · Mermaid auto-tukar · Formula LaTeX boleh diedit · 100+ bahasa penyorotan sintaks · 18+ tema · Cache pintar · Percuma sepenuhnya
+**Anda akan dapat:** Markdown → Word penukaran satu klik · Mermaid auto-tukar · Formula LaTeX boleh diedit · 100+ bahasa penyorotan sintaks · 29+ tema · Cache pintar · Percuma sepenuhnya
 
 **Sempurna untuk:** Penulis teknikal · Pelajar/penyelidik · Pengurus produk · Pembangun · Sesiapa yang menggunakan Markdown
 

@@ -4,7 +4,7 @@
 
 **Markdown täiuslikuks Wordiks ühe klõpsuga — Mermaid, Graphviz, Vega, infograafika, LaTeX (redigeeritav), koodi esiletõstmine, kohalik töötlemine**
 
-*Täiesti tasuta · 18+ professionaalset teemat · 28 keele tugi*
+*Täiesti tasuta · 29+ professionaalset teemat · 28 keele tugi*
 
 🚀 **Install Now:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@ Klõpsake allalaadimiseks ja saage täiuslik Word-dokument:
 - ✅ Graphviz DOT graafikud → Kõrge eraldusvõimega pildid
 - ✅ LaTeX valemid → Word redigeeritavad võrrandid
 - ✅ Automaatne süntaksi esiletõstmine (100+ keelt)
-- ✅ 18+ professionaalset teemat ühe klikiga
+- ✅ 29+ professionaalset teemat ühe klikiga
 - ✅ Täiesti tasuta, kohalik töötlemine
 
 **Kulutage aega kirjutamisele, mitte vormindamisele.**
@@ -125,14 +125,14 @@ Pärast eksportimist saate:
 - ❌ Word võrrandi redaktor: Klõps...klõps...klõps...vali sümbolid...kohenda positsioone
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` Valmis
 
-### 3. 18+ professionaalset teemat
+### 3. 29+ professionaalset teemat
 
 Erinevad stsenaariumid, erinevad stiilid, ühe klikiga vahetamine:
 
 - 📊 Business / Technical → Äriaruanded, tehniline dokumentatsioon
 - 📚 Academic / Palatino → Akadeemilised tööd, raamatute küljendamine  
-- 🇨🇳 Songti / Heiti / Mixed → Hiina dokumendid
-- 🎨 Typewriter / Sakura → Loominguline sisu
+- 🇨🇳 Heiti / Mixed → Hiina dokumendid
+- 🎨 Typewriter / Handwritten → Loominguline sisu
 
 **WYSIWYG:** Eelvaade näeb välja täpselt nagu eksporditud Word. Pole vajadust aimata ega katsetada.
 
@@ -203,14 +203,15 @@ Dokument 50 Mermaid diagrammiga:
 
 Pealkirjad · Lõigud · Rasvane · Kursiiv · Läbikriipsutatud · Loendid · Ülesannete loendid · Plokki tsitaadid · Koodiplokid (100+ keelt esiletõstetud) · Tabelid · Lingid · Pildid · Mermaid diagrammid · Vega / Vega-Lite graafikud · Infographic graafikud · LaTeX valemid · HTML · GFM laiendused
 
-### 18 teemat
+### 29 teemat
 
-**Äri:** Default · Business · Technical  
-**Akadeemiline:** Academic  
-**Serif:** Palatino · Garamond · Cambria · Elegant  
-**Sans-serif:** Verdana · Trebuchet · Century  
-**Hiina:** Songti · Heiti · Mixed  
-**Loov:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28 liidese keelt
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | Käsitsi ekraanipilt | Vajalik pistikprogramm | ✅ Toetatud | ✅ Toetatud | ✅ Natiivne tugi |
 | **Matemaatilised valemid** | Pildid | Pildid | Pildid | Pildid | ✅ Redigeeritav |
 | **Privaatsus** | ✅ Kohalik | ✅ Kohalik | ❌ Pilve üleslaadimine | ✅ Kohalik | ✅ Kohalik |
-| **Teemad** | - | - | 3-5 | 5-10 | ✅ 18+ |
+| **Teemad** | - | - | 3-5 | 5-10 | ✅ 29+ |
 | **Võrguühenduseta** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **GitHubi otsene vaade** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **Hind** | Tasuta | Tasuta | Tasulised paketid | Tasulised paketid | ✅ Tasuta |
@@ -256,7 +257,7 @@ V: Mitte kunagi. Kogu töötlemine toimub kohalikult.
 V: Klõpsake tööriistariba ikoonil → Valige teema → Rakendage kohe.
 
 **K: Kas saan teemasid kohandada?**  
-V: Praegu 18 eelseadistatud teemat, kohandamine tuleb varsti.
+V: Praegu 29 eelseadistatud teemat, kohandamine tuleb varsti.
 
 **K: Kas suured dokumendid jooksevad aeglaselt?**  
 V: Ei. Järk-järguline laadimine + nutikas vahemälu, tekst kuvatakse kohe, diagrammid renderdatakse taustal (esimene 5s, teine 1s).
@@ -274,7 +275,7 @@ V: Word 2016+ täielikult toetatud, Word 2013 töötab samuti. Täielikult ühil
 V: Praegu ainult Word, PDF on plaanis. Saate eksportida Wordi ja seejärel salvestada PDF-ina.
 
 **K: Milline teema sobib mulle?**  
-V: Äriaruanded → Business · Akadeemilised tööd → Academic · Tehniline dokumentatsioon → Technical · Hiina dokumendid → Songti/Mixed
+V: Äriaruanded → Business · Akadeemilised tööd → Academic · Tehniline dokumentatsioon → Technical · Hiina dokumendid → Heiti/Mixed
 
 **K: Mis vahe on Vegal ja Mermaidil?**  
 V: **Mermaid** on voodiagrammide, arhitektuuri diagrammide ja muude skemaatiliste diagrammide jaoks; **Vega/Vega-Lite** on andmete visualiseerimise jaoks, nagu müügidiagrammid, finantsaruanded ja muud andmepõhised ärigraafikud. Need täiendavad üksteist erinevate stsenaariumide puhul.
@@ -311,7 +312,7 @@ V: Kasutage Markdownis ````vega-lite` koodiplokki JSON-vormingus graafiku spetsi
 4. Lohistage `.md` failid brauserisse
 5. ✅ Hakake kasutama
 
-**Saate:** Markdown → Word ühe klikiga teisendamine · Mermaid automaatne teisendamine · LaTeX redigeeritavad valemid · 100+ keele süntaksi esiletõstmine · 18+ teemat · Nutikas vahemälu · Täiesti tasuta
+**Saate:** Markdown → Word ühe klikiga teisendamine · Mermaid automaatne teisendamine · LaTeX redigeeritavad valemid · 100+ keele süntaksi esiletõstmine · 29+ teemat · Nutikas vahemälu · Täiesti tasuta
 
 **Ideaalne:** Tehnilised kirjutajad · Üliõpilased/teadlased · Tootejuhid · Arendajad · Igaüks, kes kasutab Markdowni
 

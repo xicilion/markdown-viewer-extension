@@ -10,7 +10,7 @@ The Chrome extension is the primary platform for Markdown Viewer, offering the m
 | Word export | ✅ |
 | All diagram types | ✅ |
 | LaTeX formulas | ✅ |
-| 18+ themes | ✅ |
+| 29 themes | ✅ |
 | Smart caching | ✅ |
 | Offline mode | ✅ |
 
@@ -89,7 +89,7 @@ When you open a supported file:
 ### Theme Selection
 
 1. Click the extension icon or theme button
-2. Browse 18+ themes
+2. Browse 29 themes
 3. Click to apply instantly
 
 ### Smart Caching
@@ -110,7 +110,7 @@ Access settings through:
 
 | Setting | Default | Options |
 |---------|---------|---------|
-| Default theme | Default | Any of 18+ themes |
+| Default theme | Default | Any of 29 themes |
 | Cache size | 1000 items | 100-5000 |
 | Auto-detect URLs | Enabled | On/Off |
 

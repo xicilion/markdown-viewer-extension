@@ -4,7 +4,7 @@
 
 **Markdown을 클릭 한 번으로 완벽한 Word로 — Mermaid, Graphviz, Vega, 인포그래픽, LaTeX(편집 가능), 코드 강조, 로컬 처리**
 
-*완전 무료 · 18+ 전문 테마 · 28개 언어 지원*
+*완전 무료 · 29+ 전문 테마 · 28개 언어 지원*
 
 🚀 **지금 설치:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@
 - ✅ Graphviz DOT 그래프 → 고해상도 이미지
 - ✅ LaTeX 수식 → Word 편집 가능한 수식
 - ✅ 자동 구문 강조 (100+ 언어)
-- ✅ 클릭 한 번으로 18+ 전문 테마
+- ✅ 클릭 한 번으로 29+ 전문 테마
 - ✅ 완전 무료, 로컬 처리
 
 **작성에 시간을 쓰고, 포맷팅에는 쓰지 마세요.**
@@ -125,14 +125,14 @@ LaTeX → Word 편집 가능한 수식 (이미지가 아닙니다!)
 - ❌ Word 수식 편집기: 클릭...클릭...클릭...기호 선택...위치 조정
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` 완료
 
-### 3. 18+ 전문 테마
+### 3. 29+ 전문 테마
 
 다양한 시나리오, 다양한 스타일, 원클릭 전환:
 
 - 📊 Business / Technical → 비즈니스 보고서, 기술 문서
 - 📚 Academic / Palatino → 학술 논문, 책 조판  
-- 🇨🇳 Songti / Heiti / Mixed → 중국어 문서
-- 🎨 Typewriter / Sakura → 창의적인 콘텐츠
+- 🇨🇳 Heiti / Mixed → 중국어 문서
+- 🎨 Typewriter / Handwritten → 창의적인 콘텐츠
 
 **WYSIWYG:** 미리보기가 내보낸 Word와 정확히 같습니다. 추측도, 시행착오도 없습니다.
 
@@ -203,14 +203,15 @@ LaTeX → Word 편집 가능한 수식 (이미지가 아닙니다!)
 
 제목 · 단락 · 굵게 · 기울임꼴 · 취소선 · 목록 · 작업 목록 · 인용 · 코드 블록 (100+ 언어 강조) · 표 · 링크 · 이미지 · Mermaid 다이어그램 · Vega / Vega-Lite 차트 · Infographic 차트 · LaTeX 수식 · HTML · GFM 확장
 
-### 18개 테마
+### 29개 테마
 
-**비즈니스:** Default · Business · Technical  
-**학술:** Academic  
-**세리프:** Palatino · Garamond · Cambria · Elegant  
-**산세리프:** Verdana · Trebuchet · Century  
-**중국어:** Songti · Heiti · Mixed  
-**창의적:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28개 인터페이스 언어
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | 수동 스크린샷 | 플러그인 필요 | ✅ 지원 | ✅ 지원 | ✅ 기본 지원 |
 | **수학 수식** | 이미지 | 이미지 | 이미지 | 이미지 | ✅ 편집 가능 |
 | **프라이버시** | ✅ 로컬 | ✅ 로컬 | ❌ 클라우드 업로드 | ✅ 로컬 | ✅ 로컬 |
-| **테마 수** | - | - | 3-5개 | 5-10개 | ✅ 18+개 |
+| **테마 수** | - | - | 3-5개 | 5-10개 | ✅ 29+개 |
 | **오프라인** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **GitHub 직접 보기** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **가격** | 무료 | 무료 | 유료 플랜 | 유료 플랜 | ✅ 무료 |
@@ -256,7 +257,7 @@ A: 절대 안 됩니다. 모든 처리는 로컬에서 완료됩니다.
 A: 도구 모음 아이콘 클릭 → 테마 선택 → 즉시 적용.
 
 **Q: 테마를 사용자 정의할 수 있나요?**  
-A: 현재 18개 프리셋 테마 제공, 사용자 정의 기능은 곧 제공 예정.
+A: 현재 29개 프리셋 테마 제공, 사용자 정의 기능은 곧 제공 예정.
 
 **Q: 큰 문서가 느려지나요?**  
 A: 아니요. 점진적 로딩 + 스마트 캐시로 텍스트는 즉시 표시되고, 다이어그램은 백그라운드에서 렌더링 (첫 번째 5초, 두 번째 1초).
@@ -274,7 +275,7 @@ A: Word 2016+ 완벽 지원, Word 2013도 작동. WPS Office와 완전 호환.
 A: 현재 Word만 가능, PDF는 계획 중. Word로 내보낸 후 PDF로 저장할 수 있습니다.
 
 **Q: 어떤 테마가 저에게 맞나요?**  
-A: 비즈니스 보고서 → Business · 학술 논문 → Academic · 기술 문서 → Technical · 중국어 문서 → Songti/Mixed
+A: 비즈니스 보고서 → Business · 학술 논문 → Academic · 기술 문서 → Technical · 중국어 문서 → Heiti/Mixed
 
 **Q: Vega와 Mermaid의 차이점은 무엇인가요?**  
 A: **Mermaid**는 순서도, 아키텍처 다이어그램 등 개략도에 적합하고, **Vega/Vega-Lite**는 판매 차트, 재무 보고서 등 실제 데이터 기반 비즈니스 차트의 데이터 시각화에 적합합니다. 서로 보완하여 다양한 시나리오를 커버합니다.
@@ -311,7 +312,7 @@ A: A: Markdown에서 ````vega-lite` 코드 블록을 사용하고 JSON 형식의
 4. `.md` 파일을 브라우저로 드래그
 5. ✅ 사용 시작
 
-**얻을 수 있는 것:** Markdown → Word 원클릭 변환 · Mermaid 자동 변환 · LaTeX 편집 가능 수식 · 100+ 언어 코드 강조 · 18+ 테마 · 스마트 캐시 · 완전 무료
+**얻을 수 있는 것:** Markdown → Word 원클릭 변환 · Mermaid 자동 변환 · LaTeX 편집 가능 수식 · 100+ 언어 코드 강조 · 29+ 테마 · 스마트 캐시 · 완전 무료
 
 **적합한 대상:** 기술 작성자 · 학생/연구원 · 제품 관리자 · 개발자 · Markdown을 사용하는 모든 사람
 

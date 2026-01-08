@@ -121,13 +121,13 @@ Default: max 1000 items, approximately 500MB. You can:
 | Business reports | Business |
 | Academic papers | Academic |
 | Technical docs | Technical |
-| Chinese documents | Songti, Heiti, Mixed |
-| Creative content | Typewriter, Sakura |
+| Chinese documents | Heiti, Mixed |
+| Creative content | Typewriter, Handwritten |
 | General use | Default |
 
 ### Can I customize themes?
 
-Currently not supported. We offer 18+ pre-designed themes that cover most needs. Custom themes are planned for future releases.
+Currently not supported. We offer 29 pre-designed themes across 7 categories that cover most needs. Custom themes are planned for future releases.
 
 ---
 

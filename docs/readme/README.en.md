@@ -4,7 +4,7 @@
 
 **Markdown to perfect Word in one click — Mermaid, Graphviz, Vega, Infographic, LaTeX (editable), code highlighting, local processing**
 
-*Completely Free · 18+ Professional Themes · 28 Languages Support*
+*Completely Free · 29+ Professional Themes · 28 Languages Support*
 
 🚀 **Install Now:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@ Click to download and get a perfect Word document:
 - ✅ Graphviz DOT graphs → High-resolution images
 - ✅ LaTeX formulas → Word editable equations
 - ✅ Auto syntax highlighting (100+ languages)
-- ✅ 18+ professional themes with one click
+- ✅ 29+ professional themes with one click
 - ✅ Completely free, local processing
 
 **Spend time on writing, not on formatting.**
@@ -125,14 +125,14 @@ After export, you can:
 - ❌ Word equation editor: Click...click...click...select symbols...adjust positions
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` Done
 
-### 3. 18+ Professional Themes
+### 3. 29+ Professional Themes
 
 Different scenarios, different styles, one-click switch:
 
 - 📊 Business / Technical → Business reports, technical docs
 - 📚 Academic / Palatino → Academic papers, book typesetting  
-- 🇨🇳 Songti / Heiti / Mixed → Chinese documents
-- 🎨 Typewriter / Sakura → Creative content
+- 🇨🇳 Heiti / Mixed → Chinese documents
+- 🎨 Typewriter / Handwritten → Creative content
 
 **WYSIWYG:** Preview looks exactly like exported Word. No guessing, no trial.
 
@@ -203,14 +203,15 @@ Document with 50 Mermaid diagrams:
 
 Headings · Paragraphs · Bold · Italic · Strikethrough · Lists · Task lists · Blockquotes · Code blocks (100+ languages highlighted) · Tables · Links · Images · Mermaid diagrams · Vega / Vega-Lite charts · Infographic charts · LaTeX formulas · HTML · GFM extensions
 
-### 18 Themes
+### 29 Themes
 
-**Business:** Default · Business · Technical  
-**Academic:** Academic  
-**Serif:** Palatino · Garamond · Cambria · Elegant  
-**Sans-serif:** Verdana · Trebuchet · Century  
-**Chinese:** Songti · Heiti · Mixed  
-**Creative:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28 Interface Languages
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | Manual screenshot | Plugin needed | ✅ Supported | ✅ Supported | ✅ Native support |
 | **Math Formulas** | Images | Images | Images | Images | ✅ Editable |
 | **Privacy** | ✅ Local | ✅ Local | ❌ Cloud upload | ✅ Local | ✅ Local |
-| **Themes** | - | - | 3-5 | 5-10 | ✅ 18+ |
+| **Themes** | - | - | 3-5 | 5-10 | ✅ 29+ |
 | **Offline** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **GitHub Direct View** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **Price** | Free | Free | Paid plans | Paid plans | ✅ Free |
@@ -256,7 +257,7 @@ A: Never. All processing happens locally.
 A: Click toolbar icon → Select theme → Apply instantly.
 
 **Q: Can I customize themes?**  
-A: Currently 18 preset themes, customization coming soon.
+A: Currently 29 preset themes, customization coming soon.
 
 **Q: Will large documents lag?**  
 A: No. Progressive loading + smart cache, text displays instantly, diagrams render in background (first 5s, second 1s).
@@ -274,7 +275,7 @@ A: Word 2016+ fully supported, Word 2013 also works. Fully compatible with WPS O
 A: Currently Word only, PDF planned. You can export to Word then save as PDF.
 
 **Q: Which theme suits me?**  
-A: Business reports → Business · Academic papers → Academic · Technical docs → Technical · Chinese docs → Songti/Mixed
+A: Business reports → Business · Academic papers → Academic · Technical docs → Technical · Chinese docs → Heiti/Mixed
 
 **Q: What's the difference between Vega and Mermaid?**  
 A: **Mermaid** is for flowcharts, architecture diagrams, and other schematic diagrams; **Vega/Vega-Lite** is for data visualization like sales charts, financial reports, and other data-driven business charts. They complement each other for different scenarios.
@@ -311,7 +312,7 @@ A: Use ````vega-lite` code block in Markdown with JSON format chart specificatio
 4. Drag `.md` files to browser
 5. ✅ Start using
 
-**You'll get:** Markdown → Word one-click conversion · Mermaid auto-convert · LaTeX editable formulas · 100+ languages syntax highlighting · 18+ themes · Smart cache · Completely free
+**You'll get:** Markdown → Word one-click conversion · Mermaid auto-convert · LaTeX editable formulas · 100+ languages syntax highlighting · 29+ themes · Smart cache · Completely free
 
 **Perfect for:** Technical writers · Students/researchers · Product managers · Developers · Anyone using Markdown
 

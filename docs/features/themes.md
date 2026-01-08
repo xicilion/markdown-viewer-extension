@@ -1,57 +1,41 @@
 # Themes
 
-Markdown Viewer includes 18+ professionally designed themes to match any document type or personal preference.
+Markdown Viewer includes 29 professionally designed themes across 7 categories to match any document type or personal preference.
 
 ## Theme Categories
 
-### Professional
+### Classic
 
 Themes designed for business and formal documents.
 
 | Theme | Font | Best For |
 |-------|------|----------|
 | **Default** | Times New Roman | General documents, papers |
+| **Academic** | SimSun + SimHei | Academic papers |
 | **Business** | Calibri | Business reports, proposals |
-| **Technical** | Consolas + Calibri | Technical documentation, specs |
+| **Manuscript** | Palatino Linotype | Handwritten style |
+| **Newspaper** | Times New Roman | News articles |
 
-### Academic
+### Reading
 
-Optimized for academic writing.
-
-| Theme | Font | Best For |
-|-------|------|----------|
-| **Academic** | SimSun + SimHei | Chinese academic papers |
-
-### Serif Fonts
-
-Classic, elegant typography for long-form reading.
+Optimized for comfortable long-form reading.
 
 | Theme | Font | Best For |
 |-------|------|----------|
-| **Palatino** | Palatino Linotype | Books, literary content |
+| **Palatino** | Palatino | Books, literary content |
 | **Garamond** | Garamond | Classic elegance, print |
-| **Cambria** | Cambria | Modern serif documents |
+| **Typewriter** | Courier New | Vintage, scripts, drafts |
 | **Elegant** | Georgia | Refined, professional |
 
-### Sans-Serif Fonts
+### Modern
 
 Clean, modern typography for screen reading.
 
 | Theme | Font | Best For |
 |-------|------|----------|
-| **Verdana** | Verdana | Screen reading, accessibility |
-| **Trebuchet** | Trebuchet MS | Modern, web-friendly |
-| **Century** | Century Gothic | Clean, contemporary |
-
-### Chinese
-
-Optimized for Chinese language documents.
-
-| Theme | Font | Best For |
-|-------|------|----------|
-| **Songti** | SimSun (宋体) | Traditional Chinese documents |
-| **Heiti** | SimHei (黑体) | Modern Chinese documents |
-| **Mixed** | SimSun + SimHei | Academic Chinese papers |
+| **Technical** | Arial | Technical documentation |
+| **Swiss** | Helvetica Neue | Modern, minimalist |
+| **Minimal** | Arial | Clean, distraction-free |
 
 ### Creative
 
@@ -59,10 +43,44 @@ Unique styles for creative and personal content.
 
 | Theme | Font | Best For |
 |-------|------|----------|
-| **Typewriter** | Courier New | Vintage, scripts, drafts |
-| **Sakura** | Custom pink theme | Creative, feminine content |
-| **Water** | Soft blue theme | Calm, technical blogs |
-| **Minimal** | Minimal styling | Clean, distraction-free |
+| **Magazine** | Georgia | Magazine layouts |
+| **Century** | Century Gothic | Presentations |
+| **Handwritten** | Comic Sans MS | Creative, casual |
+| **Verdana** | Verdana | Screen reading |
+
+### Chinese
+
+Optimized for Chinese language documents.
+
+| Theme | Font | Best For |
+|-------|------|----------|
+| **Heiti** | SimHei (黑体) | Modern Chinese documents |
+| **Mixed** | SimSun + Times | Academic Chinese papers |
+| **Water** | FangSong | Traditional Chinese style |
+
+### Playful
+
+Fun, colorful themes for students and kids.
+
+| Theme | Color Scheme | Best For |
+|-------|--------------|----------|
+| **Rainbow** | Multi-color | Student assignments |
+| **Starry** | Purple/Blue | Creative content |
+| **Candy** | Pink/Sweet | Fun documents |
+| **Dinosaur** | Green/Brown | Kids' content |
+| **Space** | Dark/Blue | Sci-fi themed |
+| **Garden** | Green/Fresh | Nature themed |
+
+### Nature
+
+Nature-inspired color themes.
+
+| Theme | Color Scheme | Best For |
+|-------|--------------|----------|
+| **Forest** | Green tones | Environmental docs |
+| **Ocean** | Blue tones | Calm, professional |
+| **Coral** | Coral/Orange | Warm, inviting |
+| **Sunset** | Warm tones | Creative content |
 
 ---
 
@@ -159,8 +177,8 @@ Best for: Scripts, drafts, vintage look
 | General use | Default |
 | Long reading | Palatino, Garamond |
 | Screen/web | Verdana |
-| Chinese docs | Songti, Heiti, Mixed |
-| Creative writing | Typewriter, Sakura |
+| Chinese docs | Heiti, Mixed |
+| Creative writing | Typewriter, Handwritten |
 
 ---
 
@@ -173,8 +191,8 @@ Each document theme includes a matching code highlighting style:
 | `light-clean` | Clean, minimal colors | Default, Technical, Verdana |
 | `warm-book` | Warm, book-like colors | Palatino, Garamond, Elegant |
 | `business-contrast` | High contrast for business | Business, Heiti, Century |
-| `cool-modern` | Cool, modern colors | Cambria, Mixed |
-| `colorful` | Vibrant colors | Typewriter, Sakura, Trebuchet |
+| `cool-modern` | Cool, modern colors | Swiss, Mixed |
+| `colorful` | Vibrant colors | Typewriter, Playful themes |
 
 ---
 
@@ -198,7 +216,7 @@ No surprises when you export!
 - **Formal/Business** → Default, Business
 - **Academic/Research** → Academic, Palatino
 - **Technical** → Technical, Verdana
-- **Creative** → Typewriter, Sakura
+- **Creative** → Typewriter, Handwritten
 
 ### Consider the Content
 
@@ -210,14 +228,14 @@ No surprises when you export!
 ### Consider the Medium
 
 - **Print** → Garamond, Palatino (serif)
-- **Screen** → Verdana, Trebuchet (sans-serif)
+- **Screen** → Verdana, Century (sans-serif)
 - **Both** → Default, Business
 
 ---
 
 ## Custom Themes
 
-Currently, themes cannot be customized. However, 18+ built-in themes cover most use cases.
+Currently, themes cannot be customized. However, 29 built-in themes across 7 categories cover most use cases.
 
 **Coming soon:** Custom theme support for advanced users.
 

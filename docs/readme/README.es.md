@@ -4,7 +4,7 @@
 
 **Markdown a Word perfecto con un clic — Mermaid, Graphviz, Vega, infografía, LaTeX (editable), resaltado de código, procesamiento local**
 
-*Completamente gratis · 18+ temas profesionales · 28 idiomas*
+*Completamente gratis · 29+ temas profesionales · 28 idiomas*
 
 🚀 **Instalar Ahora:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@ Haz clic para descargar y obtener un documento de Word perfecto:
 - ✅ Grafos Graphviz DOT → Imágenes de alta resolución
 - ✅ Fórmulas LaTeX → Ecuaciones editables de Word
 - ✅ Resaltado de sintaxis automático (100+ lenguajes)
-- ✅ 18+ temas profesionales con un clic
+- ✅ 29+ temas profesionales con un clic
 - ✅ Completamente gratis, procesamiento local
 
 **Dedica tiempo a escribir, no a formatear.**
@@ -125,14 +125,14 @@ Después de exportar, puedes:
 - ❌ Editor de ecuaciones de Word: Clic...clic...clic...seleccionar símbolos...ajustar posiciones
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` Listo
 
-### 3. 18+ Temas Profesionales
+### 3. 29+ Temas Profesionales
 
 Diferentes escenarios, diferentes estilos, cambio con un clic:
 
 - 📊 Business / Technical → Informes empresariales, documentos técnicos
 - 📚 Academic / Palatino → Artículos académicos, composición de libros  
-- 🇨🇳 Songti / Heiti / Mixed → Documentos en chino
-- 🎨 Typewriter / Sakura → Contenido creativo
+- 🇨🇳 Heiti / Mixed → Documentos en chino
+- 🎨 Typewriter / Handwritten → Contenido creativo
 
 **WYSIWYG:** La vista previa se ve exactamente como el Word exportado. Sin adivinanzas, sin pruebas.
 
@@ -203,14 +203,15 @@ Documento con 50 diagramas Mermaid:
 
 Encabezados · Párrafos · Negrita · Cursiva · Tachado · Listas · Listas de tareas · Citas · Bloques de código (100+ lenguajes resaltados) · Tablas · Enlaces · Imágenes · Diagramas Mermaid · Gráficos Vega/Vega-Lite · Gráficos Infographic · Fórmulas LaTeX · HTML · Extensiones GFM
 
-### 18 Temas
+### 29 Temas
 
-**Negocios:** Default · Business · Technical  
-**Académico:** Academic  
-**Serif:** Palatino · Garamond · Cambria · Elegant  
-**Sans-serif:** Verdana · Trebuchet · Century  
-**Chino:** Songti · Heiti · Mixed  
-**Creativo:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28 Idiomas de Interfaz
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | Captura manual | Plugin necesario | ✅ Soportado | ✅ Soportado | ✅ Soporte nativo |
 | **Fórmulas Matemáticas** | Imágenes | Imágenes | Imágenes | Imágenes | ✅ Editable |
 | **Privacidad** | ✅ Local | ✅ Local | ❌ Carga en la nube | ✅ Local | ✅ Local |
-| **Temas** | - | - | 3-5 | 5-10 | ✅ 18+ |
+| **Temas** | - | - | 3-5 | 5-10 | ✅ 29+ |
 | **Sin Conexión** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **Vista Directa de GitHub** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **Precio** | Gratis | Gratis | Planes de pago | Planes de pago | ✅ Gratis |
@@ -256,7 +257,7 @@ R: Nunca. Todo el procesamiento ocurre localmente.
 R: Hacer clic en icono de barra de herramientas → Elegir tema → Aplicar instantáneamente.
 
 **P: ¿Puedo personalizar los temas?**  
-R: Actualmente 18 temas preestablecidos, personalización en planificación.
+R: Actualmente 29 temas preestablecidos, personalización en planificación.
 
 **P: ¿Los documentos grandes se vuelven lentos?**  
 R: No. Carga progresiva + caché inteligente, el texto se muestra instantáneamente, los diagramas se renderizan en segundo plano (primera vez 5s, segunda vez 1s).
@@ -274,7 +275,7 @@ R: Word 2016+ completamente soportado, Word 2013 también funciona. Totalmente c
 R: Actualmente solo Word, PDF planificado. Puedes exportar primero a Word y luego guardar como PDF.
 
 **P: ¿Qué tema me conviene?**  
-R: Informes empresariales → Business · Artículos académicos → Academic · Documentos técnicos → Technical · Documentos en chino → Songti/Mixed
+R: Informes empresariales → Business · Artículos académicos → Academic · Documentos técnicos → Technical · Documentos en chino → Heiti/Mixed
 
 **P: ¿Cuál es la diferencia entre Vega y Mermaid?**  
 R: **Mermaid** es para diagramas de flujo, diagramas de arquitectura y otros diagramas esquemáticos; **Vega/Vega-Lite** es para visualización de datos como gráficos de ventas, informes financieros y otros gráficos empresariales basados en datos. Se complementan para diferentes escenarios.
@@ -311,7 +312,7 @@ R: Usa bloque de código ````vega-lite` en Markdown con especificación de gráf
 4. Arrastra archivos `.md` al navegador
 5. ✅ Comienza a usar
 
-**Obtendrás:** Conversión Markdown → Word con un clic · Auto-conversión Mermaid · Fórmulas LaTeX editables · Resaltado de sintaxis de 100+ lenguajes · 18+ temas · Caché inteligente · Completamente gratis
+**Obtendrás:** Conversión Markdown → Word con un clic · Auto-conversión Mermaid · Fórmulas LaTeX editables · Resaltado de sintaxis de 100+ lenguajes · 29+ temas · Caché inteligente · Completamente gratis
 
 **Perfecto para:** Escritores técnicos · Estudiantes/investigadores · Gerentes de producto · Desarrolladores · Cualquiera que use Markdown
 

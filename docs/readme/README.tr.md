@@ -4,7 +4,7 @@
 
 **Markdown'dan mükemmel Word'e tek tıkla — Mermaid, Graphviz, Vega, infografik, LaTeX (düzenlenebilir), kod vurgulama, yerel işleme**
 
-*Tamamen ücretsiz · 18+ profesyonel tema · 28 dil desteği*
+*Tamamen ücretsiz · 29+ profesyonel tema · 28 dil desteği*
 
 🚀 **Şimdi Yükleyin:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@ Ama sonunda her zaman bir Word belgesine ihtiyacınız oluyor.
 - ✅ Graphviz DOT grafikleri → Yüksek çözünürlüklü görüntüler
 - ✅ LaTeX formülleri → Düzenlenebilir Word denklemleri
 - ✅ Otomatik sözdizimi vurgulama (100+ dil)
-- ✅ Tek tıkla 18+ profesyonel tema
+- ✅ Tek tıkla 29+ profesyonel tema
 - ✅ Tamamen ücretsiz, yerel işleme
 
 **Zamanınızı yazmaya ayırın, biçimlendirmeye değil.**
@@ -125,14 +125,14 @@ Dışa aktardıktan sonra yapabilirsiniz:
 - ❌ Word denklem düzenleyici: Tıkla...tıkla...tıkla...sembolleri seç...konumları ayarla
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` Bitti
 
-### 3. 18+ Profesyonel Tema
+### 3. 29+ Profesyonel Tema
 
 Farklı senaryolar, farklı stiller, tek tıkla geçiş yapın:
 
 - 📊 Business / Technical → İş raporları, teknik belgeler
 - 📚 Academic / Palatino → Akademik makaleler, kitap dizgisi  
-- 🇨🇳 Songti / Heiti / Mixed → Çince belgeler
-- 🎨 Typewriter / Sakura → Yaratıcı içerik
+- 🇨🇳 Heiti / Mixed → Çince belgeler
+- 🎨 Typewriter / Handwritten → Yaratıcı içerik
 
 **WYSIWYG:** Önizleme, dışa aktarılan Word ile tam olarak aynı görünür. Tahmin yok, deneme yok.
 
@@ -203,14 +203,15 @@ Farklı senaryolar, farklı stiller, tek tıkla geçiş yapın:
 
 Başlıklar · Paragraflar · Kalın · İtalik · Üstü çizili · Listeler · Görev listeleri · Alıntılar · Kod blokları (100+ dil vurgulanmış) · Tablolar · Bağlantılar · Resimler · Mermaid diyagramları · Vega / Vega-Lite grafikleri · Infographic grafikleri · LaTeX formülleri · HTML · GFM uzantıları
 
-### 18 Tema
+### 29 Tema
 
-**İş:** Default · Business · Technical  
-**Akademik:** Academic  
-**Serif:** Palatino · Garamond · Cambria · Elegant  
-**Sans-serif:** Verdana · Trebuchet · Century  
-**Çince:** Songti · Heiti · Mixed  
-**Yaratıcı:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28 Arayüz Dili
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | Manuel ekran görüntüsü | Eklenti gerekli | ✅ Destekleniyor | ✅ Destekleniyor | ✅ Yerel destek |
 | **Matematik Formülleri** | Görüntüler | Görüntüler | Görüntüler | Görüntüler | ✅ Düzenlenebilir |
 | **Gizlilik** | ✅ Yerel | ✅ Yerel | ❌ Buluta yükleme | ✅ Yerel | ✅ Yerel |
-| **Temalar** | - | - | 3-5 | 5-10 | ✅ 18+ |
+| **Temalar** | - | - | 3-5 | 5-10 | ✅ 29+ |
 | **Çevrimdışı** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **GitHub Doğrudan Görünüm** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **Fiyat** | Ücretsiz | Ücretsiz | Ücretli planlar | Ücretli planlar | ✅ Ücretsiz |
@@ -256,7 +257,7 @@ C: Asla. Tüm işlemler yerel olarak gerçekleşir.
 C: Araç çubuğu simgesine tıklayın → Tema seçin → Hemen uygulayın.
 
 **S: Temaları özelleştirebilir miyim?**  
-C: Şu anda 18 önceden ayarlanmış tema, özelleştirme yakında geliyor.
+C: Şu anda 29 önceden ayarlanmış tema, özelleştirme yakında geliyor.
 
 **S: Büyük belgeler yavaş olur mu?**  
 C: Hayır. Aşamalı yükleme + akıllı önbellek, metin anında gösterilir, diyagramlar arka planda oluşturulur (ilk 5s, ikinci 1s).
@@ -274,7 +275,7 @@ C: Word 2016+ tam destek, Word 2013 de çalışır. WPS Office ile tamamen uyuml
 C: Şu anda sadece Word, PDF planlanıyor. Önce Word'e aktarabilir, sonra PDF olarak kaydedebilirsiniz.
 
 **S: Hangi tema bana uyar?**  
-C: İş raporları → Business · Akademik makaleler → Academic · Teknik belgeler → Technical · Çince belgeler → Songti/Mixed
+C: İş raporları → Business · Akademik makaleler → Academic · Teknik belgeler → Technical · Çince belgeler → Heiti/Mixed
 
 **S: Vega ve Mermaid arasındaki fark nedir?**  
 C: **Mermaid** akış şemaları, mimari diyagramlar ve diğer şematik diyagramlar içindir; **Vega/Vega-Lite** satış grafikleri, finansal raporlar ve diğer veriye dayalı iş grafikleri gibi veri görselleştirme içindir. Farklı senaryolar için birbirini tamamlarlar.
@@ -311,7 +312,7 @@ C: Markdown'da ````vega-lite` kod bloğunu JSON biçimli grafik spesifikasyonu i
 4. `.md` dosyalarını tarayıcıya sürükleyin
 5. ✅ Kullanmaya başlayın
 
-**Elde edecekleriniz:** Markdown → Word tek tık dönüştürme · Mermaid otomatik dönüştürme · LaTeX düzenlenebilir formüller · 100+ dil sözdizimi vurgulama · 18+ tema · Akıllı önbellek · Tamamen ücretsiz
+**Elde edecekleriniz:** Markdown → Word tek tık dönüştürme · Mermaid otomatik dönüştürme · LaTeX düzenlenebilir formüller · 100+ dil sözdizimi vurgulama · 29+ tema · Akıllı önbellek · Tamamen ücretsiz
 
 **Mükemmel:** Teknik yazarlar · Öğrenciler/araştırmacılar · Ürün yöneticileri · Geliştiriciler · Markdown kullanan herkes
 

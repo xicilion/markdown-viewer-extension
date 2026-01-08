@@ -4,7 +4,7 @@
 
 **Markdown sang Word hoàn hảo chỉ với một click — Mermaid, Graphviz, Vega, infographic, LaTeX (có thể chỉnh sửa), tô sáng mã, xử lý cục bộ**
 
-*Hoàn toàn miễn phí · 18+ chủ đề chuyên nghiệp · Hỗ trợ 28 ngôn ngữ*
+*Hoàn toàn miễn phí · 29+ chủ đề chuyên nghiệp · Hỗ trợ 28 ngôn ngữ*
 
 🚀 **Cài đặt ngay:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@ Nhấp tải xuống và nhận tài liệu Word hoàn hảo:
 - ✅ Graphviz DOT → Hình ảnh độ phân giải cao
 - ✅ Công thức LaTeX → Phương trình Word có thể chỉnh sửa
 - ✅ Tự động làm nổi bật cú pháp (100+ ngôn ngữ)
-- ✅ 18+ chủ đề chuyên nghiệp chỉ một cú nhấp chuột
+- ✅ 29+ chủ đề chuyên nghiệp chỉ một cú nhấp chuột
 - ✅ Hoàn toàn miễn phí, xử lý cục bộ
 
 **Dành thời gian cho việc viết, không phải định dạng.**
@@ -125,14 +125,14 @@ Sau khi xuất, bạn có thể:
 - ❌ Trình soạn thảo phương trình Word: Nhấp...nhấp...nhấp...chọn ký hiệu...điều chỉnh vị trí
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` Xong
 
-### 3. 18+ chủ đề chuyên nghiệp
+### 3. 29+ chủ đề chuyên nghiệp
 
 Các tình huống khác nhau, phong cách khác nhau, chuyển đổi chỉ một cú nhấp chuột:
 
 - 📊 Business / Technical → Báo cáo kinh doanh, tài liệu kỹ thuật
 - 📚 Academic / Palatino → Bài báo học thuật, sắp chữ sách  
-- 🇨🇳 Songti / Heiti / Mixed → Tài liệu tiếng Trung
-- 🎨 Typewriter / Sakura → Nội dung sáng tạo
+- 🇨🇳 Heiti / Mixed → Tài liệu tiếng Trung
+- 🎨 Typewriter / Handwritten → Nội dung sáng tạo
 
 **WYSIWYG:** Xem trước trông giống hệt Word đã xuất. Không đoán, không thử.
 
@@ -203,14 +203,15 @@ Tài liệu có 50 sơ đồ Mermaid:
 
 Tiêu đề · Đoạn văn · Đậm · Nghiêng · Gạch ngang · Danh sách · Danh sách nhiệm vụ · Trích dẫn · Khối mã (làm nổi bật 100+ ngôn ngữ) · Bảng · Liên kết · Hình ảnh · Sơ đồ Mermaid · Biểu đồ Vega / Vega-Lite · Biểu đồ Infographic · Công thức LaTeX · HTML · Phần mở rộng GFM
 
-### 18 chủ đề
+### 29 chủ đề
 
-**Kinh doanh:** Default · Business · Technical  
-**Học thuật:** Academic  
-**Serif:** Palatino · Garamond · Cambria · Elegant  
-**Sans-serif:** Verdana · Trebuchet · Century  
-**Trung Quốc:** Songti · Heiti · Mixed  
-**Sáng tạo:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28 ngôn ngữ giao diện
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | Chụp màn hình thủ công | Cần plugin | ✅ Được hỗ trợ | ✅ Được hỗ trợ | ✅ Hỗ trợ gốc |
 | **Công thức toán học** | Hình ảnh | Hình ảnh | Hình ảnh | Hình ảnh | ✅ Có thể chỉnh sửa |
 | **Quyền riêng tư** | ✅ Cục bộ | ✅ Cục bộ | ❌ Tải lên đám mây | ✅ Cục bộ | ✅ Cục bộ |
-| **Chủ đề** | - | - | 3-5 | 5-10 | ✅ 18+ |
+| **Chủ đề** | - | - | 3-5 | 5-10 | ✅ 29+ |
 | **Ngoại tuyến** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **Xem trực tiếp GitHub** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **Giá** | Miễn phí | Miễn phí | Gói trả phí | Gói trả phí | ✅ Miễn phí |
@@ -256,7 +257,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 Đ: Nhấp biểu tượng thanh công cụ → Chọn chủ đề → Áp dụng ngay lập tức.
 
 **H: Tôi có thể tùy chỉnh chủ đề không?**  
-Đ: Hiện tại có 18 chủ đề được thiết lập sẵn, tùy chỉnh sắp ra mắt.
+Đ: Hiện tại có 29 chủ đề được thiết lập sẵn, tùy chỉnh sắp ra mắt.
 
 **H: Tài liệu lớn có bị chậm không?**  
 Đ: Không. Tải tiến bộ + bộ nhớ cache thông minh, văn bản hiển thị ngay lập tức, sơ đồ được hiển thị ở chế độ nền (lần đầu 5s, lần thứ hai 1s).
@@ -274,7 +275,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 Đ: Hiện tại chỉ Word, PDF đang được lên kế hoạch. Bạn có thể xuất sang Word trước rồi lưu dưới dạng PDF.
 
 **H: Chủ đề nào phù hợp với tôi?**  
-Đ: Báo cáo kinh doanh → Business · Bài báo học thuật → Academic · Tài liệu kỹ thuật → Technical · Tài liệu tiếng Trung → Songti/Mixed
+Đ: Báo cáo kinh doanh → Business · Bài báo học thuật → Academic · Tài liệu kỹ thuật → Technical · Tài liệu tiếng Trung → Heiti/Mixed
 
 **H: Sự khác biệt giữa Vega và Mermaid là gì?**  
 Đ: **Mermaid** dành cho sơ đồ luồng, sơ đồ kiến trúc và các sơ đồ minh họa khác; **Vega/Vega-Lite** dành cho trực quan hóa dữ liệu như biểu đồ bán hàng, báo cáo tài chính và các biểu đồ kinh doanh dựa trên dữ liệu khác. Chúng bổ sung cho nhau cho các tình huống khác nhau.
@@ -311,7 +312,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 4. Kéo tệp `.md` vào trình duyệt
 5. ✅ Bắt đầu sử dụng
 
-**Bạn sẽ nhận được:** Chuyển đổi Markdown → Word một cú nhấp chuột · Chuyển đổi Mermaid tự động · Công thức LaTeX có thể chỉnh sửa · Làm nổi bật cú pháp 100+ ngôn ngữ · 18+ chủ đề · Bộ nhớ cache thông minh · Hoàn toàn miễn phí
+**Bạn sẽ nhận được:** Chuyển đổi Markdown → Word một cú nhấp chuột · Chuyển đổi Mermaid tự động · Công thức LaTeX có thể chỉnh sửa · Làm nổi bật cú pháp 100+ ngôn ngữ · 29+ chủ đề · Bộ nhớ cache thông minh · Hoàn toàn miễn phí
 
 **Hoàn hảo cho:** Nhà văn kỹ thuật · Sinh viên/nhà nghiên cứu · Người quản lý sản phẩm · Nhà phát triển · Bất kỳ ai sử dụng Markdown
 

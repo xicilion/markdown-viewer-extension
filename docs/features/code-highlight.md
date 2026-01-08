@@ -165,8 +165,8 @@ Each document theme includes a matching code highlighting style:
 | **Light Clean** | Minimal, GitHub-like | Default, Technical, Verdana |
 | **Warm Book** | Warm, sepia tones | Palatino, Garamond, Water |
 | **Business Contrast** | High contrast | Business, Heiti, Century |
-| **Cool Modern** | Cool blues | Cambria, Mixed |
-| **Colorful** | Vibrant colors | Typewriter, Sakura, Trebuchet |
+| **Cool Modern** | Cool blues | Swiss, Mixed |
+| **Colorful** | Vibrant colors | Typewriter, Playful themes |
 
 The code theme is automatically selected based on your document theme for consistent styling.
 

@@ -4,7 +4,7 @@
 
 **Markdown täydelliseksi Wordiksi yhdellä napsautuksella — Mermaid, Graphviz, Vega, infografiikka, LaTeX (muokattava), koodin korostus, paikallinen käsittely**
 
-*Täysin ilmainen · 18+ ammattimaista teemaa · 28 kielen tuki*
+*Täysin ilmainen · 29+ ammattimaista teemaa · 28 kielen tuki*
 
 🚀 **Asenna nyt:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@ Klikkaa lataa ja saat täydellisen Word-dokumentin:
 - ✅ Graphviz DOT -kaaviot → Korkearesoluutioiset kuvat
 - ✅ LaTeX-kaavat → Wordin muokattavat kaavat
 - ✅ Automaattinen syntaksikorostus (100+ kieltä)
-- ✅ 18+ ammattimaista teemaa yhdellä klikkauksella
+- ✅ 29+ ammattimaista teemaa yhdellä klikkauksella
 - ✅ Täysin ilmainen, paikallinen käsittely
 
 **Käytä aikasi kirjoittamiseen, ei muotoiluun.**
@@ -125,14 +125,14 @@ Viennin jälkeen voit:
 - ❌ Wordin kaavaeditori: Klikkaa...klikkaa...klikkaa...valitse symbolit...säädä sijainteja
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` Valmis
 
-### 3. 18+ ammattimaista teemaa
+### 3. 29+ ammattimaista teemaa
 
 Eri skenaariot, eri tyylit, vaihda yhdellä klikkauksella:
 
 - 📊 Business / Technical → Liiketoimintaraportit, tekniset dokumentit
 - 📚 Academic / Palatino → Akateemiset artikkelit, kirjojen taitto  
-- 🇨🇳 Songti / Heiti / Mixed → Kiinalaiset dokumentit
-- 🎨 Typewriter / Sakura → Luova sisältö
+- 🇨🇳 Heiti / Mixed → Kiinalaiset dokumentit
+- 🎨 Typewriter / Handwritten → Luova sisältö
 
 **WYSIWYG:** Esikatselu näyttää täsmälleen samalta kuin viety Word. Ei arvailua, ei kokeilua.
 
@@ -203,14 +203,15 @@ Dokumentti, jossa 50 Mermaid-kaaviota:
 
 Otsikot · Kappaleet · Lihavoitu · Kursivoitu · Yliviivaus · Luettelot · Tehtävälistat · Lainaukset · Koodilohkot (100+ kielen korostus) · Taulukot · Linkit · Kuvat · Mermaid-kaaviot · Vega / Vega-Lite -kaaviot · Infographic-kaaviot · LaTeX-kaavat · HTML · GFM-laajennukset
 
-### 18 teemaa
+### 29 teemaa
 
-**Liiketoiminta:** Default · Business · Technical  
-**Akateeminen:** Academic  
-**Pääteviiva:** Palatino · Garamond · Cambria · Elegant  
-**Päätteetön:** Verdana · Trebuchet · Century  
-**Kiina:** Songti · Heiti · Mixed  
-**Luova:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28 käyttöliittymän kieltä
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | Manuaalinen kuvakaappaus | Laajennus tarvitaan | ✅ Tuettu | ✅ Tuettu | ✅ Natiivi tuki |
 | **Matemaattiset kaavat** | Kuvat | Kuvat | Kuvat | Kuvat | ✅ Muokattavissa |
 | **Yksityisyys** | ✅ Paikallinen | ✅ Paikallinen | ❌ Pilvilataus | ✅ Paikallinen | ✅ Paikallinen |
-| **Teemat** | - | - | 3-5 | 5-10 | ✅ 18+ |
+| **Teemat** | - | - | 3-5 | 5-10 | ✅ 29+ |
 | **Offline-käyttö** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **GitHub-suora katselu** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **Hinta** | Ilmainen | Ilmainen | Maksulliset suunnitelmat | Maksulliset suunnitelmat | ✅ Ilmainen |
@@ -256,7 +257,7 @@ A: Ei koskaan. Kaikki käsittely tapahtuu paikallisesti.
 A: Klikkaa työkalupalkin kuvaketta → Valitse teema → Käytä välittömästi.
 
 **K: Voinko mukauttaa teemoja?**  
-A: Tällä hetkellä 18 esiasetettua teemaa, mukautus tulossa.
+A: Tällä hetkellä 29 esiasetettua teemaa, mukautus tulossa.
 
 **K: Hidastavatko suuret dokumentit?**  
 A: Ei. Progressiivinen lataus + älykäs välimuisti, teksti näkyy välittömästi, kaaviot renderöidään taustalla (ensimmäinen 5s, toinen 1s).
@@ -274,7 +275,7 @@ A: Word 2016+ täysin tuettu, Word 2013 toimii myös. Täysin yhteensopiva WPS O
 A: Tällä hetkellä vain Word, PDF suunnitteilla. Voit ensin viedä Wordiin ja tallentaa sitten PDF:nä.
 
 **K: Mikä teema sopii minulle?**  
-A: Liiketoimintaraportit → Business · Akateemiset artikkelit → Academic · Tekniset dokumentit → Technical · Kiinalaiset dokumentit → Songti/Mixed
+A: Liiketoimintaraportit → Business · Akateemiset artikkelit → Academic · Tekniset dokumentit → Technical · Kiinalaiset dokumentit → Heiti/Mixed
 
 **K: Mikä ero on Vegalla ja Mermaidilla?**  
 A: **Mermaid** sopii vuokaavioihin, arkkitehtuurikaavioihin ja muihin kaavamaisiin diagrammeihin; **Vega/Vega-Lite** sopii datavisualisointiin, kuten myyntikaavioihin, talousraportteihin ja muihin dataan perustuviin liiketoimintakaavioihin. Ne täydentävät toisiaan eri skenaarioissa.
@@ -311,7 +312,7 @@ A: Käytä ````vega-lite` koodilohkoa Markdownissa JSON-muotoisella kaaviomäär
 4. Vedä `.md`-tiedostot selaimeen
 5. ✅ Aloita käyttö
 
-**Saat:** Markdown → Word yhden klikkauksen muunnos · Mermaid automaattimuunnos · LaTeX muokattavat kaavat · 100+ kielen syntaksikorostus · 18+ teemaa · Älykäs välimuisti · Täysin ilmainen
+**Saat:** Markdown → Word yhden klikkauksen muunnos · Mermaid automaattimuunnos · LaTeX muokattavat kaavat · 100+ kielen syntaksikorostus · 29+ teemaa · Älykäs välimuisti · Täysin ilmainen
 
 **Täydellinen:** Tekniset kirjoittajat · Opiskelijat/tutkijat · Tuotepäälliköt · Kehittäjät · Kuka tahansa Markdownia käyttävä
 

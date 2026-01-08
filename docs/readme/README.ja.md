@@ -4,7 +4,7 @@
 
 **Markdown をワンクリックで完璧な Word に — Mermaid、Graphviz、Vega、インフォグラフィック、LaTeX（編集可能）、コードハイライト、ローカル処理**
 
-*完全無料 · 18+ のプロフェッショナルテーマ · 28 言語サポート*
+*完全無料 · 29+ のプロフェッショナルテーマ · 28 言語サポート*
 
 🚀 **今すぐインストール:** https://chromewebstore.google.com/detail/markdown-viewer/jekhhoflgcfoikceikgeenibinpojaoi
 
@@ -28,7 +28,7 @@ Markdownで書くのが好きですよね。クリーンで効率的で、バー
 - ✅ Graphviz DOTグラフ → 高解像度画像
 - ✅ LaTeX数式 → Word編集可能な数式
 - ✅ 自動構文ハイライト（100+言語）
-- ✅ ワンクリックで18+プロフェッショナルテーマ
+- ✅ ワンクリックで29+プロフェッショナルテーマ
 - ✅ 完全無料、ローカル処理
 
 **執筆に時間を使い、フォーマットには使わない。**
@@ -125,14 +125,14 @@ LaTeX → Word編集可能な数式（画像ではありません！）
 - ❌ Word数式エディタ: クリック...クリック...クリック...記号を選択...位置を調整
 - ✅ LaTeX: `\int_0^\infty e^{-x^2}dx` 完了
 
-### 3. 18+プロフェッショナルテーマ
+### 3. 29+プロフェッショナルテーマ
 
 異なるシナリオ、異なるスタイル、ワンクリック切り替え：
 
 - 📊 Business / Technical → ビジネスレポート、技術文書
 - 📚 Academic / Palatino → 学術論文、書籍組版  
-- 🇨🇳 Songti / Heiti / Mixed → 中国語文書
-- 🎨 Typewriter / Sakura → クリエイティブコンテンツ
+- 🇨🇳 Heiti / Mixed → 中国語文書
+- 🎨 Typewriter / Handwritten → クリエイティブコンテンツ
 
 **WYSIWYG:** プレビューがエクスポートされたWordと完全に同じ。推測不要、試行不要。
 
@@ -203,14 +203,15 @@ LaTeX → Word編集可能な数式（画像ではありません！）
 
 見出し · 段落 · 太字 · 斜体 · 取り消し線 · リスト · タスクリスト · 引用 · コードブロック（100+言語ハイライト）· テーブル · リンク · 画像 · Mermaidダイアグラム · Vega/Vega-Liteチャート · Infographicチャート · LaTeX数式 · HTML · GFM拡張
 
-### 18テーマ
+### 29テーマ
 
-**ビジネス:** Default · Business · Technical  
-**学術:** Academic  
-**セリフ:** Palatino · Garamond · Cambria · Elegant  
-**サンセリフ:** Verdana · Trebuchet · Century  
-**中国語:** Songti · Heiti · Mixed  
-**クリエイティブ:** Typewriter · Sakura · Water · Minimal
+**Classic:** Default · Academic · Business · Manuscript · Newspaper  
+**Reading:** Palatino · Garamond · Typewriter · Elegant  
+**Modern:** Technical · Swiss · Minimal  
+**Creative:** Magazine · Century · Handwritten · Verdana  
+**Chinese:** Heiti · Mixed · Water  
+**Playful:** Rainbow · Starry · Candy · Dinosaur · Space · Garden  
+**Nature:** Forest · Ocean · Coral · Sunset
 
 ### 28のインターフェース言語
 
@@ -226,7 +227,7 @@ English · 简体中文 · 繁體中文 · Русский · 日本語 · हि
 | **Mermaid** | 手動スクリーンショット | プラグイン必要 | ✅ サポート | ✅ サポート | ✅ ネイティブサポート |
 | **数学式** | 画像 | 画像 | 画像 | 画像 | ✅ 編集可能 |
 | **プライバシー** | ✅ ローカル | ✅ ローカル | ❌ クラウドアップロード | ✅ ローカル | ✅ ローカル |
-| **テーマ** | - | - | 3-5 | 5-10 | ✅ 18+ |
+| **テーマ** | - | - | 3-5 | 5-10 | ✅ 29+ |
 | **オフライン** | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **GitHub直接表示** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **価格** | 無料 | 無料 | 有料プラン | 有料プラン | ✅ 無料 |
@@ -256,7 +257,7 @@ A: 絶対にありません。すべての処理はローカルで行われま�
 A: ツールバーアイコンをクリック → テーマを選択 → 即座に適用。
 
 **Q: テーマをカスタマイズできますか？**  
-A: 現在18のプリセットテーマ、カスタマイズは計画中です。
+A: 現在29のプリセットテーマ、カスタマイズは計画中です。
 
 **Q: 大きな文書は遅くなりますか？**  
 A: いいえ。プログレッシブローディング + スマートキャッシュで、テキストは即座に表示、ダイアグラムはバックグラウンドでレンダリング（初回5秒、2回目1秒）。
@@ -274,7 +275,7 @@ A: Word 2016+完全サポート、Word 2013も動作します。WPS Officeと完
 A: 現在Wordのみ、PDF対応を計画中。まずWordにエクスポートしてからPDFとして保存できます。
 
 **Q: どのテーマが適していますか？**  
-A: ビジネスレポート → Business · 学術論文 → Academic · 技術文書 → Technical · 中国語文書 → Songti/Mixed
+A: ビジネスレポート → Business · 学術論文 → Academic · 技術文書 → Technical · 中国語文書 → Heiti/Mixed
 
 **Q: VegaとMermaidの違いは何ですか？**  
 A: **Mermaid**はフローチャート、アーキテクチャ図などの図式的なダイアグラム用；**Vega/Vega-Lite**は売上チャート、財務レポートなどのデータ駆動型ビジネスチャートのためのデータ可視化用。異なるシナリオで補完し合います。
@@ -311,7 +312,7 @@ A: Markdownで````vega-lite`コードブロックを使用し、JSON形式のチ
 4. `.md`ファイルをブラウザにドラッグ
 5. ✅ 使用開始
 
-**得られるもの:** Markdown → Wordワンクリック変換 · Mermaid自動変換 · LaTeX編集可能数式 · 100+言語構文ハイライト · 18+テーマ · スマートキャッシュ · 完全無料
+**得られるもの:** Markdown → Wordワンクリック変換 · Mermaid自動変換 · LaTeX編集可能数式 · 100+言語構文ハイライト · 29+テーマ · スマートキャッシュ · 完全無料
 
 **最適な対象:** 技術ライター · 学生/研究者 · プロダクトマネージャー · 開発者 · Markdownを使用するすべての人
 
