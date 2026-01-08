@@ -219,9 +219,8 @@ export class MarkdownDocument {
       }
     }
 
-    // Line is beyond last block - return last block at 100%
-    const lastIndex = this.blocks.length - 1;
-    return { block: this.blocks[lastIndex], index: lastIndex, progress: 1 };
+    // Line is beyond last block - not yet rendered, return null
+    return null;
   }
 
   /**
