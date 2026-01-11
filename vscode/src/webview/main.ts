@@ -126,6 +126,7 @@ interface UpdateContentPayload {
   filename?: string;
   documentBaseUri?: string;
   forceRender?: boolean;
+  scrollLine?: number;
 }
 
 interface SetThemePayload {
@@ -179,7 +180,7 @@ function handleExtensionMessage(message: ExtensionMessage): void {
 // ============================================================================
 
 async function handleUpdateContent(payload: UpdateContentPayload): Promise<void> {
-  const { content, filename, documentBaseUri, forceRender } = payload;
+  const { content, filename, documentBaseUri, forceRender, scrollLine } = payload;
   const container = document.getElementById('markdown-content');
   
   if (!container) {
@@ -210,8 +211,8 @@ async function handleUpdateContent(payload: UpdateContentPayload): Promise<void>
   setCurrentFileKey(newFilename);
 
   // Render using shared flow
-  // VSCode: targetLine is set via SCROLL_TO_LINE message before UPDATE_CONTENT
-  // Don't pass targetLine here to avoid overwriting the value set by message handler
+  // VSCode: targetLine is set via SCROLL_TO_LINE message before UPDATE_CONTENT,
+  // or passed as scrollLine parameter during theme switch
   await renderMarkdownFlow({
     markdown: wrappedContent,
     container: container as HTMLElement,
@@ -223,7 +224,8 @@ async function handleUpdateContent(payload: UpdateContentPayload): Promise<void>
     translate: (key: string, subs?: string | string[]) => Localization.translate(key, subs),
     platform,
     currentTaskManagerRef: { current: currentTaskManager },
-    // VSCode: targetLine is undefined, uses message-driven value
+    // When scrollLine is provided (e.g., theme switch), use it; otherwise undefined
+    targetLine: scrollLine,
     onHeadings: (headings) => {
       vscodeBridge.postMessage('HEADINGS_UPDATED', headings);
     },
@@ -248,10 +250,10 @@ async function handleSetTheme(payload: SetThemePayload): Promise<void> {
       scrollController: scrollSyncController,
       applyTheme: loadAndApplyTheme,
       saveTheme: (id) => themeManager.saveSelectedTheme(id),
-      rerender: async () => {
+      rerender: async (scrollLine) => {
         // Re-render if we have content - force render to regenerate diagrams
         if (currentMarkdown) {
-          await handleUpdateContent({ content: currentMarkdown, filename: currentFilename, forceRender: true });
+          await handleUpdateContent({ content: currentMarkdown, filename: currentFilename, forceRender: true, scrollLine });
         }
       },
     });

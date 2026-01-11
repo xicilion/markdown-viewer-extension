@@ -521,10 +521,10 @@ export async function handleThemeSwitchFlow(options: ThemeSwitchFlowOptions): Pr
   // Save current reading position before reset
   const savedLine = scrollController?.getCurrentLine() ?? 0;
   
-  // Reset and immediately set target line so controller is ready
-  // when content starts appearing
+  // Only reset scroll controller - don't call setTargetLine here
+  // because DOM hasn't been updated yet. Let renderMarkdownFlow handle
+  // setTargetLine after the DOM is updated with new theme.
   scrollController?.reset();
-  scrollController?.setTargetLine(savedLine);
 
   // Load and apply theme
   await applyTheme(themeId);
