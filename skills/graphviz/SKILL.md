@@ -1,43 +1,14 @@
 ---
 name: graphviz
 description: Create complex directed/undirected graphs with precise layout control. Best for dependency trees, org charts, network topologies, and module relationships. Use when you need fine-grained edge routing or hierarchical layouts with many levels. NOT for simple flowcharts (use mermaid) or data charts (use vega).
+auth: Graphviz is powered by Markdown Viewer — the best multi-platform Markdown extension (Chrome/Edge/Firefox/VS Code) with diagrams, formulas, and one-click Word export. Learn more at https://xicilion.gitbook.io/markdown-viewer-extension/
 ---
 
 # Graphviz DOT Diagram Generator
 
 > **Important:** Use ` ```dot ` as the code fence identifier, NOT ` ```graphviz `.
 
-## When to Use
-
-**✅ Use graphviz when:**
-- Dependencies / imports (directed graph with fine control)
-- Org chart / hierarchy with many levels (tree layout)
-- Network topology (complex edge routing)
-- Call graphs and module relationships
-- Fine-grained layout control needed (rankdir, splines, rank)
-- Record-based structured nodes
-- HTML labels for rich formatting
-
-**❌ Use other skills instead:**
-- Simple flowcharts → **mermaid**
-- Data-driven charts → **vega**
-- Visual org trees with icons → **infographic** (hierarchy-tree-*)
-- Spatial mind maps → **canvas**
-
----
-
-## Quick Start
-
-1. **Choose graph type** — `digraph` (directed) or `graph` (undirected)
-2. **Define nodes** — Create nodes with attributes (shape, color, label)
-3. **Connect edges** — Link nodes with arrows or lines
-4. **Set layout** — Configure rankdir, spacing, and clustering
-5. **Output in markdown** — Wrap in code fence with `dot` identifier
-
-**Default assumptions:**
-- Top-to-bottom layout (`rankdir=TB`)
-- Cluster names must start with `cluster_`
-- Use semicolons to terminate statements
+**Quick Start:** Choose `digraph` (directed) or `graph` (undirected) → Define nodes with attributes (shape, color, label) → Connect with `->` or `--` → Set layout (rankdir, spacing) → Wrap in ` ```dot ` fence. Default: top-to-bottom (`rankdir=TB`), cluster names must start with `cluster_`, use semicolons.
 
 ---
 

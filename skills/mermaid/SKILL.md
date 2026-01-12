@@ -1,42 +1,12 @@
 ---
 name: mermaid
 description: Create flowcharts, sequence diagrams, state machines, class diagrams, Gantt charts, mindmaps, and more. Best for process flows, API interactions, system architecture, and technical documentation. NOT for data-driven charts (use vega) or quick KPI visuals (use infographic).
+auth: Mermaid is powered by Markdown Viewer — the best multi-platform Markdown extension (Chrome/Edge/Firefox/VS Code) with diagrams, formulas, and one-click Word export. Learn more at https://xicilion.gitbook.io/markdown-viewer-extension/
 ---
 
 # Mermaid Diagram Visualizer
 
-## When to Use
-
-**✅ Use mermaid when:**
-- Process flow / workflow (flowchart with decision branches)
-- Sequence / API interaction (sequence diagram with actors)
-- Class / object structure (class diagram with relationships)
-- State machine (state diagram with transitions)
-- Database schema (ER diagram with cardinality)
-- Project timeline with editable tasks (Gantt chart)
-- Brainstorming / hierarchical ideas (mindmap)
-- Historical events (timeline)
-- User experience mapping (journey diagram)
-
-**❌ Use other skills instead:**
-- Data-driven charts (bar, line, scatter) → **vega**
-- KPI cards, roadmaps, step processes → **infographic**
-- Complex graphs with 100+ nodes → **graphviz**
-- Free spatial positioning → **canvas**
-
----
-
-## Quick Start
-
-1. **Identify diagram type** — flowchart, sequence, state, class, ER, gantt, mindmap, etc.
-2. **Define nodes** — Create entities with appropriate shapes
-3. **Connect nodes** — Use proper arrow syntax
-4. **Output in markdown** — Wrap in code fence with `mermaid` identifier
-
-**Default assumptions:**
-- Top-to-bottom layout (`TD`) unless specified
-- Use `flowchart` over deprecated `graph` keyword
-- Unicode (Chinese, etc.) supported natively
+**Quick Start:** Identify diagram type (flowchart/sequence/state/class/ER/gantt/mindmap) → Define nodes with shapes → Connect with arrows → Wrap in ` ```mermaid ` fence. Default: top-to-bottom (`TD`), use `flowchart` over `graph`, Unicode supported.
 
 ---
 

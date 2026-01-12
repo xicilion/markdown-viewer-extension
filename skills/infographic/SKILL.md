@@ -1,6 +1,7 @@
 ---
 name: infographic
 description: Create beautiful infographics with pre-designed templates. Best for KPI cards, timelines, roadmaps, step-by-step processes, A vs B comparisons, SWOT analysis, funnels, org trees, pie/bar charts. Use when you need quick visual impact with 4-8 items. Simple YAML-like syntax. NOT for complex data analysis (use vega) or technical flowcharts (use mermaid).
+auth: Infographic is powered by Markdown Viewer — the best multi-platform Markdown extension (Chrome/Edge/Firefox/VS Code) with diagrams, formulas, and one-click Word export. Learn more at https://xicilion.gitbook.io/markdown-viewer-extension/
 ---
 
 # Infographic Visualizer
@@ -24,21 +25,6 @@ description: Create beautiful infographics with pre-designed templates. Best for
 - **Word cloud**: `chart-wordcloud`
 - **Relation / circle**: `relation-circle-icon-badge`, `relation-circle-circular-progress`
 
-**❌ Use other skills instead:**
-- Complex data analysis with 20+ data points → **vega**
-- Technical flowcharts with decision logic → **mermaid**
-- API sequences or state machines → **mermaid**
-- Complex dependency graphs → **graphviz**
-- Free spatial positioning → **canvas**
-
-## Overview
-
-Infographic transforms data and information into visual infographics using a simple, mermaid-like DSL syntax.
-
-`Infographic = Information Structure + Visual Expression`
-
-**Live Gallery:** [AntV Infographic Gallery](https://infographic.antv.vision/examples)
-
 ## Syntax Structure
 
 ```plain
@@ -55,13 +41,7 @@ theme
   palette #3b82f6 #8b5cf6 #f97316
 ```
 
-### Key Rules
-
-1. **First line**: `infographic <template-name>` — template must be from the Available Templates list
-2. **Indentation**: Two spaces per level
-3. **Key-value pairs**: `key value` (space separated)
-4. **Arrays**: Use `-` prefix for items
-5. **Icon format**: `mdi/icon-name` (from Iconify, e.g., `mdi/chart-line`)
+**Rules:** First line `infographic <template-name>` (must match template list) | 2-space indentation | `key value` pairs | `-` prefix for arrays | Compare templates need exactly 2 root items with `children` | SWOT needs exactly 4 items (Strengths/Weaknesses/Opportunities/Threats in English) | list templates use `desc` not `value` | `hierarchy-structure` max 3 levels
 
 ## Data Fields
 
@@ -221,64 +201,6 @@ data
             - label Research
 ```
 
-### With Theme Customization
-```infographic
-infographic list-row-horizontal-icon-arrow
-theme dark
-  palette
-    - #61DDAA
-    - #F6BD16
-    - #F08BB4
-data
-  items
-    - label Step 1
-      desc Start
-      icon mdi/play
-    - label Step 2
-      desc In Progress
-      icon mdi/progress-clock
-    - label Step 3
-      desc Complete
-      icon mdi/check
-```
-
-## Critical Rules
-
-### Compare Templates: Exactly 2 Root Nodes
-```plain
-❌ 3+ root items
-✅ Exactly 2 root items with children
-```
-
-### SWOT: Exactly 4 Root Nodes with English Labels
-```plain
-❌ 优势/劣势/机会/威胁
-✅ Strengths/Weaknesses/Opportunities/Threats
-```
-
-### Value Field: Numbers Only (for charts/funnels)
-```plain
-❌ value "40%"
-✅ value 40
-```
-
-### Icon Format: Collection/Name
-```plain
-❌ icon star
-✅ icon mdi/star
-```
-
-## Common Pitfalls
-
-| Issue | Solution |
-|-------|----------|
-| Won't render | Check indentation (2 spaces per level) |
-| "Incomplete options" | Template doesn't support used fields, or missing required `label` |
-| Compare broken | Ensure exactly 2 root items with `children` |
-| SWOT incomplete | Must have exactly 4 items with English labels |
-| Values not showing | Put values in `desc` for list templates, use `value` only for charts/funnels |
-| Icons not showing | Use `icon mdi/icon-name` format |
-| Hierarchy too deep | `hierarchy-structure` supports max 3 levels |
 
 ## Output Format
 
