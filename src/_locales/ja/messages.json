@@ -355,6 +355,18 @@
     "message": "リセット",
     "description": "Reset button"
   },
+  "settings_auto_refresh": {
+    "message": "自動更新",
+    "description": "Label for auto refresh checkbox"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "更新間隔:",
+    "description": "Label for refresh interval selector"
+  },
+  "settings_auto_refresh_note": {
+    "message": "ローカルファイルが変更されたときに自動的にリロードします（file://のみ）。",
+    "description": "Helper note for auto refresh option"
+  },
   "settings_docx_emoji_style": {
     "message": "絵文字スタイル",
     "description": "Label for the emoji style selector in DOCX export settings"

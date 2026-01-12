@@ -355,6 +355,18 @@
     "message": "Lähtesta",
     "description": "Reset button"
   },
+  "settings_auto_refresh": {
+    "message": "Automaatne värskendamine",
+    "description": "Label for auto refresh checkbox"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "Värskendusintervall:",
+    "description": "Label for refresh interval selector"
+  },
+  "settings_auto_refresh_note": {
+    "message": "Laadi automaatselt uuesti, kui kohalik fail muutub (ainult file://).",
+    "description": "Helper note for auto refresh option"
+  },
   "settings_docx_emoji_style": {
     "message": "Emoji stiil",
     "description": "Label for the emoji style selector in DOCX export settings"

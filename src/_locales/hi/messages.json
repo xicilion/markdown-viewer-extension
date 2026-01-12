@@ -355,6 +355,18 @@
     "message": "रीसेट",
     "description": "Reset button"
   },
+  "settings_auto_refresh": {
+    "message": "स्वतः रिफ्रेश",
+    "description": "Label for auto refresh checkbox"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "रिफ्रेश अंतराल:",
+    "description": "Label for refresh interval selector"
+  },
+  "settings_auto_refresh_note": {
+    "message": "स्थानीय फ़ाइल बदलने पर स्वचालित रूप से पुनः लोड करें (केवल file://)।",
+    "description": "Helper note for auto refresh option"
+  },
   "settings_docx_emoji_style": {
     "message": "इमोजी शैली",
     "description": "Label for the emoji style selector in DOCX export settings"

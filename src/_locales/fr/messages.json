@@ -355,6 +355,18 @@
     "message": "Réinitialiser",
     "description": "Reset button"
   },
+  "settings_auto_refresh": {
+    "message": "Actualisation automatique",
+    "description": "Label for auto refresh checkbox"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "Intervalle d'actualisation :",
+    "description": "Label for refresh interval selector"
+  },
+  "settings_auto_refresh_note": {
+    "message": "Recharger automatiquement lorsque le fichier local change (file:// uniquement).",
+    "description": "Helper note for auto refresh option"
+  },
   "settings_docx_emoji_style": {
     "message": "Style d'emoji",
     "description": "Label for the emoji style selector in DOCX export settings"

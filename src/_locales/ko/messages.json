@@ -355,6 +355,18 @@
     "message": "재설정",
     "description": "Reset button"
   },
+  "settings_auto_refresh": {
+    "message": "자동 새로고침",
+    "description": "Label for auto refresh checkbox"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "새로고침 간격:",
+    "description": "Label for refresh interval selector"
+  },
+  "settings_auto_refresh_note": {
+    "message": "로컬 파일이 변경되면 자동으로 새로고침합니다 (file://만 해당).",
+    "description": "Helper note for auto refresh option"
+  },
   "settings_docx_emoji_style": {
     "message": "이모지 스타일",
     "description": "Label for the emoji style selector in DOCX export settings"

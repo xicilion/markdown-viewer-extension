@@ -331,7 +331,7 @@ export async function initializeViewerMain(options: ViewerMainOptions): Promise<
   }
 
   /**
-   * Setup message listener for locale/theme changes
+   * Setup message listener for locale/theme/file changes
    */
   function setupMessageListener(): void {
     platform.message.addListener((message: unknown) => {
@@ -367,11 +367,137 @@ export async function initializeViewerMain(options: ViewerMainOptions): Promise<
         }
         return;
       }
+
+      // Handle file content changes from background script
+      if (msg.type === 'FILE_CHANGED') {
+        const payload = msg.payload && typeof msg.payload === 'object' ? (msg.payload as Record<string, unknown>) : null;
+        if (payload) {
+          const changedUrl = payload.url as string;
+          const newContent = payload.content as string;
+          
+          // Verify it's for the current document
+          if (changedUrl === currentUrl && typeof newContent === 'string') {
+            void handleFileChanged(newContent);
+          }
+        }
+        return;
+      }
+
+      // Handle auto refresh settings changes
+      if (msg.type === 'AUTO_REFRESH_SETTINGS_CHANGED') {
+        const payload = msg.payload && typeof msg.payload === 'object' ? (msg.payload as Record<string, unknown>) : null;
+        if (payload) {
+          const enabled = payload.enabled as boolean;
+          if (enabled) {
+            void startFileTracking();
+          } else {
+            stopFileTracking();
+          }
+        }
+        return;
+      }
     });
   }
 
-  // Setup message listener for theme/locale changes
+  /**
+   * Handle file content change (incremental update)
+   */
+  async function handleFileChanged(newContent: string): Promise<void> {
+    const container = document.getElementById('markdown-content') as HTMLElement | null;
+    if (!container) {
+      return;
+    }
+
+    // Wrap content if needed (e.g., mermaid, vega files)
+    const wrappedContent = wrapFileContent(newContent, currentUrl);
+
+    // Use shared render flow with incremental update
+    await renderMarkdownFlow({
+      markdown: wrappedContent,
+      container,
+      fileChanged: false, // Same file, enable incremental update
+      forceRender: false,
+      zoomLevel: toolbarManager.getZoomLevel() / 100,
+      scrollController: scrollSyncController,
+      renderer: pluginRenderer,
+      translate,
+      platform,
+      currentTaskManagerRef: { current: currentTaskManager },
+      // Preserve current scroll position
+      onHeadings: (_headings) => {
+        void generateTOC();
+      },
+      onProgress: (completed, total) => {
+        updateProgress(completed, total);
+      },
+      beforeProcessAll: showProcessingIndicator,
+      afterProcessAll: hideProcessingIndicator,
+      afterRender: updateActiveTocItem,
+    });
+  }
+
+  /**
+   * Start file change tracking for current document
+   */
+  async function startFileTracking(): Promise<void> {
+    if (!currentUrl.startsWith('file://')) {
+      return; // Only track local files
+    }
+
+    try {
+      await new Promise<void>((resolve, reject) => {
+        chrome.runtime.sendMessage(
+          {
+            id: `start-tracking-${Date.now()}`,
+            type: 'START_FILE_TRACKING',
+            payload: { url: currentUrl },
+          },
+          (response) => {
+            if (chrome.runtime.lastError) {
+              reject(new Error(chrome.runtime.lastError.message));
+              return;
+            }
+            if (response && response.ok) {
+              resolve();
+            } else {
+              reject(new Error(response?.error?.message || 'Failed to start tracking'));
+            }
+          }
+        );
+      });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('[Chrome] Failed to start file tracking:', error);
+    }
+  }
+
+  /**
+   * Stop file change tracking
+   */
+  function stopFileTracking(): void {
+    if (!currentUrl.startsWith('file://')) {
+      return;
+    }
+
+    chrome.runtime.sendMessage({
+      id: `stop-tracking-${Date.now()}`,
+      type: 'STOP_FILE_TRACKING',
+      payload: { url: currentUrl },
+    });
+  }
+
+  // Setup message listener for theme/locale/file changes
   setupMessageListener();
+
+  // Start file tracking for local files
+  if (currentUrl.startsWith('file://')) {
+    void startFileTracking();
+
+    // Stop tracking when page unloads
+    window.addEventListener('beforeunload', () => {
+      stopFileTracking();
+    });
+  }
 }
 
 /**

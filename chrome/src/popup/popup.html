@@ -149,6 +149,25 @@
 
         <div class="info-section">
           <h3 data-i18n="settings_general_title"></h3>
+
+          <div style="margin: 10px 0;">
+            <label class="checkbox-label">
+              <input type="checkbox" id="auto-refresh-enabled" checked>
+              <span data-i18n="settings_auto_refresh">Auto Refresh</span>
+            </label>
+            <div class="settings-note" data-i18n="settings_auto_refresh_note">Automatically reload when local file changes</div>
+          </div>
+
+          <div style="margin: 10px 0;">
+            <label for="auto-refresh-interval" data-i18n="settings_auto_refresh_interval">Refresh Interval</label>
+            <select id="auto-refresh-interval">
+              <option value="500">0.5s</option>
+              <option value="1000" selected>1s</option>
+              <option value="2000">2s</option>
+              <option value="5000">5s</option>
+            </select>
+          </div>
+
           <div style="margin: 10px 0;">
             <label for="frontmatter-display" data-i18n="settings_frontmatter_display"></label>
             <select id="frontmatter-display">

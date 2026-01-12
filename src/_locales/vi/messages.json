@@ -355,6 +355,18 @@
     "message": "Đặt lại",
     "description": "Reset button"
   },
+  "settings_auto_refresh": {
+    "message": "Tự động làm mới",
+    "description": "Label for auto refresh checkbox"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "Khoảng thời gian làm mới:",
+    "description": "Label for refresh interval selector"
+  },
+  "settings_auto_refresh_note": {
+    "message": "Tự động tải lại khi tệp cục bộ thay đổi (chỉ file://).",
+    "description": "Helper note for auto refresh option"
+  },
   "settings_docx_emoji_style": {
     "message": "Kiểu emoji",
     "description": "Label for the emoji style selector in DOCX export settings"

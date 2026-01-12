@@ -308,6 +308,9 @@ export function createSettingsTabManager({
       }
     }
 
+    // Auto Refresh settings (Chrome only)
+    loadAutoRefreshSettingsUI();
+
     // Load supported file extensions checkboxes
     const ext = settings.supportedExtensions || {
       mermaid: true,
@@ -402,6 +405,85 @@ export function createSettingsTabManager({
         settings.supportedExtensions[key] = el.checked;
         await saveSettingsToStorage();
       });
+    }
+  }
+
+  /**
+   * Load and setup Auto Refresh settings UI (Chrome only feature)
+   */
+  function loadAutoRefreshSettingsUI(): void {
+    const enabledEl = document.getElementById('auto-refresh-enabled') as HTMLInputElement | null;
+    const intervalEl = document.getElementById('auto-refresh-interval') as HTMLSelectElement | null;
+
+    // If elements don't exist (not Chrome), skip
+    if (!enabledEl || !intervalEl) {
+      return;
+    }
+
+    // Load current settings from background
+    chrome.runtime.sendMessage(
+      {
+        id: `get-auto-refresh-${Date.now()}`,
+        type: 'GET_AUTO_REFRESH_SETTINGS',
+        payload: {},
+      },
+      (response) => {
+        if (response && response.ok && response.data) {
+          const settings = response.data as { enabled: boolean; intervalMs: number };
+          enabledEl.checked = settings.enabled;
+          intervalEl.value = String(settings.intervalMs);
+        }
+      }
+    );
+
+    // Setup change listeners
+    if (!enabledEl.dataset.listenerAdded) {
+      enabledEl.dataset.listenerAdded = 'true';
+      enabledEl.addEventListener('change', () => {
+        updateAutoRefreshSettings();
+      });
+    }
+
+    if (!intervalEl.dataset.listenerAdded) {
+      intervalEl.dataset.listenerAdded = 'true';
+      intervalEl.addEventListener('change', () => {
+        updateAutoRefreshSettings();
+      });
+    }
+
+    function updateAutoRefreshSettings(): void {
+      const enabled = enabledEl!.checked;
+      const intervalMs = parseInt(intervalEl!.value, 10);
+
+      // Save to storage and update tracker
+      const newSettings = { enabled, intervalMs };
+      
+      chrome.storage.local.set({ autoRefreshSettings: newSettings });
+
+      chrome.runtime.sendMessage(
+        {
+          id: `update-auto-refresh-${Date.now()}`,
+          type: 'UPDATE_AUTO_REFRESH_SETTINGS',
+          payload: newSettings,
+        },
+        (response) => {
+          if (response && response.ok) {
+            showMessage(translate('settings_save_success'), 'success');
+
+            // Broadcast to all markdown tabs
+            safeQueryTabs({}).then((tabs) => {
+              tabs.forEach((tab) => {
+                if (tab.id && tab.url && (tab.url.endsWith('.md') || tab.url.endsWith('.markdown'))) {
+                  safeSendTabMessage(tab.id, {
+                    type: 'AUTO_REFRESH_SETTINGS_CHANGED',
+                    payload: newSettings,
+                  });
+                }
+              });
+            });
+          }
+        }
+      );
     }
   }
 

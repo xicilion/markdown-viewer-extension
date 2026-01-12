@@ -355,6 +355,18 @@
     "message": "Återställ",
     "description": "Reset button"
   },
+  "settings_auto_refresh": {
+    "message": "Automatisk uppdatering",
+    "description": "Label for auto refresh checkbox"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "Uppdateringsintervall:",
+    "description": "Label for refresh interval selector"
+  },
+  "settings_auto_refresh_note": {
+    "message": "Ladda om automatiskt när lokal fil ändras (endast file://).",
+    "description": "Helper note for auto refresh option"
+  },
   "settings_docx_emoji_style": {
     "message": "Emoji-stil",
     "description": "Label for the emoji style selector in DOCX export settings"

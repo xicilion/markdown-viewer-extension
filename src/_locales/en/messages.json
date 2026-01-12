@@ -407,6 +407,18 @@
     "message": "Extension settings",
     "description": "Heading for settings section"
   },
+  "settings_auto_refresh": {
+    "message": "Auto Refresh",
+    "description": "Label for auto refresh checkbox"
+  },
+  "settings_auto_refresh_note": {
+    "message": "Automatically reload when local file changes (file:// URLs only).",
+    "description": "Helper note for auto refresh option"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "Refresh interval:",
+    "description": "Label for refresh interval selector"
+  },
   "settings_interface_title": {
     "message": "Interface settings",
     "description": "Heading for interface settings section"

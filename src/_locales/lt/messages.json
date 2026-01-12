@@ -355,6 +355,18 @@
     "message": "Atstatyti",
     "description": "Reset button"
   },
+  "settings_auto_refresh": {
+    "message": "Automatinis atnaujinimas",
+    "description": "Label for auto refresh checkbox"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "Atnaujinimo intervalas:",
+    "description": "Label for refresh interval selector"
+  },
+  "settings_auto_refresh_note": {
+    "message": "Automatiškai perkrauti, kai pasikeičia vietinis failas (tik file://).",
+    "description": "Helper note for auto refresh option"
+  },
   "settings_docx_emoji_style": {
     "message": "Emoji stilius",
     "description": "Label for the emoji style selector in DOCX export settings"

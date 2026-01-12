@@ -355,6 +355,18 @@
     "message": "Resetten",
     "description": "Reset button"
   },
+  "settings_auto_refresh": {
+    "message": "Automatisch vernieuwen",
+    "description": "Label for auto refresh checkbox"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "Vernieuwingsinterval:",
+    "description": "Label for refresh interval selector"
+  },
+  "settings_auto_refresh_note": {
+    "message": "Automatisch herladen wanneer lokaal bestand wijzigt (alleen file://).",
+    "description": "Helper note for auto refresh option"
+  },
   "settings_docx_emoji_style": {
     "message": "Emoji-stijl",
     "description": "Label for the emoji style selector in DOCX export settings"

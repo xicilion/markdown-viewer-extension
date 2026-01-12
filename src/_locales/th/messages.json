@@ -355,6 +355,18 @@
     "message": "รีเซ็ต",
     "description": "Reset button"
   },
+  "settings_auto_refresh": {
+    "message": "รีเฟรชอัตโนมัติ",
+    "description": "Label for auto refresh checkbox"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "ช่วงเวลารีเฟรช:",
+    "description": "Label for refresh interval selector"
+  },
+  "settings_auto_refresh_note": {
+    "message": "โหลดใหม่โดยอัตโนมัติเมื่อไฟล์ในเครื่องเปลี่ยนแปลง (เฉพาะ file://).",
+    "description": "Helper note for auto refresh option"
+  },
   "settings_docx_emoji_style": {
     "message": "สไตล์อิโมจิ",
     "description": "Label for the emoji style selector in DOCX export settings"

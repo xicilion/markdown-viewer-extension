@@ -355,6 +355,18 @@
     "message": "Tetapkan semula",
     "description": "Reset button"
   },
+  "settings_auto_refresh": {
+    "message": "Muat Semula Automatik",
+    "description": "Label for auto refresh checkbox"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "Selang muat semula:",
+    "description": "Label for refresh interval selector"
+  },
+  "settings_auto_refresh_note": {
+    "message": "Muat semula secara automatik apabila fail tempatan berubah (file:// sahaja).",
+    "description": "Helper note for auto refresh option"
+  },
   "settings_docx_emoji_style": {
     "message": "Gaya Emoji",
     "description": "Label for the emoji style selector in DOCX export settings"

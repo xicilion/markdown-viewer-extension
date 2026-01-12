@@ -355,6 +355,18 @@
     "message": "重置",
     "description": "Reset button"
   },
+  "settings_auto_refresh": {
+    "message": "自動重新整理",
+    "description": "Label for auto refresh checkbox"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "重新整理間隔:",
+    "description": "Label for refresh interval selector"
+  },
+  "settings_auto_refresh_note": {
+    "message": "本機檔案變更時自動重新載入（僅限 file:// 協定）。",
+    "description": "Helper note for auto refresh option"
+  },
   "settings_docx_emoji_style": {
     "message": "表情符號樣式",
     "description": "Label for the emoji style selector in DOCX export settings"

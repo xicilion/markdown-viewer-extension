@@ -355,6 +355,18 @@
     "message": "Сбросить",
     "description": "Reset button"
   },
+  "settings_auto_refresh": {
+    "message": "Автообновление",
+    "description": "Label for auto refresh checkbox"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "Интервал обновления:",
+    "description": "Label for refresh interval selector"
+  },
+  "settings_auto_refresh_note": {
+    "message": "Автоматически перезагружать при изменении локального файла (только file://).",
+    "description": "Helper note for auto refresh option"
+  },
   "settings_docx_emoji_style": {
     "message": "Стиль эмодзи",
     "description": "Label for the emoji style selector in DOCX export settings"

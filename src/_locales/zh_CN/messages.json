@@ -407,6 +407,18 @@
     "message": "扩展设置",
     "description": "设置区标题"
   },
+  "settings_auto_refresh": {
+    "message": "自动刷新",
+    "description": "自动刷新复选框标签"
+  },
+  "settings_auto_refresh_note": {
+    "message": "本地文件变化时自动刷新预览（仅限 file:// 协议）。",
+    "description": "自动刷新选项说明"
+  },
+  "settings_auto_refresh_interval": {
+    "message": "刷新间隔:",
+    "description": "刷新间隔选择器标签"
+  },
   "settings_interface_title": {
     "message": "界面设置",
     "description": "界面设置区标题"

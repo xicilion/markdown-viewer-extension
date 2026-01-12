@@ -6,6 +6,11 @@
 
 import CacheStorage from '../../../src/utils/cache-storage';
 import { toSimpleCacheStats } from '../../../src/utils/cache-stats';
+import {
+  getFileChangeTracker,
+  DEFAULT_AUTO_REFRESH_SETTINGS,
+  type AutoRefreshSettings,
+} from './file-change-tracker';
 import type {
   FileState,
   AllFileStates,
@@ -413,6 +418,122 @@ async function handleReadLocalFileEnvelope(
   }
 }
 
+// ============================================================================
+// File Change Tracking
+// ============================================================================
+
+/**
+ * Helper function to read file content (used by tracker)
+ */
+async function readFileContent(url: string): Promise<string> {
+  const { content } = await readLocalFile(url, false);
+  return content;
+}
+
+/**
+ * Handle START_FILE_TRACKING request
+ */
+async function handleStartFileTrackingEnvelope(
+  message: { id: string; type: string; payload: unknown },
+  sender: chrome.runtime.MessageSender,
+  sendResponse: (response: unknown) => void
+): Promise<void> {
+  const payload = (message.payload || {}) as Record<string, unknown>;
+  const url = typeof payload.url === 'string' ? payload.url : '';
+  const tabId = sender.tab?.id;
+
+  if (!url || !tabId) {
+    sendResponseEnvelope(message.id, sendResponse, {
+      ok: false,
+      errorMessage: 'Missing url or invalid sender tab',
+    });
+    return;
+  }
+
+  if (!url.startsWith('file://')) {
+    sendResponseEnvelope(message.id, sendResponse, {
+      ok: false,
+      errorMessage: 'Only file:// URLs can be tracked',
+    });
+    return;
+  }
+
+  try {
+    const tracker = getFileChangeTracker();
+    await tracker.startTracking(url, tabId, readFileContent);
+    sendResponseEnvelope(message.id, sendResponse, { ok: true });
+  } catch (error) {
+    sendResponseEnvelope(message.id, sendResponse, {
+      ok: false,
+      errorMessage: (error as Error).message,
+    });
+  }
+}
+
+/**
+ * Handle STOP_FILE_TRACKING request
+ */
+function handleStopFileTrackingEnvelope(
+  message: { id: string; type: string; payload: unknown },
+  sendResponse: (response: unknown) => void
+): void {
+  const payload = (message.payload || {}) as Record<string, unknown>;
+  const url = typeof payload.url === 'string' ? payload.url : '';
+
+  if (url) {
+    const tracker = getFileChangeTracker();
+    tracker.stopTracking(url);
+  }
+
+  sendResponseEnvelope(message.id, sendResponse, { ok: true });
+}
+
+/**
+ * Handle UPDATE_AUTO_REFRESH_SETTINGS request
+ */
+function handleUpdateAutoRefreshSettingsEnvelope(
+  message: { id: string; type: string; payload: unknown },
+  sendResponse: (response: unknown) => void
+): void {
+  const payload = (message.payload || {}) as Partial<AutoRefreshSettings>;
+  const tracker = getFileChangeTracker();
+  
+  const currentSettings = tracker.getSettings();
+  const newSettings: AutoRefreshSettings = {
+    enabled: typeof payload.enabled === 'boolean' ? payload.enabled : currentSettings.enabled,
+    intervalMs: typeof payload.intervalMs === 'number' ? payload.intervalMs : currentSettings.intervalMs,
+  };
+
+  tracker.updateSettings(newSettings);
+  sendResponseEnvelope(message.id, sendResponse, { ok: true, data: newSettings });
+}
+
+/**
+ * Handle GET_AUTO_REFRESH_SETTINGS request
+ */
+function handleGetAutoRefreshSettingsEnvelope(
+  message: { id: string; type: string; payload: unknown },
+  sendResponse: (response: unknown) => void
+): void {
+  const tracker = getFileChangeTracker();
+  const settings = tracker.getSettings();
+  sendResponseEnvelope(message.id, sendResponse, { ok: true, data: settings });
+}
+
+// Clean up tracking when tab is closed
+chrome.tabs.onRemoved.addListener((tabId) => {
+  const tracker = getFileChangeTracker();
+  tracker.stopTrackingByTab(tabId);
+});
+
+// Load auto refresh settings from storage on startup
+chrome.storage.local.get(['autoRefreshSettings'], (result) => {
+  if (result.autoRefreshSettings) {
+    const tracker = getFileChangeTracker();
+    tracker.updateSettings(result.autoRefreshSettings as AutoRefreshSettings);
+  }
+});
+
 // Upload sessions in memory
 const uploadSessions = new Map<string, UploadSession>();
 const DEFAULT_UPLOAD_CHUNK_SIZE = 255 * 1024;
@@ -610,6 +731,27 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
 
   if (isRequestEnvelope(message) && message.type === 'READ_LOCAL_FILE') {
     handleReadLocalFileEnvelope(message, sendResponse);
+    return true;
+  }
+
+  // File change tracking
+  if (isRequestEnvelope(message) && message.type === 'START_FILE_TRACKING') {
+    handleStartFileTrackingEnvelope(message, sender, sendResponse);
+    return true;
+  }
+
+  if (isRequestEnvelope(message) && message.type === 'STOP_FILE_TRACKING') {
+    handleStopFileTrackingEnvelope(message, sendResponse);
+    return true;
+  }
+
+  if (isRequestEnvelope(message) && message.type === 'UPDATE_AUTO_REFRESH_SETTINGS') {
+    handleUpdateAutoRefreshSettingsEnvelope(message, sendResponse);
+    return true;
+  }
+
+  if (isRequestEnvelope(message) && message.type === 'GET_AUTO_REFRESH_SETTINGS') {
+    handleGetAutoRefreshSettingsEnvelope(message, sendResponse);
     return true;
   }
 
