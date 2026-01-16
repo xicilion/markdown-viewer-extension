@@ -21,6 +21,7 @@ import {
 import { mathJaxReady, convertLatex2Math } from './docx-math-converter';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
+import remarkCjkFriendly from 'remark-cjk-friendly';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import remarkMath from 'remark-math';
@@ -432,6 +433,7 @@ class DocxExporter {
 
     const processor = unified()
       .use(remarkParse)
+      .use(remarkCjkFriendly)
       .use(remarkGfm, { singleTilde: false })
       .use(remarkBreaks)
       .use(remarkMath)

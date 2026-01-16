@@ -3,6 +3,7 @@
 
 import { unified, type Processor } from 'unified';
 import remarkParse from 'remark-parse';
+import remarkCjkFriendly from 'remark-cjk-friendly';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import remarkMath from 'remark-math';
@@ -560,6 +561,7 @@ export function createMarkdownProcessor(
 
   const processor = unified()
     .use(remarkParse)
+    .use(remarkCjkFriendly)
     .use(remarkGfm, { singleTilde: false })
     .use(remarkBreaks)
     .use(remarkMath)
