@@ -171,17 +171,18 @@ export class JsonCanvasRenderer extends BaseRenderer {
 
         const dx = Math.abs(end.x - start.x);
         const dy = Math.abs(end.y - start.y);
+        const dist = Math.max(dx, dy);
         const straightDist = Math.sqrt(dx * dx + dy * dy);
 
         if (straightDist >= MIN_DISTANCE_FOR_CURVE) {
           const fromDir = this.getSideDirection(edge.fromSide);
           const toDir = this.getSideDirection(edge.toSide);
 
-          const fromControlDist = this.getControlDistanceForDirection(fromDir, dx, dy);
-          const toControlDist = this.getControlDistanceForDirection(toDir, dx, dy);
+          // Use the same control distance calculation as renderEdge
+          const controlDist = Math.max(80, dist * 0.5);
 
-          const cp1 = { x: start.x + fromDir.x * fromControlDist, y: start.y + fromDir.y * fromControlDist };
-          const cp2 = { x: end.x + toDir.x * toControlDist, y: end.y + toDir.y * toControlDist };
+          const cp1 = { x: start.x + fromDir.x * controlDist, y: start.y + fromDir.y * controlDist };
+          const cp2 = { x: end.x + toDir.x * controlDist, y: end.y + toDir.y * controlDist };
 
           // Using control points directly tends to overshoot the real curve bounds.
           // Compute a tighter bounding box from the bezier extrema to reduce empty margins.
@@ -465,12 +466,6 @@ export class JsonCanvasRenderer extends BaseRenderer {
     }
   }
 
-  private getControlDistanceForDirection(dir: { x: number; y: number }, dx: number, dy: number): number {
-    // Use axis-specific distance so a large vertical separation doesn't overly "push" a horizontal curve (and vice versa).
-    const axisDist = Math.abs(dir.x) > 0 ? dx : dy;
-    return Math.max(80, axisDist * 0.5);
-  }
-
   /**
    * Generate SVG for an edge
    */
@@ -551,15 +546,17 @@ export class JsonCanvasRenderer extends BaseRenderer {
     } else {
       // For distant nodes, draw the curved path
       // Control distance should be at least 80px, and scale with distance.
-      // Use axis-specific distance to avoid excessive bulges on long diagonal links.
-      const fromControlDist = this.getControlDistanceForDirection(fromDir, dx, dy);
-      const toControlDist = this.getControlDistanceForDirection(toDir, dx, dy);
+      // IMPORTANT: Use the same control distance for both ends to ensure the curve's
+      // tangent at endpoints aligns with the arrow direction (orient="auto").
+      // Using different distances causes the arrow to point at an angle different
+      // from the curve's entry angle.
+      const controlDist = Math.max(80, dist * 0.5);
       
       // Control points extend from start/end in the direction of their sides
-      const cp1x = start.x + fromDir.x * fromControlDist;
-      const cp1y = start.y + fromDir.y * fromControlDist;
-      const cp2x = end.x + toDir.x * toControlDist;
-      const cp2y = end.y + toDir.y * toControlDist;
+      const cp1x = start.x + fromDir.x * controlDist;
+      const cp1y = start.y + fromDir.y * controlDist;
+      const cp2x = end.x + toDir.x * controlDist;
+      const cp2y = end.y + toDir.y * controlDist;
       
       // Draw the path (markers are defined in <defs>)
       const markerEnd = (edge.toEnd === 'arrow' || edge.toEnd === undefined) ? `marker-end="url(#${markerId})"` : '';
